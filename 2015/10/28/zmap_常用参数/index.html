@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Phoenix&#39;s nest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#Zmap 常用参数：
+###常用参数：
+-p 要扫描的TCP 端口 (ex. -p 443)
+-o 将结果写入文件 (ex. -o ./result.txt)
+-b 黑名单，输入黑名单时将不会扫描这些ip
+###搜索选项：
+-n 扫描目标ip数量上限，这个可以是一个数字或者一个百分比
+-N 扫描结果上限，当获得这个数量的目标后zmap将退出
+-t 设置发送包的长度
+-r 设置每秒发送的速度
+-B">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Phoenix's nest">
+<meta property="og:url" content="http://kersujd.tk/2015/10/28/zmap_常用参数/index.html">
+<meta property="og:site_name" content="Phoenix's nest">
+<meta property="og:description" content="#Zmap 常用参数：
+###常用参数：
+-p 要扫描的TCP 端口 (ex. -p 443)
+-o 将结果写入文件 (ex. -o ./result.txt)
+-b 黑名单，输入黑名单时将不会扫描这些ip
+###搜索选项：
+-n 扫描目标ip数量上限，这个可以是一个数字或者一个百分比
+-N 扫描结果上限，当获得这个数量的目标后zmap将退出
+-t 设置发送包的长度
+-r 设置每秒发送的速度
+-B">
+<meta property="og:updated_time" content="2015-10-28T06:42:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Phoenix's nest">
+<meta name="twitter:description" content="#Zmap 常用参数：
+###常用参数：
+-p 要扫描的TCP 端口 (ex. -p 443)
+-o 将结果写入文件 (ex. -o ./result.txt)
+-b 黑名单，输入黑名单时将不会扫描这些ip
+###搜索选项：
+-n 扫描目标ip数量上限，这个可以是一个数字或者一个百分比
+-N 扫描结果上限，当获得这个数量的目标后zmap将退出
+-t 设置发送包的长度
+-r 设置每秒发送的速度
+-B">
+  
+    <link rel="alternative" href="/atom.xml" title="Phoenix&#39;s nest" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Phoenix&#39;s nest</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://kersujd.tk"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-zmap_常用参数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/10/28/zmap_常用参数/" class="article-date">
+  <time datetime="2015-10-28T06:42:06.000Z" itemprop="datePublished">2015-10-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#Zmap 常用参数：</p>
+<p>###常用参数：</p>
+<p>-p 要扫描的TCP 端口 (ex. -p 443)</p>
+<p>-o 将结果写入文件 (ex. -o ./result.txt)</p>
+<p>-b 黑名单，输入黑名单时将不会扫描这些ip</p>
+<p>###搜索选项：</p>
+<p>-n 扫描目标ip数量上限，这个可以是一个数字或者一个百分比</p>
+<p>-N 扫描结果上限，当获得这个数量的目标后zmap将退出</p>
+<p>-t 设置发送包的长度</p>
+<p>-r 设置每秒发送的速度</p>
+<p>-B 设置带宽 (ex. -B 10M)</p>
+<p>-c 设定接收包的超时时间</p>
+<p>-e 种子数量</p>
+<p>-T 发包线程数，缺省值为1</p>
+<p>-P 发送给每个探测ip的包数量</p>
+<p>-d debug模式，将每个包打印出来</p>
+<p>###网络选项：</p>
+<p>-s 扫描端口列表</p>
+<p>-S 扫描ip地址列表</p>
+<p>-G 设置MAC地址</p>
+<p>-i 设置网卡</p>
+<p>###探测选项<br>–list-probe-modules 列出探测模块</p>
+<p>-M, –probe-module=name 选择探测模块</p>
+<p>–probe-args=args 探测模块的参数</p>
+<p>–list-output-fields 列出探测模块可以输出的字段</p>
+<p>###输出选项</p>
+<p>–list-output-modules 列出可用的输出模块</p>
+<p>-O 选择输出模块和参数</p>
+<p>-f 逗号分隔的方式列出输出模块的字段</p>
+<p>###额外参数</p>
+<p>-C 读取配置文件</p>
+<p>-q 安静模式</p>
+<p>-g 在扫描完成后打印扫描报告</p>
+<p>-v 扫描报告的详细程度(0-5,缺省为3)</p>
+<p>-h 打印帮助</p>
+<p>-V 打印版本</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://kersujd.tk/2015/10/28/zmap_常用参数/" data-id="cih4tef3w0004cbotndsbrpup" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/11/01/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/10/21/rectangle/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+ 
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-zmap_常用参数" data-title="" data-url="http://kersujd.tk/2015/10/28/zmap_常用参数/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'754406'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2015/11/18/重置onlineJudge的密码/">重置onlineJudge的密码</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/18/jquery-php-ajax响应模型/">jquery+php ajax响应模型</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/12/Python-学习笔记/">Python 学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/08/用Shadowsocks找寄生兽看/">用Shadowsocks找寄生兽看</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/08/Some-Nike-com-s-message/">Some Nike.com&#39;s message</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 Radish<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+  <script src="http://s11.cnzz.com/stat.php?id=1256730265&web_id=1256730265" language="JavaScript"></script>
+  <audio src="./ahq.mp3" autoplay></audio>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

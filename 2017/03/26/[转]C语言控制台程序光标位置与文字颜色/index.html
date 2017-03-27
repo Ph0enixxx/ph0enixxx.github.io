@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:[转]C语言控制台程序光标位置与文字颜色date:2016-09-25 07:23:46Windows平台控制光标定位Windows环境下可以通过调用WIN32 API来实现光标定位，具体实现如下:
+#include void gotoxy(int x, int y) {    COORD cursorPosition;    cursorPosition.X = x;    curs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/[转]C语言控制台程序光标位置与文字颜色/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:[转]C语言控制台程序光标位置与文字颜色date:2016-09-25 07:23:46Windows平台控制光标定位Windows环境下可以通过调用WIN32 API来实现光标定位，具体实现如下:
+#include void gotoxy(int x, int y) {    COORD cursorPosition;    cursorPosition.X = x;    curs">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:[转]C语言控制台程序光标位置与文字颜色date:2016-09-25 07:23:46Windows平台控制光标定位Windows环境下可以通过调用WIN32 API来实现光标定位，具体实现如下:
+#include void gotoxy(int x, int y) {    COORD cursorPosition;    cursorPosition.X = x;    curs">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-[转]C语言控制台程序光标位置与文字颜色" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]C语言控制台程序光标位置与文字颜色/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]C语言控制台程序光标位置与文字颜色<br>date:2016-09-25 07:23:46<br>Windows平台<br>控制光标定位<br>Windows环境下可以通过调用WIN32 API来实现光标定位，具体实现如下:</p>
+<p>#include <windows.h><br>void gotoxy(int x, int y) {<br>    COORD cursorPosition;<br>    cursorPosition.X = x;<br>    cursorPosition.Y = y;<br>    // COORD cursorPosition = {x, y};<br>    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPosition);<br>}<br>注意：X, Y 的值都是从 0 开始的。</windows.h></p>
+<p>隐藏光标<br>有了光标定位的基础，只需要将光标定位于控制台之外的为，便可以实现隐藏光标，例如，通过上文中实现的gotoxy函数将光标定位于(-1, -1) 位置便可以实现隐藏光标。</p>
+<p>清屏<br>Windows环境下可以通过执行cls命令来实现清屏，具体实现如下：</p>
+<p>#include <windows.h><br>void clear() {<br>    system(“cls”);<br>}<br>color命令<br>在cmd命令行中执行 color /?，可以得到color命令的用法如下：</windows.h></p>
+<p>设置默认的控制台前景和背景颜色。<br>COLOR [attr]<br>    attr        指定控制台输出的颜色属性<br>颜色属性由两个十六进制数字指定 – 第一个为背景，第二个则为<br>前景。每个数字可以为以下任何值之一:</p>
+<pre><code>0 = 黑色       8 = 灰色
+1 = 蓝色       9 = 淡蓝色
+2 = 绿色       A = 淡绿色
+3 = 浅绿色     B = 淡浅绿色
+4 = 红色       C = 淡红色
+5 = 紫色       D = 淡紫色
+6 = 黄色       E = 淡黄色
+7 = 白色       F = 亮白色
+</code></pre><p>如果没有给定任何参数，该命令会将颜色还原到 CMD.EXE 启动时<br>的颜色。这个值来自当前控制台窗口、/T 命令行开关或<br>DefaultColor 注册表值。</p>
+<p>如果用相同的前景和背景颜色来执行 COLOR 命令，COLOR 命令<br>会将 ERRORLEVEL 设置为 1。</p>
+<p>例如: “COLOR fc” 在亮白色上产生亮红色<br>程序中，也可以通过 system(“color … “) 调用color命令来实现改变控制台颜色的功能。</p>
+<p>彩色输出<br>在Windows环境下，同样是通过调用WIN32 API来实现控制台程序的彩色输出。具体实现如下：</p>
+<p>#include <windows.h><br>void settextcolor(int color)<br>{<br>    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);<br>}<br>其中，color的值定义在 wincon.h 中。多个颜色值可以综合在一起使用。具体颜色定义如下:</windows.h></p>
+<p>#define FOREGROUND_BLUE    1</p>
+<p>#define FOREGROUND_GREEN    2</p>
+<p>#define FOREGROUND_RED    4</p>
+<p>#define FOREGROUND_INTENSITY    8</p>
+<p>#define BACKGROUND_BLUE    16</p>
+<p>#define BACKGROUND_GREEN    32</p>
+<p>#define BACKGROUND_RED    64</p>
+<p>#define BACKGROUND_INTENSITY    128<br>多个值综合使用示例：(本质上为多个值得或运算)</p>
+<p>SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),<br>        FOREGROUND_GREEN|FOREGROUND_RED|FOREGROUND_INTENSITY);<br>便可以在控制台将输出字符的颜色设置为黄色。</p>
+<p>Linux 平台<br>控制光标定位<br>Linux环境下，控制台会解释ANSI转义序列，转义符是ESC，ASCII码为0x1b，因此，可以通过在中断输出转义序列来实现光标的定位，具体序列如下：</p>
+<p>Esc[Line;Columnf<br>或</p>
+<p>Esc[Line;ColumnH<br>应用举例：</p>
+<p>void gotoxy(int x, int y) {<br>    printf(“%c[%d;%df”, 0x1b, y, x);<br>    // printf(“%c[%d;%dH”, 0x1b, y, x);<br>}<br>注意: 光标位置的行和列都是从 0 开始索引。</p>
+<p>转义序列列表：</p>
+<p>Esc[PnA 光标向上移动Pn行，如果光标已经处于最上方(the top line)，则忽略该转义序列。<br>Esc[PnB 光标向下移动Pn行，如果光标已经处于最下方(the buttom line)，则忽略该转义序列。<br>Esc[PnC 光标向右移动Pn行，如果光标已经处于最右处(the rightmost column)，则忽略该转义序列。<br>Esc[PnD 光标向左移动Pn行，如果光标已经处于最左处(the leftmost column)，则忽略该转义序列。<br>Esc[s 保存当前光标位置，之后可以通过恢复光标位置的转义序列回到被保存的光标位置。<br>Esc[u 恢复光标位置，将光标置于 Esc[s 序列保存的光标位置。<br>Esc[2J 清屏，将光标置于(0, 0)处(第一行第一列)。<br>Esc[K 删除从光标所在位置至当前行行末的所有字符，包括当前光标所在位置处的字符。<br>Esc[?25l 隐藏光标。<br>Esc[?25h 显示光标。<br>设置输出字符颜色<br>同样，也可以通过输出控制符来控制输出字符的颜色，用法如下：</p>
+<p>Esc[Ps;Psm 设置图形模式(Set Graphics Mode)。第一个Ps的值为前景色的值，第二个Ps的值为背景色的值。<br>背景色的颜色值范围为40~49，前景色的颜色值范围为30-39，具体颜色值如下：</p>
+<p>Color    Background    Foreground<br>black    40    30<br>red    41    31<br>green    42    32<br>yellow    43    33<br>blue    44    34<br>purple    45    35<br>deep green    46    36<br>white    47    37<br>例如，echo -e “\e[1;42m”表示将背景色设置为green，而echo -e “\e[1;32m表示将前景色设置为green.</p>
+<p>其他转义序列控制<br>Esc[0m 关闭所有属性。<br>Esc[1m 设置高亮度。<br>Esc[4m 下划线。<br>Esc[5m 闪烁。<br>Esc[7m 反显。<br>Esc[8m 消隐。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]C语言控制台程序光标位置与文字颜色/" data-id="cj0ryfuau001qc6otrqb7tbze" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/Zmap 常用参数：/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/[转]DNS服务器列表/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

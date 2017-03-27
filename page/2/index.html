@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Fork bomb原理解析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Fork bomb原理解析/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Fork bomb原理解析<br>date:2016-02-10 05:15:29<br>据说一段会让电脑变暖宝宝的shell代码：</p>
+<p>:(){ :|: &amp; };:</p>
+<p>拆开后是这样的：</p>
+<p>:()  //声明一个名为:的函数</p>
+<p>{ </p>
+<p>:|: &amp; //递归调用自身，并通过管道后台运行</p>
+<p>};</p>
+<p>: //开始执行</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Fork bomb原理解析/" data-id="cj0ryfu91000ac6oteuswqkj7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-HTML5 卡屏代码及原理分析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/HTML5 卡屏代码及原理分析/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:HTML5 卡屏代码及原理分析<br>date:2016-01-25 15:00:24<br>    <html><br>    <body><br>    <script><br>    var total=””;<br>    for (var i=0;i<1000000;i++)
+    {
+        total= total+i.toString();//生成一个很长的字符串
+        history.pushState(0,0,total);//一直往地址栏里面添加字符串，导致浏览器卡死
+    }
+    </script><br>    </body><br>    </html></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/HTML5 卡屏代码及原理分析/" data-id="cj0ryfu92000bc6otfxjhefz1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-IP数字相互转换" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/IP数字相互转换/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:IP数字相互转换<br>date:2016-01-22 15:27:49<br>num2ip:</p>
+<pre><code>import sys
+num=sys.argv[1]
+print(str(int(num[0:3]))+&apos;.&apos;+str(int(num[3:6]))+&apos;.&apos;+str(int(num[6:9]))+&apos;.&apos;+str(int(num[9:12])))
+</code></pre><p>ip2num:</p>
+<pre><code>import sys
+ip=sys.argv[1]
+num=ip.split(&apos;.&apos;)
+tmp=&quot;&quot;
+for i in num:
+    if len(i)==2:
+        i=&apos;0&apos;+i
+    if len(i)==1:
+        i=&quot;00&quot;+i
+    tmp=tmp+i
+print(tmp)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/IP数字相互转换/" data-id="cj0ryfu93000cc6otkgqzj5w3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ImportError: No module named &#39;thread&#39;" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/ImportError: No module named 'thread'/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:ImportError: No module named ‘thread’<br>date:2016-05-12 09:11:59<br>这个错误是由于Python3中thread模块改名引起的，解决办法：</p>
+<p>import   _thread  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/ImportError: No module named 'thread'/" data-id="cj0ryfu95000dc6ottdenjlay" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-How to do when you forget your Mysql password?" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/How to do when you forget your Mysql password?/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:How to do when you forget your Mysql password?<br>date:2016-01-22 15:21:18</p>
+<p>#####1.start your mysql service</p>
+<p>#####2.type </p>
+<pre><code>mysqld_safe --skip-grant-tables &amp;
+</code></pre><p>#####3.then,login your mysql:</p>
+<pre><code>mysql -u root -p    
+</code></pre><p>#####(4.)use the backup:<br>    mysql -u root jol &lt;jol.sql </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/How to do when you forget your Mysql password?/" data-id="cj0ryfu96000ec6ot4zcmrp9l" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Leetcode：Customers Who Never Order My Submissions Question" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Leetcode：Customers Who Never Order My Submissions Question/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Leetcode：Customers Who Never Order My Submissions Question<br>date:2016-03-08 13:54:34<br>这是道SQL查询题，要求是从表1中找出不在表2中的人名</p>
+<p>Suppose that a website contains two tables, the Customers table and the Orders table. Write a SQL query to find all customers who never order anything.</p>
+<p>Table: Customers.</p>
+<p>+—-+——-+</p>
+<p>| Id | Name  |</p>
+<p>+—-+——-+</p>
+<p>| 1  | Joe   |</p>
+<p>| 2  | Henry |</p>
+<p>| 3  | Sam   |</p>
+<p>| 4  | Max   |</p>
+<p>+—-+——-+</p>
+<p>Table: Orders.</p>
+<p>+—-+————+</p>
+<p>| Id | CustomerId |</p>
+<p>+—-+————+</p>
+<p>| 1  | 3          |</p>
+<p>| 2  | 1          |</p>
+<p>+—-+————+</p>
+<p>Using the above tables as example, return the following:</p>
+<p>+———–+</p>
+<p>| Customers |</p>
+<p>+———–+</p>
+<p>| Henry     |</p>
+<p>| Max       |</p>
+<p>+———–+</p>
+<p>Subscribe to see which companies asked this question<br>答案也很简单，求两者的差集就行了：</p>
+<pre><code>select Name from Customers where id not in (select CustomerId from Orders)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Leetcode：Customers Who Never Order My Submissions Question/" data-id="cj0ryfu97000fc6ot0cua2wyk" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Leetcode: 258. Add Digits" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Leetcode: 258. Add Digits/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Leetcode: 258. Add Digits<br>date:2016-04-03 02:57:23<br>Given a non-negative integer num, repeatedly add all its digits until the result has only one digit.</p>
+<p>For example:</p>
+<p>Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one digit, return it.</p>
+<p>Follow up:<br>Could you do it without any loop/recursion in O(1) runtime?</p>
+<p>题意为将一个数的每一位加起来，然后再相加每一位，直到和&lt;=9</p>
+<p>代码可以不用循环，数学方法即可得解：</p>
+<p>每个数字最后的和若不是0或9 ，都可以通过num%9来得出：</p>
+<pre><code>class Solution(object):
+    def addDigits(self, num):
+        &quot;&quot;&quot;
+        :type num: int
+        :rtype: int
+        &quot;&quot;&quot;
+        if num%9 == 0 and num != 0:
+            return 9
+        if num &gt; 9:
+            return num%9
+        return num
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Leetcode: 258. Add Digits/" data-id="cj0ryfu98000gc6otw9h72k0q" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Hdu 1004 balloon（附代码）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Hdu 1004 balloon（附代码）/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Hdu 1004 balloon（附代码）<br>date:2016-01-23 10:22:55</p>
+<p>#####Problem Description<br>Contest time again! How excited it is to see balloons floating around. But to tell you a secret, the judges’ favorite time is guessing the most popular problem. When the contest is over, they will count the balloons of each color and find the result.</p>
+<p>This year, they decide to leave this lovely job to you. </p>
+<p>#####Input<br>Input contains multiple test cases. Each test case starts with a number N (0 &lt; N &lt;= 1000) – the total number of balloons distributed. The next N lines contain one color each. The color of a balloon is a string of up to 15 lower-case letters.</p>
+<p>A test case with N = 0 terminates the input and this test case is not to be processed.</p>
+<p>#####Output<br>For each case, print the color of balloon for the most popular problem on a single line. It is guaranteed that there is a unique solution for each test case.<br>Sample Input<br>5<br>green<br>red<br>blue<br>red<br>red<br>3<br>pink<br>orange<br>pink<br>0<br>Sample Output<br>red<br>pink</p>
+<p>说白了 这道题的意思是把最多的颜色输出，用C++的Map就可以做到：</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;map&gt;
+#include &lt;string&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+int main()
+{
+    int cnt = 0;
+    while(cin&gt;&gt;cnt &amp;&amp; cnt!=0)
+    {
+        map&lt;string ,int&gt; ::iterator point;
+        map&lt;string , int&gt; ball;
+        string tmp;
+        while(cnt--)
+        {
+            cin&gt;&gt;tmp;
+            ball[tmp]++;
+        }
+        int pMax = 0;
+        for(point = ball.begin();point != ball.end();point++)
+        {
+            if(pMax &lt; point-&gt;second)
+            {
+                pMax = point-&gt;second;
+                tmp = point-&gt;first;
+            }
+        }
+        cout&lt;&lt;tmp&lt;&lt;endl;
+    }
+
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Hdu 1004 balloon（附代码）/" data-id="cj0ryfu99000hc6othbapmwb0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Js实现超简约网址导航" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Js实现超简约网址导航/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Js实现超简约网址导航<br>date:2016-01-24 12:54:59<br>程序包含两个网页：导航页和设置页</p>
+<p>使用方法：想跳到哪个网页，直接按下那个键就OK~</p>
+<p>体验网址:<br><a href="http://radishx.top:8080/" target="_blank" rel="external">http://radishx.top:8080/</a><br><a href="http://radishx.top:8080/set.html" target="_blank" rel="external">http://radishx.top:8080/set.html</a></p>
+<p>导航页：</p>
+<script src="https://gist.github.com/Ph0enixxx/fd4c9558cdd0b8e53645.js"></script>
+
+<p>设置页：</p>
+<script src="https://gist.github.com/Ph0enixxx/5c7f2cdc5eae2780b762.js"></script>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Js实现超简约网址导航/" data-id="cj0ryfu9a000ic6otmjz137f5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Leetcode：Move Zeroes" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Leetcode：Move Zeroes/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Leetcode：Move Zeroes<br>date:2016-03-19 05:26:28<br>    class Solution(object):<br>        def moveZeroes(self, nums):<br>            “””<br>            :type nums: List[int]<br>            :rtype: void Do not return anything, modify nums in-place instead.<br>            “””<br>            cnt = 0<br>            key = 0<br>            for i in nums:<br>                if i == 0:<br>                    cnt += 1</p>
+<pre><code>for i in range(0,cnt):
+    nums.remove(0)
+    nums.append(0)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Leetcode：Move Zeroes/" data-id="cj0ryfu9b000jc6ot5h86ycqj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:Ajax模板date:2016-01-22 15:14:00随机选择学号的程序,同时也自己学习了一下mvc模式的具体实现。
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;!-- 新 Bootstrap 核心 CSS 文件 --&amp;gt;
+    &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;//cdn.bootcss.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/Ajax模板/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:Ajax模板date:2016-01-22 15:14:00随机选择学号的程序,同时也自己学习了一下mvc模式的具体实现。
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;!-- 新 Bootstrap 核心 CSS 文件 --&amp;gt;
+    &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;//cdn.bootcss.">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:Ajax模板date:2016-01-22 15:14:00随机选择学号的程序,同时也自己学习了一下mvc模式的具体实现。
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;!-- 新 Bootstrap 核心 CSS 文件 --&amp;gt;
+    &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;//cdn.bootcss.">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Ajax模板" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Ajax模板/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Ajax模板<br>date:2016-01-22 15:14:00<br>随机选择学号的程序,同时也自己学习了一下mvc模式的具体实现。</p>
+<pre><code>&lt;html&gt;
+&lt;head&gt;
+    &lt;!-- 新 Bootstrap 核心 CSS 文件 --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css&quot;&gt;
+    &lt;!-- 可选的Bootstrap主题文件（一般不用引入） --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css&quot;&gt;
+    &lt;!-- jQuery文件。务必在bootstrap.min.js 之前引入 --&gt;
+    &lt;script src=&quot;//cdn.bootcss.com/jquery/1.11.3/jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;!-- 最新的 Bootstrap 核心 JavaScript 文件 --&gt;
+    &lt;script src=&quot;//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;/jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(document).ready(function(){
+ $(&quot;#b01&quot;).click(function(){
+  htmlobj=$.ajax({url:&quot;/shake.php?num=&quot;+$(&quot;#num&quot;).val()+&quot;&amp;class=&quot;+$(&quot;#class&quot;).val(),async:false});
+
+  console.log($(&quot;#num&quot;).val());
+
+  var obj = jQuery.parseJSON(htmlobj.responseText);
+  console.log(obj[0]);
+  $(&quot;#myDiv&quot;).html(&quot;&quot;);
+  for(var i=0;i&lt;obj.length;i++)
+  {
+    console.log(obj[i].name);
+    $(&quot;#myDiv&quot;).append(&quot;&lt;li class=\&quot;list-group-item\&quot;&gt;&quot;+obj[i].num+obj[i].name+&quot;&lt;/li&gt;&quot;);
+  }
+  });
+});
+
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;nav class=&quot;navbar navbar-inverse navbar-fixed-top&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;navbar-header&quot;&gt;
+      &lt;button type=&quot;button&quot; class=&quot;navbar-toggle collapsed&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbar&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;navbar&quot;&gt;
+        &lt;span class=&quot;sr-only&quot;&gt;Toggle navigation&lt;/span&gt;
+        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;
+        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;
+        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Shake!&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div id=&quot;navbar&quot; class=&quot;navbar-collapse collapse&quot;&gt;
+      &lt;form class=&quot;navbar-form navbar-right&quot; action=&quot;#&quot;&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;input type=&quot;text&quot; placeholder=&quot;Number&quot; class=&quot;form-control&quot; id=&quot;num&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;form-group&quot;&gt;
+          &lt;input type=&quot;text&quot; placeholder=&quot;Class&quot; class=&quot;form-control&quot; value=&quot;31&quot; id=&quot;class&quot;&gt;
+        &lt;/div&gt;
+        &lt;button class=&quot;btn btn-success&quot; id=&quot;b01&quot;&gt;Sign in&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;&lt;!--/.navbar-collapse --&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+
+&lt;body style=&quot;padding: 10px;padding-top:55px;&quot;&gt;
+
+
+&lt;div style=&quot;width:100%;float:left;&quot;&gt;
+&lt;ul class=&quot;list-group&quot; id=&quot;myDiv&quot;&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>shake.php</p>
+<pre><code>&lt;?php
+include &apos;./data.class.php&apos;;
+$data = new data();
+$name = $data-&gt;getData($_GET[&apos;class&apos;]);//名字学号数据
+
+
+if(isset($_GET[&apos;num&apos;]))
+    $num = $_GET[&apos;num&apos;];
+else 
+    $num = 1; 
+if((int)$_GET[&apos;num&apos;] &gt; count($name))
+    $num = 1;
+
+//echo $num;
+$result = array_rand($name , (int)$num);
+//var_dump($result);
+$data-&gt;display($result,$name);
+?&gt;
+</code></pre><p>data.class.php</p>
+<pre><code>&lt;?php 
+class data
+{
+public function getData($name)
+{
+    if($tmp = parse_ini_file(&quot;./$name.ini&quot;))
+        return $tmp;
+    else
+        return NULL;
+}
+public function display($arr,$name)
+{
+    if(!is_array($arr))
+    {
+        $this-&gt;display2($arr , $name);
+        return ;
+    }
+    $tmp = [];
+    $o = 0;
+    foreach($arr as $k =&gt; $i)
+    {
+        //echo $i;
+        $tmp[$o++] = [&quot;num&quot; =&gt; $i ,&quot;name&quot;=&gt; $name[$i] ];
+        //$tmp[$i] = $name[$i];
+    }
+    //var_dump($tmp);
+    echo json_encode($tmp);
+    //var_dump(json_decode(json_encode($tmp)));
+}
+public function display2($int = 1,$name)
+{
+    echo json_encode([[&quot;num&quot; =&gt; $int , &quot;name&quot; =&gt; $name[$int] ]]);
+}
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Ajax模板/" data-id="cj0ryfu8e0002c6otf329atpl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/About/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/Bing背景图片API/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

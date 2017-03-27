@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:[转]VPS丢包优化记date:2016-03-12 07:15:13原文：http://michaelfeng.github.io/blog/2015/06/21/VPS%E4%B8%A2%E5%8C%85%E4%BC%98%E5%8C%96%E8%AE%B0.html
+最近本农用的Linode节点VPS丢包率增高，而且链路时间变长了，尤其晚上更是让人无法忍受。遂想要改善下，查了下G">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/[转]VPS丢包优化记/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:[转]VPS丢包优化记date:2016-03-12 07:15:13原文：http://michaelfeng.github.io/blog/2015/06/21/VPS%E4%B8%A2%E5%8C%85%E4%BC%98%E5%8C%96%E8%AE%B0.html
+最近本农用的Linode节点VPS丢包率增高，而且链路时间变长了，尤其晚上更是让人无法忍受。遂想要改善下，查了下G">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:[转]VPS丢包优化记date:2016-03-12 07:15:13原文：http://michaelfeng.github.io/blog/2015/06/21/VPS%E4%B8%A2%E5%8C%85%E4%BC%98%E5%8C%96%E8%AE%B0.html
+最近本农用的Linode节点VPS丢包率增高，而且链路时间变长了，尤其晚上更是让人无法忍受。遂想要改善下，查了下G">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-[转]VPS丢包优化记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]VPS丢包优化记/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]VPS丢包优化记<br>date:2016-03-12 07:15:13<br>原文：<a href="http://michaelfeng.github.io/blog/2015/06/21/VPS%E4%B8%A2%E5%8C%85%E4%BC%98%E5%8C%96%E8%AE%B0.html" target="_blank" rel="external">http://michaelfeng.github.io/blog/2015/06/21/VPS%E4%B8%A2%E5%8C%85%E4%BC%98%E5%8C%96%E8%AE%B0.html</a></p>
+<p>最近本农用的Linode节点VPS丢包率增高，而且链路时间变长了，尤其晚上更是让人无法忍受。遂想要改善下，查了下Google发现有几种优化方式：</p>
+<p>使用Tcp加速产品<br>现在是市面上有两种产品：锐速和netspeeder，锐速现在有免费版本和企业版本，个人使用的vps显然使用免费版也可以。</p>
+<p>netspeeder是开源产品，之前代码在google code上，现已在github上。netspeeder的策略是重发tcp包，每个tcp包都重发一次，流量上会直接增加一倍。官网的介绍是：A program to speed up single thread download upon long delay and unstable network。对，就是这么简单粗暴，我的vps现在就部署了一份netspeeder在跑，至少在丢包率上效果很好，即使有丢包也不会影响请求和返回。</p>
+<p>锐速这个产品后知后觉已经有6 7年历史了，之前没有听过，不得不说本农孤陋寡闻了。看了下改产品的介绍，发现该产品实现了Learning－based TCP加速，即会根据用户的流量自己学习使用场景来控制tcp拥塞窗口cwnd的增加和减小，包的重发和流量控制等。不是开源的还要root权限开，你什么感觉？</p>
+<p>修改Tcp拥塞算法<br>修改系统tcp拥塞算法至Hybla, 可以通过下载自己机器的特定内核代码，自己编译生成tcp hybla的模块，然后给机器安装上。Hybla是一个针对全球链路和卫星线路场景研究开发的TCP拥塞算法，作者是Carlo Caini博士和Rosario Firrincieli博士。按理想的设计与推导实现，将吞吐率推导出于RTT无关的实现。因而可在高丢包率、高时延的网络表现出更好的吞吐量（即单位时间内的数据传输量）。</p>
+<p>传统的Linux默认算法像cubic和其他bic,NewReno,,westwood，vegas算法总是有些自己缺陷和不足。比如默认的算法，在TCP ss（slow start）阶段如果出现丢包，就会认为tcp出现拥塞（实际情况有可能因向好衰减等链路问题出现丢包），会减小cwnd的增长速率，因而减小了流量吞吐，在ca（congestion avoidance）阶段，丢包会认为拥塞而增大cwnd减小的速度。所以传统的tcp算法并不适用于所有场景，这也就是为什么我们需要hybla作为vpstcp拥塞算法的原因了。</p>
+<p>修改Linux系统配置<br>主要包括： 修改/etc/sysctl.conf里面的以下参数</p>
+<h1 id="max-open-files"><a href="#max-open-files" class="headerlink" title="max open files"></a>max open files</h1><p>fs.file-max = 51200</p>
+<h1 id="max-read-buffer"><a href="#max-read-buffer" class="headerlink" title="max read buffer"></a>max read buffer</h1><p>net.core.rmem_max = 67108864</p>
+<h1 id="max-write-buffer"><a href="#max-write-buffer" class="headerlink" title="max write buffer"></a>max write buffer</h1><p>net.core.wmem_max = 67108864</p>
+<h1 id="default-read-buffer"><a href="#default-read-buffer" class="headerlink" title="default read buffer"></a>default read buffer</h1><p>net.core.rmem_default = 65536</p>
+<h1 id="default-write-buffer"><a href="#default-write-buffer" class="headerlink" title="default write buffer"></a>default write buffer</h1><p>net.core.wmem_default = 65536</p>
+<h1 id="max-processor-input-queue"><a href="#max-processor-input-queue" class="headerlink" title="max processor input queue"></a>max processor input queue</h1><p>net.core.netdev_max_backlog = 4096</p>
+<h1 id="max-backlog"><a href="#max-backlog" class="headerlink" title="max backlog"></a>max backlog</h1><p>net.core.somaxconn = 4096</p>
+<h1 id="resist-SYN-flood-attacks"><a href="#resist-SYN-flood-attacks" class="headerlink" title="resist SYN flood attacks"></a>resist SYN flood attacks</h1><p>net.ipv4.tcp_syncookies = 1</p>
+<h1 id="reuse-timewait-sockets-when-safe"><a href="#reuse-timewait-sockets-when-safe" class="headerlink" title="reuse timewait sockets when safe"></a>reuse timewait sockets when safe</h1><p>net.ipv4.tcp_tw_reuse = 1</p>
+<h1 id="turn-off-fast-timewait-sockets-recycling"><a href="#turn-off-fast-timewait-sockets-recycling" class="headerlink" title="turn off fast timewait sockets recycling"></a>turn off fast timewait sockets recycling</h1><p>net.ipv4.tcp_tw_recycle = 0</p>
+<h1 id="short-FIN-timeout"><a href="#short-FIN-timeout" class="headerlink" title="short FIN timeout"></a>short FIN timeout</h1><p>net.ipv4.tcp_fin_timeout = 30</p>
+<h1 id="short-keepalive-time"><a href="#short-keepalive-time" class="headerlink" title="short keepalive time"></a>short keepalive time</h1><p>net.ipv4.tcp_keepalive_time = 1200</p>
+<h1 id="outbound-port-range"><a href="#outbound-port-range" class="headerlink" title="outbound port range"></a>outbound port range</h1><p>net.ipv4.ip_local_port_range = 10000 65000</p>
+<h1 id="max-SYN-backlog"><a href="#max-SYN-backlog" class="headerlink" title="max SYN backlog"></a>max SYN backlog</h1><p>net.ipv4.tcp_max_syn_backlog = 4096</p>
+<h1 id="max-timewait-sockets-held-by-system-simultaneously"><a href="#max-timewait-sockets-held-by-system-simultaneously" class="headerlink" title="max timewait sockets held by system simultaneously"></a>max timewait sockets held by system simultaneously</h1><p>net.ipv4.tcp_max_tw_buckets = 5000</p>
+<h1 id="turn-on-TCP-Fast-Open-on-both-client-and-server-side"><a href="#turn-on-TCP-Fast-Open-on-both-client-and-server-side" class="headerlink" title="turn on TCP Fast Open on both client and server side"></a>turn on TCP Fast Open on both client and server side</h1><p>net.ipv4.tcp_fastopen = 3</p>
+<h1 id="TCP-receive-buffer"><a href="#TCP-receive-buffer" class="headerlink" title="TCP receive buffer"></a>TCP receive buffer</h1><p>net.ipv4.tcp_rmem = 4096 87380 67108864</p>
+<h1 id="TCP-write-buffer"><a href="#TCP-write-buffer" class="headerlink" title="TCP write buffer"></a>TCP write buffer</h1><p>net.ipv4.tcp_wmem = 4096 65536 67108864</p>
+<h1 id="turn-on-path-MTU-discovery"><a href="#turn-on-path-MTU-discovery" class="headerlink" title="turn on path MTU discovery"></a>turn on path MTU discovery</h1><p>net.ipv4.tcp_mtu_probing = 1</p>
+<h1 id="for-high-latency-network"><a href="#for-high-latency-network" class="headerlink" title="for high-latency network"></a>for high-latency network</h1><p>net.ipv4.tcp_congestion_control = hybla</p>
+<p>修改／etc/security/limit.conf文件提高TCP连接数性能    </p>
+<ul>
+<li>soft nofile 51200</li>
+<li>hard nofile 51200</li>
+</ul>
+<p>关于TCP拥塞算法的一些知识<br>TCP Vegas, 通过动态的评估可用带宽来防止拥塞可能带来的丢包，但是cwnd窗口的最大增长率还是没有修改，和标准保持一致。即ss阶段根据流量增长每次增长按2的倍数，到达threshhlod大小进入ca阶段，则根据流量增长每次增加一个MSS(Maximun Segment Size)。但是该算法下，依然对长延迟RTT(Round Trip Time)，没有很好的处理。</p>
+<p>TCP-Peach, 实现了sudden start和rapid recovery用于替换传统算法的slow start和fast recovery，通过引入一些无关的tcp segment来评估有效带宽。它需要链路上的所有路由节点，在ip层实现一些优先机制，以在拥塞的时候丢弃那些无关的tcp segment。</p>
+<p>TCP Westwood, 修改了传统算法的fast recovery并改名“faster recovery”，和传统的tcp机制检测到3个重复的ACK就会不加判断的把slow start的threshold改成当前cwnd窗口的一半。Westwood会尝试选择一个与当前链路带宽更接近的slow start作为threshold(阀值)。尽管这样会让链路异常或丢包情况下更利于数据吞吐，但在长延迟RTT的情况下并没有好转。</p>
+<p>这些算法要么把链路分解成很多独立的段、要么就是对更底层的协议做了修改（tcp与udp在传输层，ip层在网络层），本质上都与tcp端到端的思想有所违背，这也会导致一些安全和隐私的问题。总的来说尽管这些优先的贡献和努力被实现了，但是对于RTT长延迟的情况的问题还没有被克服，要给出一个优秀的solution还有段路要走。</p>
+<p>Hybla的主要思想是针对tcp的拥塞窗口做修改，来达到增加数据吞吐率的目的。引入了SACK（即Selective ACK）和时间戳，在卫星链路上带来的数据增加几乎很小。另外还实现了packet spacing技术，通过避除突然传输的过程中路由节点可能产生的缓冲区溢出问题所导致的拥塞等。</p>
+<p>上面一些主要是优化具体实践和介绍的内容，本农还发现国内和国外关于tcp拥塞算法和hybla的内容其实除了人家的paper外几乎找不到什么学习资料。除了简单的介绍说是适用远程的vps线路之外，没有更详尽的介绍，这让想知道为什么的码农们好奇不已。所以本农就去翻了下tcp hybla的paper来看，但是在paper中的5，6，7公式的推导上遇到了问题，觉得不好理解，要是你看了那篇paper，而且能看明白忘请指导下。</p>
+<p>总体上来说经过一次服务器优化，能解决vps丢包和长rtt导致的页面访问慢的问题，并让你的上网更佳顺畅。关于hybla算法的学习也让我们对tcp的拥塞机制和内核模块编译都有所了了解。祝小长假愉快！</p>
+<p>TCP Hybla的Paper，<a href="http://www.mathcs.emory.edu/~cheung/Courses/558/Syllabus/Papers/TCP-Hybla.pdf" target="_blank" rel="external">http://www.mathcs.emory.edu/~cheung/Courses/558/Syllabus/Papers/TCP-Hybla.pdf</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]VPS丢包优化记/" data-id="cj0ryfub90020c6ot98rdrvx7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/[转]VPN经常掉线解决方法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/[转]c++调用蜂鸣器/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

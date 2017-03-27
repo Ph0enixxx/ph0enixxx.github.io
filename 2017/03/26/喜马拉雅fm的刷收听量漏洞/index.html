@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:喜马拉雅fm的刷收听量漏洞date:2016-01-21 10:33:42今天 在听罗辑思维的时候 ，偶然发现了喜马拉雅的一个小bug：
+
+当点击并刷新页面时，播放量发生了改动
+换了个比较冷门的fm，印证了点击一次播放量加一的判断
+右击播放按钮-&amp;gt;审查元素：
+
+均指向了这一js，分析后得到play的状态API为：
+http://www.ximalaya.com/tracks/11">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/喜马拉雅fm的刷收听量漏洞/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:喜马拉雅fm的刷收听量漏洞date:2016-01-21 10:33:42今天 在听罗辑思维的时候 ，偶然发现了喜马拉雅的一个小bug：
+
+当点击并刷新页面时，播放量发生了改动
+换了个比较冷门的fm，印证了点击一次播放量加一的判断
+右击播放按钮-&amp;gt;审查元素：
+
+均指向了这一js，分析后得到play的状态API为：
+http://www.ximalaya.com/tracks/11">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/01/21/56a0b587560bc.jpg">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/01/21/56a0b58792ceb.jpg">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/01/21/56a0b58794714.jpg">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/01/21/56a0b587956c5.jpg">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/01/21/56a0b65c69036.jpg">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/01/21/56a0b5ed5f5af.jpg">
+<meta property="og:image" content="https://ooo.0o0.ooo/2016/01/21/56a0b5ed79dfa.jpg">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:喜马拉雅fm的刷收听量漏洞date:2016-01-21 10:33:42今天 在听罗辑思维的时候 ，偶然发现了喜马拉雅的一个小bug：
+
+当点击并刷新页面时，播放量发生了改动
+换了个比较冷门的fm，印证了点击一次播放量加一的判断
+右击播放按钮-&amp;gt;审查元素：
+
+均指向了这一js，分析后得到play的状态API为：
+http://www.ximalaya.com/tracks/11">
+<meta name="twitter:image" content="https://ooo.0o0.ooo/2016/01/21/56a0b587560bc.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-喜马拉雅fm的刷收听量漏洞" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/喜马拉雅fm的刷收听量漏洞/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:喜马拉雅fm的刷收听量漏洞<br>date:2016-01-21 10:33:42<br>今天 在听罗辑思维的时候 ，偶然发现了喜马拉雅的一个小bug：</p>
+<p><img src="https://ooo.0o0.ooo/2016/01/21/56a0b587560bc.jpg" alt="922BFDD1-F794-4C66-A9EE-1343DB3D6558-300x86.jpg"><br><img src="https://ooo.0o0.ooo/2016/01/21/56a0b58792ceb.jpg" alt="FE49F2F3-1223-4EA9-A852-BBA010963E0C-300x130.jpg"></p>
+<p>当点击并刷新页面时，播放量发生了改动<br><img src="https://ooo.0o0.ooo/2016/01/21/56a0b58794714.jpg" alt="F4B500C2-620A-4F40-9C57-7A42F3022F7D-300x185.jpg"><br><img src="https://ooo.0o0.ooo/2016/01/21/56a0b587956c5.jpg" alt="27445539-18D0-4898-BB99-0C61E3E7DFE3-300x214-1.jpg"></p>
+<p>换了个比较冷门的fm，印证了点击一次播放量加一的判断</p>
+<p>右击播放按钮-&gt;审查元素：</p>
+<p><img src="https://ooo.0o0.ooo/2016/01/21/56a0b65c69036.jpg" alt="840278E8-05D6-439E-A04D-D17D453C93DD-300x92.jpg"></p>
+<p>均指向了这一js，分析后得到play的状态API为：</p>
+<p><a href="http://www.ximalaya.com/tracks/11255533（播放id）/play" target="_blank" rel="external">http://www.ximalaya.com/tracks/11255533（播放id）/play</a></p>
+<p>然而 浏览器访问api后，播放量并没有增加。</p>
+<p>于是开启Charles代理抓包，得到了访问api的正确方法：<br><img src="https://ooo.0o0.ooo/2016/01/21/56a0b5ed5f5af.jpg" alt="E7638CB1-A2B2-4A83-8AB3-55FC448BBC92.jpg"></p>
+<p><img src="https://ooo.0o0.ooo/2016/01/21/56a0b5ed79dfa.jpg" alt="DE3D72B9-66FC-4163-B3FC-FC14FDCD2A47-300x176.jpg"></p>
+<p>制出payload 完成。</p>
+<p><code>import requests as req<br>payload ={“played_secs”:0,”duration”:0}<br>shua = req.post(“<a href="http://www.ximalaya.com/tracks/11255533/play&quot;,data" target="_blank" rel="external">http://www.ximalaya.com/tracks/11255533/play&quot;,data</a> = payload)<br>print(shua.text)</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/喜马拉雅fm的刷收听量漏洞/" data-id="cj0ryfudj0044c6otuo1xyqcl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/博客迁移/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/图的深度优先遍历/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/11/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-leetcode: Pascal&#39;s Triangle" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/leetcode: Pascal's Triangle/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:leetcode: Pascal’s Triangle<br>date:2016-05-28 01:45:23<br>杨辉三角，元素等于上一行的两个『肩膀的元素之和』</p>
+<p>[</p>
+<p>[1],</p>
+<p>[1,1],</p>
+<p>   [1,2,1],</p>
+<p>  [1,3,3,1],</p>
+<p> [1,4,6,4,1]</p>
+<p>]</p>
+<pre><code>class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; generate(int numRows) {
+        vector&lt;vector&lt;int&gt; &gt; pas;
+        if(numRows == 0)
+        return pas;
+        pas.push_back({1});
+        if(numRows == 1)
+            return pas;
+        pas.push_back({1,1});
+        for(int i=2;i&lt;numRows;i++)
+        {
+            vector&lt;int&gt; t;
+            pas.push_back(t);
+            pas[i].push_back(1);
+            for(int j=1;j&lt;pas[i-1].size();j++)
+            {
+            pas[i].push_back(pas[i-1][j-1]+pas[i-1][j]);
+            }
+            pas[i].push_back(1);
+        }
+        return pas;
+    }
+};
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/leetcode: Pascal's Triangle/" data-id="cj0ryfuc1002sc6otoelnu7rh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leetcode:Maximum Depth of Binary Tree" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/leetcode:Maximum Depth of Binary Tree/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:leetcode:Maximum Depth of Binary Tree<br>date:2016-05-29 05:45:48<br>    /**</p>
+<pre><code> * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int cnt;
+    int maxDepth(TreeNode* root) {
+        if(NULL == root)
+            return 0;
+        cnt = 0;
+        qianXuMengBi(root);
+        return cnt;
+    }
+    void qianXuMengBi(TreeNode *root,int depth=1)
+    {
+        if(!root-&gt;left &amp;&amp; !root-&gt;right)
+        {
+            cnt = max(cnt,depth);
+            return;
+        }
+        if(root-&gt;left)
+            qianXuMengBi(root-&gt;left,depth+1);
+        if(root-&gt;right)
+            qianXuMengBi(root-&gt;right,depth+1);
+
+    }
+};
+</code></pre><p>遍历二叉树</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/leetcode:Maximum Depth of Binary Tree/" data-id="cj0ryfuc2002tc6otex13yxae" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leetcode:Merge Sorted Array" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/leetcode:Merge Sorted Array/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:leetcode:Merge Sorted Array<br>date:2016-05-31 10:52:35<br>    class Solution {<br>    public:<br>        void merge(vector<int>&amp; nums1, int m, vector<int>&amp; nums2, int n) {<br>           nums1.resize(m+n);<br>           for(int i=m;i&lt;n+m;i++)<br>           {<br>               nums1[i] = nums2[i-m];<br>           }<br>           sort(nums1.begin(),nums1.end());<br>        }<br>    };</int></int></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/leetcode:Merge Sorted Array/" data-id="cj0ryfuc2002uc6ot69av2g9x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leetcode:Missing Number" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/leetcode:Missing Number/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:leetcode:Missing Number<br>date:2016-05-29 04:20:03<br>    class Solution {<br>    public:<br>        int missingNumber(vector<int>&amp; nums) {<br>            map<int,bool> numMap;<br>            for(int i=0;i&lt;nums.size();i++)<br>            {<br>                numMap[nums[i]] = true;<br>            }<br>            int i;<br>            auto _max = max_element(nums.begin(),nums.end());<br>            for(i=0;i&lt;=*_max+1;i++)<br>            {<br>                if(numMap[i] == false)<br>                    return i;<br>            }<br>            return i;<br>        }<br>    };</int,bool></int></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/leetcode:Missing Number/" data-id="cj0ryfuc3002vc6otofmvacgu" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leetcode:Plus One" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/leetcode:Plus One/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:leetcode:Plus One<br>date:2016-05-28 01:35:56<br>    class Solution {<br>    public:<br>        vector<int> plusOne(vector<int>&amp; digits) {<br>            digits[digits.size()-1]++;<br>            for(int i(digits.size()-1);i&gt;=1;i–)<br>            {<br>                if(digits[i] &gt;= 10)<br>                {<br>                    digits[i] -= 10;<br>                    digits[i-1]++;<br>                }<br>            }<br>            if(digits[0]<10) return="" digits;="" digits[0]-="10;" vector<int=""> t;<br>            t.push_back(1);<br>            t.insert(t.end(),digits.begin(),digits.end());<br>            return t;<br>        }<br>    };</10)></int></int></p>
+<p>原理很简单，将每位如果大于10就进位，并且考虑最高位是否进位的两种情况。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/leetcode:Plus One/" data-id="cj0ryfuc5002wc6otjkxiawyw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leetcode:Reverse Vowels of a String" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/leetcode:Reverse Vowels of a String/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:leetcode:Reverse Vowels of a String<br>date:2016-05-15 04:15:41<br>翻转字符串中的元音</p>
+<pre><code>class Solution {
+public:
+    string reverseVowels(string s) {
+        //扫描一遍记录元音位置 下次交换位置
+        vector&lt;long&gt; vec;
+        size_t len = s.size();
+        for(auto x=0;x&lt;len;x++)
+        {
+            if(s[x]==&apos;a&apos;||s[x]==&apos;e&apos;||s[x]==&apos;i&apos;||s[x]==&apos;o&apos;||s[x]==&apos;u&apos;||s[x]==&apos;A&apos;||s[x]==&apos;E&apos;||s[x]==&apos;I&apos;||s[x]==&apos;O&apos;||s[x]==&apos;U&apos;)
+                vec.push_back(x);
+        }
+        len = vec.size();
+        for(auto x=0;x&lt;len/2;x++)
+        {
+            swap(s[vec[x]],s[vec[len-x-1]]);
+        }
+        return s;
+    }
+};
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/leetcode:Reverse Vowels of a String/" data-id="cj0ryfuc6002xc6ot3m6p49k4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leetcode:Symmetric Tree" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/leetcode:Symmetric Tree/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:leetcode:Symmetric Tree<br>date:2016-05-29 05:54:51<br>    /**</p>
+<pre><code> * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if(root == NULL)
+            return true;
+        return judge(root-&gt;left,root-&gt;right);
+    }
+    bool judge(TreeNode* a,TreeNode* b)
+    {
+        if(!a &amp;&amp; !b)
+            return true;
+        if(!a || !b)
+            return false;
+        if(a-&gt;val != b-&gt;val)
+            return false;
+        bool con1 = judge(a-&gt;left,b-&gt;right);
+        bool con2 = judge(a-&gt;right,b-&gt;left);
+        return con1&amp;&amp;con2;
+    }
+};
+</code></pre><p>判断二叉树是否为镜像，用递归遍历来判断。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/leetcode:Symmetric Tree/" data-id="cj0ryfuc6002yc6ot5aagt9cm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leetcode:回文数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/leetcode:回文数/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:leetcode:回文数<br>date:2016-07-09 08:48:52<br>    class Solution {<br>    public:<br>        bool isPalindrome(int x) {<br>            if(x &lt; 0)<br>                return false;<br>            if(x/10 == 0)<br>                return true;</p>
+<pre><code>        return isP(toString(x));
+    }
+    string toString(int x)
+    {
+        string str(&quot;&quot;);
+        while(x)
+        {
+            str.push_back(x%10 + &apos;0&apos;);
+            x/=10;
+        }
+        return str;
+    }
+    bool isP(string str)
+    {
+        int p(0);
+        int q(str.size()-1);
+        while(p != q &amp;&amp; q&gt;=0 &amp;&amp; p&lt;=str.size()-1)
+        {
+            if(str[p] != str[q])
+                return false;
+            p++;
+            q--;
+        }
+        return true;
+    }
+};
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/leetcode:回文数/" data-id="cj0ryfuc7002zc6otjncdqvch" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leetcode:reverse string" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/leetcode:reverse string/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:leetcode:reverse string<br>date:2016-05-15 04:03:46<br>    class Solution {<br>    public:<br>        string reverseString(string s) {<br>            size_t length = s.size();<br>            for(int i=0;i&lt;length/2;i++)<br>            {<br>                swap(s[i],s[length-i-1]);<br>            }<br>            return s;<br>        }</p>
+<pre><code>};
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/leetcode:reverse string/" data-id="cj0ryfuc80030c6otohl5ywyo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-leetcode:Two Sum" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/leetcode:Two Sum/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:leetcode:Two Sum<br>date:2016-05-17 12:33:07<br>    class Solution {<br>    public:<br>        vector<int> twoSum(vector<int>&amp; nums, int target) {<br>            for(int i=0;i<nums.size();i++) {="" for(int="" j="i+1;j<nums.size();j++)" if(nums[i]="" +="" nums[j]="=" target)="" vector<int=""> t = {i,j};<br>                        return t;<br>                    }<br>                }<br>            }<br>            vector<int> tt;<br>            return tt;<br>        }<br>    };</int></nums.size();i++)></int></int></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/leetcode:Two Sum/" data-id="cj0ryfuc80031c6ototpn3sfo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

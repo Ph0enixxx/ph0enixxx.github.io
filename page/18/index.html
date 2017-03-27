@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/18/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-筛法求素数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/筛法求素数/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:筛法求素数<br>date:2016-02-14 04:26:44<br>    <strong>MAX</strong> = 1000<br>    value = [x for x in range(2,<strong>MAX</strong>+1)]<br>    for k,v in enumerate(value):<br>        if v == 0 or k &lt; 2:<br>            continue<br>        tmp = k**2<br>        while tmp &lt; <strong>MAX</strong>-1:<br>            if tmp &gt;= <strong>MAX</strong>:<br>                continue<br>            value[tmp] = 0<br>            tmp += k</p>
+<pre><code>for k,v in enumerate(value):
+    if v != 0 and k &gt;= 2:
+        print(k,end=&quot; &quot;)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/筛法求素数/" data-id="cj0ryfudx004qc6otbsv5pmod" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-解决matplotlib闪退的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/解决matplotlib闪退的问题/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:解决matplotlib闪退的问题<br>date:2016-10-03 05:50:20<br>今天在用matplotlib画图时，发现画完后程序直接退了，并没有显示。<br>搜索资料发现这个和c语言黑框闪退是一样的，在后面加一个raw_input()（py2）或者input()（py3）就行了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/解决matplotlib闪退的问题/" data-id="cj0ryfudx004rc6otfelq834l" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-重置OnlineJudge密码" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/重置OnlineJudge密码/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:重置OnlineJudge密码<br>date:2016-01-22 15:06:38<br>今天oj的备用服务器启用时，管理后台的密码找不到了，于是，我开始了一场长达三十分钟的重置密码之路。</p>
+<pre><code>mysql -u root -p jol
+select * from jol where user_id=&apos;admin&apos;
+</code></pre><p>查出密码是一串不知道什么鬼的字符串</p>
+<pre><code>Er4ucNhYsm+28SQSNkS0a5mEqdZjMmMx
+</code></pre><p>进入login.php查看加密方式，一路追到include/my_function.php 的pwCheck函数：</p>
+<pre><code>function pwCheck($password,$saved)
+{
+    if (isOldPW($saved)){
+            $mpw = md5($password);
+            if ($mpw==$saved) return True;
+            else return False;
+    }
+    $svd=base64_decode($saved);
+    $salt=substr($svd,20);
+    $hash = base64_encode( sha1(md5($password) . $salt, true) . $salt );
+    if (strcmp($hash,$saved)==0) return True;
+    else return False;
+}
+</code></pre><p>饶了半天绕晕了 直接改代码爆密码：</p>
+<pre><code>function pwCheck($password,$saved)
+{
+    if (isOldPW($saved)){
+            $mpw = md5($password);
+            if ($mpw==$saved) return True;
+            else return False;
+    }
+    $svd=base64_decode($saved);
+    $salt=substr($svd,20);
+    $hash = base64_encode( sha1(md5($password) . $salt, true) . $salt );
+    if (strcmp($hash,$saved)==0) return True;
+    else
+    {
+            echo $hash;
+    }
+    //return False;
+}
+</code></pre><p>把得到的密码update成自己喜欢的 finfish~</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/重置OnlineJudge密码/" data-id="cj0ryfudy004sc6othdtewx2k" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/17/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

