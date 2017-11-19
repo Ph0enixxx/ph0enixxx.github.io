@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-[整理]各种各样的WebAPI接口" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[整理]各种各样的WebAPI接口/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[整理]各种各样的WebAPI接口<br>date:2016-01-25 11:33:34<br>不定期更新，整理自网络</p>
+<p><a href="https://link.zhihu.com/?target=https%3A//github.com/bxbxbai/ZhuanLan" target="_blank" rel="external">https://link.zhihu.com/?target=https%3A//github.com/bxbxbai/ZhuanLan</a> 知乎专栏API</p>
+<p><a href="http://www.oschina.net/code/snippet_852503_22713" target="_blank" rel="external">http://www.oschina.net/code/snippet_852503_22713</a> 12306查询API</p>
+<p><a href="http://www.webxml.com.cn" target="_blank" rel="external">http://www.webxml.com.cn</a> </p>
+<p><a href="https://developer.github.com/" target="_blank" rel="external">https://developer.github.com/</a> github</p>
+<p><a href="http://free.juhe.cn" target="_blank" rel="external">http://free.juhe.cn</a> 聚合数据</p>
+<p><a href="http://apistore.baidu.com/" target="_blank" rel="external">http://apistore.baidu.com/</a> APIStore</p>
+<p><a href="https://www.showapi.com/" target="_blank" rel="external">https://www.showapi.com/</a> 易源</p>
+<p><a href="http://www.tuling123.com/" target="_blank" rel="external">http://www.tuling123.com/</a> 图灵API</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[整理]各种各样的WebAPI接口/" data-id="cj0ryfuar001oc6otqgmsvya0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Zmap 常用参数：" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Zmap 常用参数：/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Zmap 常用参数：<br>date:2016-01-22 15:34:21</p>
+<p>###常用参数：</p>
+<p>-p 要扫描的TCP 端口 (ex. -p 443)</p>
+<p>-o 将结果写入文件 (ex. -o ./result.txt)</p>
+<p>-b 黑名单，输入黑名单时将不会扫描这些ip</p>
+<p>###搜索选项：</p>
+<p>-n 扫描目标ip数量上限，这个可以是一个数字或者一个百分比</p>
+<p>-N 扫描结果上限，当获得这个数量的目标后zmap将退出</p>
+<p>-t 设置发送包的长度</p>
+<p>-r 设置每秒发送的速度</p>
+<p>-B 设置带宽 (ex. -B 10M)</p>
+<p>-c 设定接收包的超时时间</p>
+<p>-e 种子数量</p>
+<p>-T 发包线程数，缺省值为1</p>
+<p>-P 发送给每个探测ip的包数量</p>
+<p>-d debug模式，将每个包打印出来</p>
+<p>###网络选项：</p>
+<p>-s 扫描端口列表</p>
+<p>-S 扫描ip地址列表</p>
+<p>-G 设置MAC地址</p>
+<p>-i 设置网卡</p>
+<p>###探测选项<br>–list-probe-modules 列出探测模块</p>
+<p>-M, –probe-module=name 选择探测模块</p>
+<p>–probe-args=args 探测模块的参数</p>
+<p>–list-output-fields 列出探测模块可以输出的字段</p>
+<p>###输出选项</p>
+<p>–list-output-modules 列出可用的输出模块</p>
+<p>-O 选择输出模块和参数</p>
+<p>-f 逗号分隔的方式列出输出模块的字段</p>
+<p>###额外参数</p>
+<p>-C 读取配置文件</p>
+<p>-q 安静模式</p>
+<p>-g 在扫描完成后打印扫描报告</p>
+<p>-v 扫描报告的详细程度(0-5,缺省为3)</p>
+<p>-h 打印帮助</p>
+<p>-V 打印版本</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Zmap 常用参数：/" data-id="cj0ryfuas001pc6otpjifo0ao" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-[转]C语言控制台程序光标位置与文字颜色" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]C语言控制台程序光标位置与文字颜色/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]C语言控制台程序光标位置与文字颜色<br>date:2016-09-25 07:23:46<br>Windows平台<br>控制光标定位<br>Windows环境下可以通过调用WIN32 API来实现光标定位，具体实现如下:</p>
+<p>#include <windows.h><br>void gotoxy(int x, int y) {<br>    COORD cursorPosition;<br>    cursorPosition.X = x;<br>    cursorPosition.Y = y;<br>    // COORD cursorPosition = {x, y};<br>    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cursorPosition);<br>}<br>注意：X, Y 的值都是从 0 开始的。</windows.h></p>
+<p>隐藏光标<br>有了光标定位的基础，只需要将光标定位于控制台之外的为，便可以实现隐藏光标，例如，通过上文中实现的gotoxy函数将光标定位于(-1, -1) 位置便可以实现隐藏光标。</p>
+<p>清屏<br>Windows环境下可以通过执行cls命令来实现清屏，具体实现如下：</p>
+<p>#include <windows.h><br>void clear() {<br>    system(“cls”);<br>}<br>color命令<br>在cmd命令行中执行 color /?，可以得到color命令的用法如下：</windows.h></p>
+<p>设置默认的控制台前景和背景颜色。<br>COLOR [attr]<br>    attr        指定控制台输出的颜色属性<br>颜色属性由两个十六进制数字指定 – 第一个为背景，第二个则为<br>前景。每个数字可以为以下任何值之一:</p>
+<pre><code>0 = 黑色       8 = 灰色
+1 = 蓝色       9 = 淡蓝色
+2 = 绿色       A = 淡绿色
+3 = 浅绿色     B = 淡浅绿色
+4 = 红色       C = 淡红色
+5 = 紫色       D = 淡紫色
+6 = 黄色       E = 淡黄色
+7 = 白色       F = 亮白色
+</code></pre><p>如果没有给定任何参数，该命令会将颜色还原到 CMD.EXE 启动时<br>的颜色。这个值来自当前控制台窗口、/T 命令行开关或<br>DefaultColor 注册表值。</p>
+<p>如果用相同的前景和背景颜色来执行 COLOR 命令，COLOR 命令<br>会将 ERRORLEVEL 设置为 1。</p>
+<p>例如: “COLOR fc” 在亮白色上产生亮红色<br>程序中，也可以通过 system(“color … “) 调用color命令来实现改变控制台颜色的功能。</p>
+<p>彩色输出<br>在Windows环境下，同样是通过调用WIN32 API来实现控制台程序的彩色输出。具体实现如下：</p>
+<p>#include <windows.h><br>void settextcolor(int color)<br>{<br>    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);<br>}<br>其中，color的值定义在 wincon.h 中。多个颜色值可以综合在一起使用。具体颜色定义如下:</windows.h></p>
+<p>#define FOREGROUND_BLUE    1</p>
+<p>#define FOREGROUND_GREEN    2</p>
+<p>#define FOREGROUND_RED    4</p>
+<p>#define FOREGROUND_INTENSITY    8</p>
+<p>#define BACKGROUND_BLUE    16</p>
+<p>#define BACKGROUND_GREEN    32</p>
+<p>#define BACKGROUND_RED    64</p>
+<p>#define BACKGROUND_INTENSITY    128<br>多个值综合使用示例：(本质上为多个值得或运算)</p>
+<p>SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),<br>        FOREGROUND_GREEN|FOREGROUND_RED|FOREGROUND_INTENSITY);<br>便可以在控制台将输出字符的颜色设置为黄色。</p>
+<p>Linux 平台<br>控制光标定位<br>Linux环境下，控制台会解释ANSI转义序列，转义符是ESC，ASCII码为0x1b，因此，可以通过在中断输出转义序列来实现光标的定位，具体序列如下：</p>
+<p>Esc[Line;Columnf<br>或</p>
+<p>Esc[Line;ColumnH<br>应用举例：</p>
+<p>void gotoxy(int x, int y) {<br>    printf(“%c[%d;%df”, 0x1b, y, x);<br>    // printf(“%c[%d;%dH”, 0x1b, y, x);<br>}<br>注意: 光标位置的行和列都是从 0 开始索引。</p>
+<p>转义序列列表：</p>
+<p>Esc[PnA 光标向上移动Pn行，如果光标已经处于最上方(the top line)，则忽略该转义序列。<br>Esc[PnB 光标向下移动Pn行，如果光标已经处于最下方(the buttom line)，则忽略该转义序列。<br>Esc[PnC 光标向右移动Pn行，如果光标已经处于最右处(the rightmost column)，则忽略该转义序列。<br>Esc[PnD 光标向左移动Pn行，如果光标已经处于最左处(the leftmost column)，则忽略该转义序列。<br>Esc[s 保存当前光标位置，之后可以通过恢复光标位置的转义序列回到被保存的光标位置。<br>Esc[u 恢复光标位置，将光标置于 Esc[s 序列保存的光标位置。<br>Esc[2J 清屏，将光标置于(0, 0)处(第一行第一列)。<br>Esc[K 删除从光标所在位置至当前行行末的所有字符，包括当前光标所在位置处的字符。<br>Esc[?25l 隐藏光标。<br>Esc[?25h 显示光标。<br>设置输出字符颜色<br>同样，也可以通过输出控制符来控制输出字符的颜色，用法如下：</p>
+<p>Esc[Ps;Psm 设置图形模式(Set Graphics Mode)。第一个Ps的值为前景色的值，第二个Ps的值为背景色的值。<br>背景色的颜色值范围为40~49，前景色的颜色值范围为30-39，具体颜色值如下：</p>
+<p>Color    Background    Foreground<br>black    40    30<br>red    41    31<br>green    42    32<br>yellow    43    33<br>blue    44    34<br>purple    45    35<br>deep green    46    36<br>white    47    37<br>例如，echo -e “\e[1;42m”表示将背景色设置为green，而echo -e “\e[1;32m表示将前景色设置为green.</p>
+<p>其他转义序列控制<br>Esc[0m 关闭所有属性。<br>Esc[1m 设置高亮度。<br>Esc[4m 下划线。<br>Esc[5m 闪烁。<br>Esc[7m 反显。<br>Esc[8m 消隐。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]C语言控制台程序光标位置与文字颜色/" data-id="cj0ryfuau001qc6otrqb7tbze" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-[转]DNS服务器列表" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]DNS服务器列表/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]DNS服务器列表<br>date:2016-03-15 10:40:20<br>/etc/resolvconf/resolv.conf.d# vim base</p>
+<p>如果修改DNS服务器地址就可以访问google等服务，你还等什么？使用免费DNS解析服务除了去掉了运营商的各种广告，还有个最大的好处就是不会重定向或者过滤用户所访问的地址，这样就防止了很多网站被电信、网通劫持，有利于提供访问一些国外网站的成功率 如googlecode，网友应该养成不使用默认DNS的习惯，笔者汇总了常用可靠的DNS服务器地址。</p>
+<p>1、OpenerDNS：42.120.21.30<br>该DNS是国内服务器，延迟在30ms左右，不掉包，速度非常好，该官方称使用该DNS能够无压力访问Facebook、Twitter、Google等服务，不过要使用<a href="https://加密链接。" target="_blank" rel="external">https://加密链接。</a></p>
+<p>2、114DNS，用他是因为他网官上的介绍：<br>纯净 无劫持  无需再忍受被强扭去看广告或粗俗网站之痛苦<br>服务地址为：114.114.114.114 和 114.114.115.115<br>拦截 钓鱼病毒木马网站 增强网银、证券、购物、游戏、隐私信息安全<br>服务地址为：114.114.114.119 和 114.114.115.119<br>学校或家长可选拦截 色情网站 保护少年儿童免受网络色情内容的毒害<br>服务地址为：114.114.114.110 和 114.114.115.110<br>如果有上述需求的，可以考虑下，效果还可以，延迟基本上在10ms以下，速度很好。</p>
+<p>3、V2EX DNS：199.91.73.222   178.79.131.110<br>延迟有点高，两个都在250ms以上，偶尔掉包，但这个用起来还是可以的。</p>
+<p>4、阿里DNS：  223.5.5.5    223.6.6.6<br>虽然阿里也没什么节操，但是延迟在25ms左右，基本不掉包，速度可以保证，如果不恶心阿的同学是可以考虑的，毕竟是国内的，访问速度可以保证的。</p>
+<p>5、Google DNS： 8.8.8.8   8.8.4.4<br>几乎从知道这个DNS之后就一直在用，延迟在50ms左右，速度还可以，就是由于众所周知的原因，掉包比较严重，我在使用的时候也会有相应的感觉，但我是可以接受的。</p>
+<p>6、OpenDNS：208.67.222.222   208.67.220.220<br>知道这个比Google还早，也是非常知名的，但延迟有点高，在180ms左右，偶尔掉包，除了延迟大点，没有什么不能接受的。</p>
+<p>7、OneDNS：112.124.47.27 114.215.126.16<br>官方说是可以屏蔽广告，加速Google等网站的访问等，我大概试了一下，效果还是有的，速度也不慢，是一个比较新的DNS，只有单节点，不过看官方应该在努力建设中，在我这里的延迟大概在30ms左右。</p>
+<p>8、OpenNIC DNS 官网：<a href="http://www.opennicproject.org/" target="_blank" rel="external">http://www.opennicproject.org/</a><br>OpenNic是一个社区化的非营利组织，主张DNS中立、免费服务、用户决议、自由开放、保护隐私、拒绝劫持。访问官网，会自动向你推荐最适合你所在区域的DNS。</p>
+<p>9、Norton（诺顿）DNS  198.153.192.50  198.153.194.50<br>资深安全厂商，安全性和稳定性有保障。</p>
+<p>10、Comodo Secure DNS（科莫多提供） 8.26.56.26   8.20.247.20<br>资深安全厂商，安全性和稳定性有保障。<br>最后，说一下最好的选择吧，如果是国内用户，没有洁癖的，可以考虑114DNS和阿里DNS，如果有洁癖，国内可以选择V2EX DNS和openerDNS，国外的可以选择很多，优选Google的，虽然延迟，但我能够接受，其他的看自己的网络情况了。<br>笔者现在主DNS用的是OpenerDNS，备用是Google DNS。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]DNS服务器列表/" data-id="cj0ryfuav001rc6otiy8ibjg0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-[转].glob _start的意义" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转].glob _start的意义/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转].glob _start的意义<br>date:2016-02-17 08:26:23<br>.globl指示告诉汇编器，_start这个符号要被链接器用到，所以要在目标文件的符号表中标记它是一个全局符号（在第 5.1 节 “目标文件”详细解释）。_start就像C程序的main函数一样特殊，是整个程序的入口，链接器在链接时会查找目标文件中的_start符号代表的地址，把它设置为整个程序的入口地址，所以每个汇编程序都要提供一个_start符号并且用.globl声明。如果一个符号没有用.globl声明，就表示这个符号不会被链接器用到。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转].glob _start的意义/" data-id="cj0ryfuaw001sc6ot8lefeikz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-[转]Emoji表情符号在MySQL数据库中的存储" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]Emoji表情符号在MySQL数据库中的存储/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]Emoji表情符号在MySQL数据库中的存储<br>date:2016-06-16 03:59:50<br>如果在移动端发布文本内容时包含了这种Emoji表情符号，通过接口传递到服务器端，服务器端再存入MySQL数据库：</p>
+<p>对gbk 字符集的数据库，写入数据库的数据，在回显时，变成 ‘口口’ 无法回显；</p>
+<p>对utf8 字符集的数据库，则根本无法写入数据库，程序直接报出异常信息<br>java.io.exception xxxxxxxx.</p>
+<p>原因分析：</p>
+<p>Emoji表情符号为4个字节的字符，而 utf8 字符集只支持1-3个字节的字符，导致无法写入数据库。</p>
+<p>解决方案：</p>
+<p>遍历输入的文本，把四字节长度的字符，修正为自定义的字符替换掉。</p>
+<p>修改MySQL数据库字符集， 把数据库字符集从utf8 修改为支持1-4 个字节字符的utf8mb4。</p>
+<p>事实上可以看出，第一种方案的工作量较大，并不可取。推荐使用第二种方案，修改数据库字符集。从MySQL 5.5.3版本开始，数据库可支持4个字节的utf8mb4 字符集，一个字符最多可以有4个字节，所以能支持更多的字符集，故能存储Emoji表情符号。从 mysql 5.5.3 之后版本基本可以无缝升级到 utf8mb4 字符集。同时，utf8mb4兼容utf8字符集，utf8 字符的编码、位置、存储在utf8mb4与utf8字符集里一样的，不会对有现有数据带来损坏。</p>
+<p>升级方案：</p>
+<p>修改数据库字符集character-set-server=utf8mb4 重启数据库生效。</p>
+<p>修改database 的字符集为 utf8mb4 alter database dbname character set utf8mb4</p>
+<p>修改表的字符集 为utf8mb4 ， alter table character set = utf8mb4</p>
+<p>附上：</p>
+<p>Emoji 全编码字符集：IOS Emoji</p>
+<p>文／亦枫（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/20740071d854" target="_blank" rel="external">http://www.jianshu.com/p/20740071d854</a><br>著作权归作者所有，转载请联系作者获得授权，并标注“简书作者”。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]Emoji表情符号在MySQL数据库中的存储/" data-id="cj0ryfuaz001tc6ot8jws22ck" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-[转]Flask使用日志记录到文件示例" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]Flask使用日志记录到文件示例/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]Flask使用日志记录到文件示例<br>date:2016-03-10 04:41:49</p>
+<p>作者: Penguin 时间: August 29, 2015 分类: 其他<br>flask的日志记录需要用到python标准库logging的支持。</p>
+<p>最简单示例：</p>
+<pre><code>from flask import Flask
+import logging
+
+app = Flask(__name__)
+
+
+@app.route(&apos;/&apos;)
+def root():
+    app.logger.info(&apos;info log&apos;)
+    app.logger.warning(&apos;warning log&apos;)
+    return &apos;hello&apos;
+
+if __name__ == &apos;__main__&apos;:
+    app.debug = True
+    handler = logging.FileHandler(&apos;flask.log&apos;)
+    app.logger.addHandler(handler)
+    app.run()
+</code></pre><p>记录到flask.log中内容为：</p>
+<p>info log<br>warning log</p>
+<p>handler = logging.FileHandler(‘flask.log’)<br>即创建一个log handler，比较常用的有FileHandler和RotatingHandler，其中FileHandler函数原型为</p>
+<pre><code>class logging.FileHandler(filename,mode=&apos;a&apos;,encoding=None,delay=False)
+app.logger.addHandler(handler)
+即将此handler加入到此app中
+
+app.logger.info(&apos;info log&apos;)
+即以INFO级别将&apos;info log&apos;写入到日志中。
+
+logging的级别主要有NOTSET、DEBUG、INFO、WARNING、ERROR和CRITICAL，挺容易理解的。
+
+高级一些的示例：
+from flask import Flask
+import logging
+
+app = Flask(__name__)
+
+
+@app.route(&apos;/&apos;)
+def root():
+    app.logger.info(&apos;info log&apos;)
+    app.logger.warning(&apos;warning log&apos;)
+    return &apos;hello&apos;
+
+if __name__ == &apos;__main__&apos;:
+    app.debug = True
+    handler = logging.FileHandler(&apos;flask.log&apos;, encoding=&apos;UTF-8&apos;)
+    handler.setLevel(logging.DEBUG)
+    logging_format = logging.Formatter(
+        &apos;%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)s - %(message)s&apos;)
+    handler.setFormatter(logging_format)
+    app.logger.addHandler(handler)
+    app.run()
+</code></pre><p>记录到flask.log中内容为：</p>
+<p>2015-08-29 10:12:48,004 - INFO - test.py - root - 9 - info log<br>2015-08-29 10:12:48,004 - WARNING - test.py - root - 10 - warning log</p>
+<p>handler.setLevel(logging.DEBUG)<br>即设置日志记录最低级别为DEBUG，低于DEBUG级别的日志记录会被忽略，不设置setLevel()则默认为NOTSET级别。</p>
+<p>logging_format = logging.Formatter(<br>    ‘%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)s - %(message)s’)<br>handler.setFormatter(logging_format)<br>这两句用来控制日志记录格式，效果如上述记录内容；在Python参考文档中有更详细的说明，这里简单介绍一下：</p>
+<p>%(asctime)s 即日志记录时间，精确到毫秒</p>
+<p>%(levelname)s 即此条日志级别</p>
+<p>%(filename)s 即触发日志记录的python文件名</p>
+<p>%(funcName)s 即触发日志记录的函数名</p>
+<p>%(lineno)s 即触发日志记录代码的行号</p>
+<p>%(message)s 这项即调用如app.logger.info(‘info log’)中的参数，即message</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]Flask使用日志记录到文件示例/" data-id="cj0ryfub3001uc6ot13z4xpcl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-[转]Python处理HTML转义字符" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]Python处理HTML转义字符/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]Python处理HTML转义字符<br>date:2016-03-30 03:20:37<br>转自：<a href="http://www.cnblogs.com/xuxn/archive/2011/08/12/parse-html-escape-characters-in-python.html" target="_blank" rel="external">http://www.cnblogs.com/xuxn/archive/2011/08/12/parse-html-escape-characters-in-python.html</a></p>
+<pre><code>抓网页数据经常遇到例如&amp;gt;或者&amp;nbsp;这种HTML转义符，抓到字符串里很是烦人。
+
+比方说一个从网页中抓到的字符串
+
+html = &apos;&amp;lt;abc&amp;gt;&apos;
+用Python可以这样处理：
+
+import HTMLParser
+html_parser = HTMLParser.HTMLParser()
+txt = html_parser.unescape(html) #这样就得到了txt = &apos;&lt;abc&gt;&apos;
+如果还想转回去，可以这样：
+
+import cgi
+html = cgi.escape(txt) # 这样又回到了 html = &apos;&amp;lt;abc&amp;gt&apos;
+ 来回转的功能还分了两个模块实现，挺奇怪。没找到更优美的方法，欢迎补充哈~
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]Python处理HTML转义字符/" data-id="cj0ryfub5001vc6otit0wg21p" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-[转]Mysql数据库 ENUM类型和SET类型简述" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]Mysql数据库 ENUM类型和SET类型简述/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]Mysql数据库 ENUM类型和SET类型简述<br>date:2016-06-11 07:06:05<br>MYSQL中 ENUM 类型的详细解释</p>
+<p>ENUM类型ENUM 是一个字符串对象，其值通常选自一个允许值列表中，该列表在表创建时的列规格说明中被明确地列举。</p>
+<p>在下列某些情况下，值也可以是空串(“”) 或 NULL：</p>
+<p>如果将一个无效值插入一个 ENUM (即，一个不在允许值列表中的字符串)，空字符串将作为一个特殊的错误值被插入。事实上，这个字符串有别于一个”普通的”空字符串，因为这个字符串有个数字索引值为 0。稍后有更详细描述。<br>如果一个 ENUM 被声明为 NULL，NULL 也是该列的一个合法值，并且该列的缺省值也将为 NULL 。如果一个 ENUM 被声明为 NOT NULL，该列的缺省值将是该列表所允许值的第一个成员。<br>每个枚举值均有一个索引值：</p>
+<p>在列说明中列表值所允许的成员值被从 1 开始编号。<br>空字符串错误值的索引值为 0。这就意味着，你可以使用下面所示的 SELECT 语句找出被赋于无效 ENUM值的记录行。<br>mysql&gt; SELECT * FROM tbl_name WHERE enum_col=0;<br>NULL 值的索引值为 NULL。<br>例如，指定为 ENUM(“one”, “two”, “three”) 的一个列，可以有下面所显示的任一值。每个值的索引值也如下所示：</p>
+<p>值    索引值<br>NULL    NULL<br>“”    0<br>“one”    1<br>“two”    2<br>“three”    3<br>换个枚举最大可以有 65535 个成员值。</p>
+<p>从 MySQL 3.23.51 开始，当表被创建时，ENUM 值尾部的空格将会自动删除。</p>
+<p>当为一个 ENUM 列赋值时，字母的大小写是无关紧要的。然而，以后从列中检索出来的值的大小写却是匹配于创建表时所指定的允许值。</p>
+<p>如果在一个数字语境中检索一个ENUM，列值的索引值将被返回。例如，你可以像这样使用数字值检索一个 ENUM 列：</p>
+<p>mysql&gt; SELECT enum_col+0 FROM tbl_name;<br>如果将一个数字存储到一个 ENUM 中，数字被当作为一个索引值，并且存储的值是该索引值所对应的枚举成员。(但是，这在 LOAD DATA 将不能工作，因为它视所有的输入均为字符串。) 在一个 ENUM 字符串中存储数字是不明智的，因为它可能会打乱思维。</p>
+<p>ENUM 值依照列规格说明中的列表顺序进行排序。(换句话说，ENUM 值依照它们的索引号排序。)举例来说，对于 ENUM(“a”, “b”) “a” 排在 “b” 后，但是对于 ENUM(“b”, “a”) ， “b” 却排在 “a” 之前。空字符串排在非空字符串前，NULL 值排在其它所有的枚举值前。为了防止意想不到的结果，建议依照字母的顺序定义 ENUM 列表。也可以通过使用 GROUP BY CONCAT(col) 来确定该以字母顺序排序而不是以索引值。</p>
+<p>在插入或者更新ENUM字段的时候，可以使用两种方式</p>
+<p>假设  字段 enum_clo 为enum类型    ENUM(‘php‘,’siyuantlw’,’chengxusheji‘)</p>
+<p>set  enum_clo = 2   或者  set enum_clo = ‘siyuantlw’  两者产生的效果是一样的。</p>
+<p>如果希望得到一个 ENUM 列的所有可能值，可以使用 SHOW COLUMNS FROM table_name LIKE enum_colum</p>
+<p>ENUM和SET列提供了定义仅能包含给定值集合的列的有效方式。但是，从MySQL 5.0.2起，ENUM和SET不是实际约束。其原因与不重视NOT NULL的原因一样。</p>
+<p>ENUM列总有1个默认值。如果未指定默认值，对于包含NULL的列，默认值为NULL；否则，第1个枚举值将被当作默认值。</p>
+<p>如果在ENUM列中插入了不正确的值，或者，如果使用IGNORE将值强制插入了ENUM列，会将其设置为保留的枚举值0，对于字符串情形，将显示为空字符串。</p>
+<p>如果在SET列中插入了不正确值，该值将被忽略。例如，如果列能包含值“a”、“b”和“c”，并赋值“a,x,b,y”，结果为“a,b”。</p>
+<p>从5.0.2开始，可以对服务器进行配置，以使用严格的SQL模式。</p>
+<p>启用严格模式后，ENUM或SET列的定义可作为对输入至列的值的约束。如果值不满足下述条件，将出现错误：</p>
+<p>· ENUM值必须是在列定义中给出的值之一，或内部的数字等同物。该值不能是错误值（即，0或空字符串）。对于定义为ENUM(‘a’,’b’,’c’)的列，诸如’’、’d’和’ax’等，均是非法的，并将被拒。</p>
+<p>· SET值必须是空字符串，或由1个或多个在列定义中给出的且用逗号隔开的值组成。 对于定义为SET(‘a’,’b’,’c’)的列，诸如’d’和’a,b,c,d’等，均是非法的，并将被拒。</p>
+<p>如果使用了INSERT IGNORE或UPDATE IGNORE，在严格模式下，可抑制无效值导致的错误。在这种情况下，将生成警告而不是错误。对于ENUM，值将作为错误成员(0)插入。对于SET，会将给定值插入，但无效的子字符串将被删除。例如，’a,x,b,y’的结果是’a,b’，就像前面介绍的那样。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]Mysql数据库 ENUM类型和SET类型简述/" data-id="cj0ryfub6001wc6otvgbq4iev" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-[转]Python实现接口" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]Python实现接口/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]Python实现接口<br>date:2017-02-06 04:30:07</p>
+<pre><code>class Interface:
+    def f1(self):
+        raise Exception(&quot;子类需实现该方法&quot;)
+
+class Sth(Interface):
+    pass
+
+a = Sth()
+a.f1()
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]Python实现接口/" data-id="cj0ryfub7001xc6ot8y6l0c6s" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

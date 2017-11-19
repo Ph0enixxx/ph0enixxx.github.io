@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:Whoosh 2.5.6 文档date:2016-01-22 15:37:33
+原地址：http://pythonhosted.org/Whoosh/index.html
+译者：Radish
+Whoosh的作者是Matt Chaput。你可以在 Whoosh Bitbucket页面上看到很多杰出的问题也可以通过Whoosh邮件列表来获得帮助.
+=====================">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/Whoosh 2.5.6 文档/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:Whoosh 2.5.6 文档date:2016-01-22 15:37:33
+原地址：http://pythonhosted.org/Whoosh/index.html
+译者：Radish
+Whoosh的作者是Matt Chaput。你可以在 Whoosh Bitbucket页面上看到很多杰出的问题也可以通过Whoosh邮件列表来获得帮助.
+=====================">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:Whoosh 2.5.6 文档date:2016-01-22 15:37:33
+原地址：http://pythonhosted.org/Whoosh/index.html
+译者：Radish
+Whoosh的作者是Matt Chaput。你可以在 Whoosh Bitbucket页面上看到很多杰出的问题也可以通过Whoosh邮件列表来获得帮助.
+=====================">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Whoosh 2.5.6 文档" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Whoosh 2.5.6 文档/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Whoosh 2.5.6 文档<br>date:2016-01-22 15:37:33</p>
+<p>原地址：<a href="http://pythonhosted.org/Whoosh/index.html" target="_blank" rel="external">http://pythonhosted.org/Whoosh/index.html</a></p>
+<p>译者：Radish</p>
+<p><strong>Whoosh</strong>的作者是Matt Chaput。你可以在 Whoosh <a href="http://bitbucket.org/mchaput/whoosh" target="_blank" rel="external">Bitbucket页面</a>上看到很多杰出的问题也可以通过<a href="http://groups.google.com/group/whoosh" target="_blank" rel="external">Whoosh邮件列表</a>来获得帮助.</p>
+<p>===========================</p>
+<p>##快速开始</p>
+<p>Whoosh是一个包含用来创建索引和检索的类和函数库。它能够让你开发迎合你自己内容的搜索引擎。举个栗子，如果你创建了一个博客软件，你可以用Whoosh来添加一个搜索用户和博客内容的功能。</p>
+<p>###一个简单的实例：</p>
+<pre><code>&gt;&gt;&gt; from whoosh.index import create_in
+&gt;&gt;&gt; from whoosh.fields import *
+&gt;&gt;&gt; schema = Schema(title=TEXT(stored=True),     path=ID(stored=True), content=TEXT)
+&gt;&gt;&gt; ix = create_in(&quot;indexdir&quot;, schema)
+&gt;&gt;&gt; writer = ix.writer()
+&gt;&gt;&gt; writer.add_document(title=u&quot;First document&quot;, path=u&quot;/a&quot;,
+...                     content=u&quot;This is the first document we&apos;ve added!&quot;)
+&gt;&gt;&gt; writer.add_document(title=u&quot;Second document&quot;, path=u&quot;/b&quot;,
+...                     content=u&quot;The second one is even more interesting!&quot;)
+&gt;&gt;&gt; writer.commit()
+&gt;&gt;&gt; from whoosh.qparser import QueryParser
+&gt;&gt;&gt; with ix.searcher() as searcher:
+...     query = QueryParser(&quot;content&quot;, ix.schema).parse(&quot;first&quot;)
+...     results = searcher.search(query)
+...     results[0]
+...
+{&quot;title&quot;: u&quot;First document&quot;, &quot;path&quot;: u&quot;/a&quot;}
+</code></pre><p>###索引对象：<br>如果想使用Whoosh，你需要一个索引对象。当你第一次使用它时，你必须定义索引。这份索引包含了你的关键词列表。字段是每个在索引中的文档信息，类似于文章的标题和内容。一个字段可以被索引（能够被搜索到）或者被存储（在被搜索到时作为内容返回）。</p>
+<p>本实例中的索引包含两个字段：“title”和“content”</p>
+<pre><code>from whoosh.fields import Schema,TEXT
+schema = Schema(title=TEXT,content=TEXT)
+</code></pre><p>你只要做一次索引，在你创建它的时候。<br>当你创建索引对象，你使用关键词参数映射的字段类型。索引和类型列表会定义什么是可以被搜索的。Whoosh预定义了一些非常有用的类型，这让你可以非常简单的创建自己的程序。</p>
+<p><em>whoosh.fields.ID</em></p>
+<p>这种类型的索引是独立的（它不能被拆开成单独的字）通常用整个值来作为标识。</p>
+<p><em>whoosh.fields.STORED</em></p>
+<p>这种字段是用文档来存储的，但是不会被索引。这种字段类型不能被索引也不能搜到，它的作用是给用户展示你的搜索结果信息。</p>
+<p><em>whoosh.fields.TEXT</em></p>
+<p>这种类型是作为文本的主体。它索引（也可选择的存储）了文本和条件位置来解析搜索语句。</p>
+<p><em>whoosh.fields.NUMERIC</em></p>
+<p>这种类型是数字，你可以存储整数或者浮点数。</p>
+<p><em>whoosh.fields.BOOLEAN</em></p>
+<p>这种类型是为了存储布尔（真/假）值。</p>
+<p><em>whoosh.fields.DATETIME</em></p>
+<p>这种类型是为了时间对象。请看<a href="http://pythonhosted.org/Whoosh/dates.html" target="_blank" rel="external">索引和解析时间</a>来获取更多的信息。</p>
+<p><em>whoosh.fields.NGRAM and whoosh.fields.NGRAMWORDS</em></p>
+<p>？？？？？？？</p>
+<p>一旦你有了索引列表，你可以用<code>create_in</code>函数创建一个索引：</p>
+<pre><code>import os.path
+from whoosh.index import create_in
+if not os.path.exists(&quot;index&quot;):
+os.mkdir(&quot;index&quot;)
+ix = create_in(&quot;index&quot;, schema)
+</code></pre><p>当你创建完一个列表。你能够通过<code>open_dir</code>函数来打开它：<br>    from whoosh.index import open_dir<br>    ix = open_dir(“index”)</p>
+<p>##IndexWriter对象</p>
+<p>OK，我们以及创建了一个Index对象，现在我们可以开始添加文档了。Index对象中的writer()方法将返回你添加文档的IndexWriter对象。<code>add_document(**kwargs)</code>方法接收字段内容被索引的值：</p>
+<pre><code>writer = ix.writer()
+writer.add_document(title=u&quot;My document&quot;, content=u&quot;This is my document!&quot;,
+                path=u&quot;/a&quot;, tags=u&quot;first short&quot;, icon=u&quot;/icons/star.png&quot;)
+writer.add_document(title=u&quot;Second try&quot;, content=u&quot;This is the second example.&quot;,
+                path=u&quot;/b&quot;, tags=u&quot;second short&quot;, icon=u&quot;/icons/sheep.png&quot;)
+writer.add_document(title=u&quot;Third time&apos;s the charm&quot;, content=u&quot;Examples are many.&quot;,
+                path=u&quot;/c&quot;, tags=u&quot;short&quot;, icon=u&quot;/icons/book.png&quot;)
+writer.commit()
+</code></pre><blockquote>
+<p>你没必要为每个字段都添加值，在通过字段查找出文档后Whoosh就不在乎之后的事情了。</p>
+</blockquote>
+<p>在IndexWriter中调用<code>commit()</code>来保存你在索引中添加的文档:</p>
+<pre><code>writer.commit()
+</code></pre><p>###搜索对象：<br>为了开始搜索索引，我们需要一个搜索对象：</p>
+<pre><code>searcher = ix.seacher()
+</code></pre><p>你通常会想去打开<code>seacher</code>用with声明所以<code>seacher</code>是可以在你用完之后自动关闭的。</p>
+<pre><code>with ix.searcher() as searcher:
+</code></pre><p>这当然与下面的代码功能相等：</p>
+<pre><code>try:
+    searcher = ix.searcher()
+...
+finally:
+        searcher.close()
+</code></pre><p>这个搜索器的search()方法取用了一个查询对象。你可以直接构造这个查询对象或者用一个查询解析器来解析提交查询的字符串。</p>
+<p>举个栗子，这个查询能够将在”content”中包括”apple”和”bear”的文档找出来：</p>
+<pre><code>from whoosh.query import *
+myquery = And([Term(&quot;content&quot;, u&quot;apple&quot;), Term(&quot;content&quot;, &quot;bear&quot;)])
+</code></pre><p>为了解析搜索的字符串，你可以用在qparser模块中的缺省的查询解析器。QueryParser构造函数的第一个参数是主要的搜索字段。这通常是”body text”字段。第二个可选的参数是一个告诉Whoosh如何解析字段的索引列表：</p>
+<pre><code>from whoosh.qparser import QueryParser
+parser = QueryParser(&quot;content&quot;, ix.schema)
+myquery = parser.parse(querystring)    
+</code></pre><p>一旦你获得了一个搜索器和一个查询的对象，你可以用搜索器的search()方法去运行和获得结果对象。</p>
+<pre><code>&gt;&gt;&gt; results = searcher.search(myquery)
+&gt;&gt;&gt; print(len(results))
+1
+&gt;&gt;&gt; print(results[0])
+{&quot;title&quot;: &quot;Second try&quot;, &quot;path&quot;: &quot;/b&quot;, &quot;icon&quot;: &quot;/icons/sheep.png&quot;}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Whoosh 2.5.6 文档/" data-id="cj0ryfuaq001nc6ot2nnwgvbe" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/ZeroNet搭建全球网站/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/[整理]各种各样的WebAPI接口/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

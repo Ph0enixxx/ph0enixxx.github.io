@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:[转]Mysql数据库 ENUM类型和SET类型简述date:2016-06-11 07:06:05MYSQL中 ENUM 类型的详细解释
+ENUM类型ENUM 是一个字符串对象，其值通常选自一个允许值列表中，该列表在表创建时的列规格说明中被明确地列举。
+在下列某些情况下，值也可以是空串(“”) 或 NULL：
+如果将一个无效值插入一个 ENUM (即，一个不在允许值列表中的字符串)，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/[转]Mysql数据库 ENUM类型和SET类型简述/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:[转]Mysql数据库 ENUM类型和SET类型简述date:2016-06-11 07:06:05MYSQL中 ENUM 类型的详细解释
+ENUM类型ENUM 是一个字符串对象，其值通常选自一个允许值列表中，该列表在表创建时的列规格说明中被明确地列举。
+在下列某些情况下，值也可以是空串(“”) 或 NULL：
+如果将一个无效值插入一个 ENUM (即，一个不在允许值列表中的字符串)，">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:[转]Mysql数据库 ENUM类型和SET类型简述date:2016-06-11 07:06:05MYSQL中 ENUM 类型的详细解释
+ENUM类型ENUM 是一个字符串对象，其值通常选自一个允许值列表中，该列表在表创建时的列规格说明中被明确地列举。
+在下列某些情况下，值也可以是空串(“”) 或 NULL：
+如果将一个无效值插入一个 ENUM (即，一个不在允许值列表中的字符串)，">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-[转]Mysql数据库 ENUM类型和SET类型简述" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]Mysql数据库 ENUM类型和SET类型简述/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]Mysql数据库 ENUM类型和SET类型简述<br>date:2016-06-11 07:06:05<br>MYSQL中 ENUM 类型的详细解释</p>
+<p>ENUM类型ENUM 是一个字符串对象，其值通常选自一个允许值列表中，该列表在表创建时的列规格说明中被明确地列举。</p>
+<p>在下列某些情况下，值也可以是空串(“”) 或 NULL：</p>
+<p>如果将一个无效值插入一个 ENUM (即，一个不在允许值列表中的字符串)，空字符串将作为一个特殊的错误值被插入。事实上，这个字符串有别于一个”普通的”空字符串，因为这个字符串有个数字索引值为 0。稍后有更详细描述。<br>如果一个 ENUM 被声明为 NULL，NULL 也是该列的一个合法值，并且该列的缺省值也将为 NULL 。如果一个 ENUM 被声明为 NOT NULL，该列的缺省值将是该列表所允许值的第一个成员。<br>每个枚举值均有一个索引值：</p>
+<p>在列说明中列表值所允许的成员值被从 1 开始编号。<br>空字符串错误值的索引值为 0。这就意味着，你可以使用下面所示的 SELECT 语句找出被赋于无效 ENUM值的记录行。<br>mysql&gt; SELECT * FROM tbl_name WHERE enum_col=0;<br>NULL 值的索引值为 NULL。<br>例如，指定为 ENUM(“one”, “two”, “three”) 的一个列，可以有下面所显示的任一值。每个值的索引值也如下所示：</p>
+<p>值    索引值<br>NULL    NULL<br>“”    0<br>“one”    1<br>“two”    2<br>“three”    3<br>换个枚举最大可以有 65535 个成员值。</p>
+<p>从 MySQL 3.23.51 开始，当表被创建时，ENUM 值尾部的空格将会自动删除。</p>
+<p>当为一个 ENUM 列赋值时，字母的大小写是无关紧要的。然而，以后从列中检索出来的值的大小写却是匹配于创建表时所指定的允许值。</p>
+<p>如果在一个数字语境中检索一个ENUM，列值的索引值将被返回。例如，你可以像这样使用数字值检索一个 ENUM 列：</p>
+<p>mysql&gt; SELECT enum_col+0 FROM tbl_name;<br>如果将一个数字存储到一个 ENUM 中，数字被当作为一个索引值，并且存储的值是该索引值所对应的枚举成员。(但是，这在 LOAD DATA 将不能工作，因为它视所有的输入均为字符串。) 在一个 ENUM 字符串中存储数字是不明智的，因为它可能会打乱思维。</p>
+<p>ENUM 值依照列规格说明中的列表顺序进行排序。(换句话说，ENUM 值依照它们的索引号排序。)举例来说，对于 ENUM(“a”, “b”) “a” 排在 “b” 后，但是对于 ENUM(“b”, “a”) ， “b” 却排在 “a” 之前。空字符串排在非空字符串前，NULL 值排在其它所有的枚举值前。为了防止意想不到的结果，建议依照字母的顺序定义 ENUM 列表。也可以通过使用 GROUP BY CONCAT(col) 来确定该以字母顺序排序而不是以索引值。</p>
+<p>在插入或者更新ENUM字段的时候，可以使用两种方式</p>
+<p>假设  字段 enum_clo 为enum类型    ENUM(‘php‘,’siyuantlw’,’chengxusheji‘)</p>
+<p>set  enum_clo = 2   或者  set enum_clo = ‘siyuantlw’  两者产生的效果是一样的。</p>
+<p>如果希望得到一个 ENUM 列的所有可能值，可以使用 SHOW COLUMNS FROM table_name LIKE enum_colum</p>
+<p>ENUM和SET列提供了定义仅能包含给定值集合的列的有效方式。但是，从MySQL 5.0.2起，ENUM和SET不是实际约束。其原因与不重视NOT NULL的原因一样。</p>
+<p>ENUM列总有1个默认值。如果未指定默认值，对于包含NULL的列，默认值为NULL；否则，第1个枚举值将被当作默认值。</p>
+<p>如果在ENUM列中插入了不正确的值，或者，如果使用IGNORE将值强制插入了ENUM列，会将其设置为保留的枚举值0，对于字符串情形，将显示为空字符串。</p>
+<p>如果在SET列中插入了不正确值，该值将被忽略。例如，如果列能包含值“a”、“b”和“c”，并赋值“a,x,b,y”，结果为“a,b”。</p>
+<p>从5.0.2开始，可以对服务器进行配置，以使用严格的SQL模式。</p>
+<p>启用严格模式后，ENUM或SET列的定义可作为对输入至列的值的约束。如果值不满足下述条件，将出现错误：</p>
+<p>· ENUM值必须是在列定义中给出的值之一，或内部的数字等同物。该值不能是错误值（即，0或空字符串）。对于定义为ENUM(‘a’,’b’,’c’)的列，诸如’’、’d’和’ax’等，均是非法的，并将被拒。</p>
+<p>· SET值必须是空字符串，或由1个或多个在列定义中给出的且用逗号隔开的值组成。 对于定义为SET(‘a’,’b’,’c’)的列，诸如’d’和’a,b,c,d’等，均是非法的，并将被拒。</p>
+<p>如果使用了INSERT IGNORE或UPDATE IGNORE，在严格模式下，可抑制无效值导致的错误。在这种情况下，将生成警告而不是错误。对于ENUM，值将作为错误成员(0)插入。对于SET，会将给定值插入，但无效的子字符串将被删除。例如，’a,x,b,y’的结果是’a,b’，就像前面介绍的那样。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]Mysql数据库 ENUM类型和SET类型简述/" data-id="cj0ryfub6001wc6otvgbq4iev" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/[转]Python处理HTML转义字符/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/[转]Python实现接口/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

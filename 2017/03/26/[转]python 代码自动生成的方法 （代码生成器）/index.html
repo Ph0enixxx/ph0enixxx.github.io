@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:[转]python 代码自动生成的方法 （代码生成器）date:2016-07-17 03:45:34
+遇到的问题
+工作中遇到这么一个事，需要写很多C++的底层数据库类，但这些类大同小异，无非是增删改查，如果人工来写代码，既费力又容易出错；而借用python的代码自动生成，可以轻松搞定；（类比JAVA中的Hibernate自动生成的数据库底层操作代码）下面介绍使用python字符串替换">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/[转]python 代码自动生成的方法 （代码生成器）/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:[转]python 代码自动生成的方法 （代码生成器）date:2016-07-17 03:45:34
+遇到的问题
+工作中遇到这么一个事，需要写很多C++的底层数据库类，但这些类大同小异，无非是增删改查，如果人工来写代码，既费力又容易出错；而借用python的代码自动生成，可以轻松搞定；（类比JAVA中的Hibernate自动生成的数据库底层操作代码）下面介绍使用python字符串替换">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:[转]python 代码自动生成的方法 （代码生成器）date:2016-07-17 03:45:34
+遇到的问题
+工作中遇到这么一个事，需要写很多C++的底层数据库类，但这些类大同小异，无非是增删改查，如果人工来写代码，既费力又容易出错；而借用python的代码自动生成，可以轻松搞定；（类比JAVA中的Hibernate自动生成的数据库底层操作代码）下面介绍使用python字符串替换">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-[转]python 代码自动生成的方法 （代码生成器）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]python 代码自动生成的方法 （代码生成器）/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]python 代码自动生成的方法 （代码生成器）<br>date:2016-07-17 03:45:34</p>
+<p>遇到的问题</p>
+<p>工作中遇到这么一个事，需要写很多C++的底层数据库类，但这些类大同小异，无非是增删改查，如果人工来写代码，既费力又容易出错；而借用python的代码自动生成，可以轻松搞定；<br>（类比JAVA中的Hibernate自动生成的数据库底层操作代码）<br>下面介绍使用python字符串替换的方法；</p>
+<p>Python字符串替换的几种方法</p>
+<ol>
+<li>字符串替换<br>将需要替换的内容使用格式化符替代，后续补上替换内容；</li>
+</ol>
+<p>template = “hello %s , your website  is %s “ % (“大CC”,”<a href="http://blog.me115.com" target="_blank" rel="external">http://blog.me115.com</a>“)<br>print(template)<br>也可使用format函数完成：</p>
+<p>template = “hello {0} , your website  is {1} “.format(“大CC”,”<a href="http://blog.me115.com" target="_blank" rel="external">http://blog.me115.com</a>“)<br>print(template)<br>注：该方法适用于变量少的单行字符串替换；</p>
+<ol>
+<li>字符串命名格式化符替换<br>使用命名格式化符，这样，对于多个相同变量的引用，在后续替换只用申明一次即可；</li>
+</ol>
+<p>template = “hello %(name)s ，your name is %(name), your website  is %(message)s” %{“name”:”大CC”,”message”:”<a href="http://blog.me115.com&quot;}" target="_blank" rel="external">http://blog.me115.com&quot;}</a><br>print(template)<br>使用format函数的语法方式：</p>
+<p>template = “hello {name} , your name is {name}, your website  is {message} “.format(name=”大CC”,message=”<a href="http://blog.me115.com" target="_blank" rel="external">http://blog.me115.com</a>“)<br>print(template)<br>注：适用相同变量较多的单行字符串替换；</p>
+<p>3.模版方法替换<br>使用string中的Template方法；</p>
+<p>from string import Template<br>tempTemplate = string.Template(“Hello $name ,your website is $message”)<br>print(tempTemplate.substitute(name=’大CC’,message=’<a href="http://blog.me115.com" target="_blank" rel="external">http://blog.me115.com</a>‘))<br>有了模版方法后，就可以将模版保存到文件单独编辑，在生成的地方替换为需要的变量；</p>
+<p>示例：代码生成</p>
+<p>这个示例使用以上讲到的第三种方法；<br>建立一个模版文件，里面需要替换的内容使用${}变量替换;<br>dao_cpp.template</p>
+<p>///<br>/// @class ${CLASSNAME}<br>/// @brief Redis底层接口类 操作${TABLE_NAME}表<br>/// TABLE ${TABLE_NAME_UPPER}<br>/// @author dao_cpp_generator.py<br>/// @generate date: ${GENE_DATE}<br>/// [注：本文件为自动生成，不需要人为编辑，若有修改，请通过配置py脚本来重新生成.]</p>
+<p>#include “${CLASSNAME}.h”</p>
+<p>#include “include/${TABLE_NAME}_t.h”</p>
+<p>#include “RedisManager.h”</p>
+<p>#include “common/LogMacros.h”</p>
+<p>#include “common/StringUtility/OtherStringFunc.h”</p>
+<p>#include “common/DateTime.h”<br>namespace redisdao{</p>
+<p>#define PRIMARY_KEY “${PRIMER_KEY}”<br>const string ${CLASSNAME}::TABLE_NAME = “${TABLE_NAME}”;<br>const string ${CLASSNAME}::TABLE_ID = “${TABLE_ID}”; //在数据库中的表的唯一性标识符<br>const string ${CLASSNAME}::KEY_SEPARETER = “${KEY_SEPARETER}”;<br>${CLASSNAME}::${CLASSNAME}(void)<br>{<br>    if ( 0 == m_reHandler.EnsureConnect())<br>        m_bRedisConnected = true;<br>    else<br>        m_bRedisConnected = false;<br>}<br>${CLASSNAME}::~${CLASSNAME}(void)<br>{<br>}<br>int ${CLASSNAME}::InsertRecord(const string&amp; strVal)<br>…<br>python代码生成程序：<br>cpp_generator.py</p>
+<p>#! /usr/bin/env python</p>
+<p>#coding=utf-8</p>
+<p>#Redis底层操作类CPP文件生成程序（*RedisDao.cpp)</p>
+<p>#author me115@126.com 2014-7-22<br>import os,sys,re,traceback<br>from datetime import datetime<br>from string import Template<br>class DaoCppGenerator:<br>    def generate(self):<br>        tableName = ‘students’<br>        className = ‘%sRedisDao’ %  tableName.capitalize()<br>        filePath = r’include/%s.cpp’ % className<br>        class_file = open(filePath,’w’)<br>        lines = []</p>
+<pre><code>#模版文件
+template_file = open(r&apos;dao_cpp.template&apos;,&apos;r&apos;)
+tmpl = Template(template_file.read())
+#模版替换
+lines.append(tmpl.substitute(
+            CLASSNAME = className,
+            TABLE_NAME = tableName,
+            TABLE_NAME_UPPER = tableName.upper(), 
+            GENE_DATE = datetime.now().strftime(&apos;%Y-%m-%d %H:%M:%S&apos;),
+            TABLE_ID = &apos;115&apos;,
+            EXPIRE_DATE = &apos;06JUN14&apos;))
+# 0.将生成的代码写入文件
+class_file.writelines(lines)
+class_file.close()
+print &apos;generate %s over. ~ ~&apos; % filePath
+</code></pre><p>有了这个程序，再配合一堆XML配置文件，就可以轻松生成各种C++程序代码了；</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]python 代码自动生成的方法 （代码生成器）/" data-id="cj0ryfubd0023c6otbbc8rxlt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/[转]socket: Too many open files (24)  的解决方法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/[转]mysql中文排序/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

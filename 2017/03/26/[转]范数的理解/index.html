@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:[转]范数的理解date:2017-02-23 05:54:24最近刚开始学习SVM，上课的时候老师总是讲到1范数、2范数之类的概念，一带而过，自己也不是很理解到底之间有什么区别，上网搜索了一下的解释也是不明不白的。自己就在这里做一个简单的解释：
+1 范数
+1-范数：是指向量（矩阵）里面非零元素的个数。类似于求棋盘上两个点间的沿方格边缘的距离。
+||x||1 = sum（abs(xi)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/[转]范数的理解/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:[转]范数的理解date:2017-02-23 05:54:24最近刚开始学习SVM，上课的时候老师总是讲到1范数、2范数之类的概念，一带而过，自己也不是很理解到底之间有什么区别，上网搜索了一下的解释也是不明不白的。自己就在这里做一个简单的解释：
+1 范数
+1-范数：是指向量（矩阵）里面非零元素的个数。类似于求棋盘上两个点间的沿方格边缘的距离。
+||x||1 = sum（abs(xi)">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:[转]范数的理解date:2017-02-23 05:54:24最近刚开始学习SVM，上课的时候老师总是讲到1范数、2范数之类的概念，一带而过，自己也不是很理解到底之间有什么区别，上网搜索了一下的解释也是不明不白的。自己就在这里做一个简单的解释：
+1 范数
+1-范数：是指向量（矩阵）里面非零元素的个数。类似于求棋盘上两个点间的沿方格边缘的距离。
+||x||1 = sum（abs(xi)">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-[转]范数的理解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]范数的理解/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]范数的理解<br>date:2017-02-23 05:54:24<br>最近刚开始学习SVM，上课的时候老师总是讲到1范数、2范数之类的概念，一带而过，自己也不是很理解到底之间有什么区别，上网搜索了一下的解释也是不明不白的。自己就在这里做一个简单的解释：</p>
+<p>1 范数</p>
+<p>1-范数：是指向量（矩阵）里面非零元素的个数。类似于求棋盘上两个点间的沿方格边缘的距离。</p>
+<pre><code>||x||1 = sum（abs(xi)）；
+</code></pre><p>应用：这个概念在二维图像处理的时候有涉及到，求两个像素点之间的通路的问题，其实就是两个像素点的1范数，是不变的，无论按照哪一条路走，最终的结果是一样的。</p>
+<p>2 范数</p>
+<p>2-范数（或Euclid范数）：是指空间上两个向量矩阵的直线距离。类似于求棋盘上两点见的直线距离   （无需只沿方格边缘）。</p>
+<p>||x||2 = sqrt(sum(xi.^2))；</p>
+<p>2范数解释</p>
+<p> 其实就是欧氏距离嘛，</p>
+<p>二维空间的公式<br>0ρ = sqrt( (x1-x2)^2+(y1-y2)^2 )　|x| = √( x2 + y2 )</p>
+<p>三维空间的公式<br>0ρ = √( (x1-x2)^2+(y1-y2)^2+(z1-z2)^2 )　|x| = √( x2 + y2 + z2 )<br>2范数推广<br>在这一点上可以联系欧氏距离进行改进，改为明氏距离，又叫做明可夫斯基距离,是欧氏空间中的一种测度，被看做是欧氏距离的一种推广。</p>
+<p>定义式：ρ(A，B) = [ ∑( a[i] - b[i] )^p ]^(1/p) (i = 1，2，…，n)</p>
+<p>3 最大值范数</p>
+<p>∞-范数(或最大值范数)：顾名思义，求出向量矩阵中其中模最大的向量。<br>               ||x||∞ = max(abs(xi))；</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]范数的理解/" data-id="cj0ryfubk002bc6ot8duefs5j" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/[转]用Python获取代理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/ab压力测试出现socket: Too many open files(24)的解决办法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

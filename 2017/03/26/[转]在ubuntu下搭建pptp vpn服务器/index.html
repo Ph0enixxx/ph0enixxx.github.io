@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:[转]在ubuntu下搭建pptp vpn服务器date:2016-09-03 04:52:31
+最近弄了digitalocean的vps，研究了一下搭建一个vpn自己用，因为有些系统代理goagent还是搞不定。但是事实证明digitalocean线路还是很不稳，基本上没啥帮助=0=
+pptp配置
+安装pptp
+用ubuntu就是安装东西快
+sudo apt-get -y updat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/[转]在ubuntu下搭建pptp vpn服务器/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:[转]在ubuntu下搭建pptp vpn服务器date:2016-09-03 04:52:31
+最近弄了digitalocean的vps，研究了一下搭建一个vpn自己用，因为有些系统代理goagent还是搞不定。但是事实证明digitalocean线路还是很不稳，基本上没啥帮助=0=
+pptp配置
+安装pptp
+用ubuntu就是安装东西快
+sudo apt-get -y updat">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:[转]在ubuntu下搭建pptp vpn服务器date:2016-09-03 04:52:31
+最近弄了digitalocean的vps，研究了一下搭建一个vpn自己用，因为有些系统代理goagent还是搞不定。但是事实证明digitalocean线路还是很不稳，基本上没啥帮助=0=
+pptp配置
+安装pptp
+用ubuntu就是安装东西快
+sudo apt-get -y updat">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-[转]在ubuntu下搭建pptp vpn服务器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/[转]在ubuntu下搭建pptp vpn服务器/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:[转]在ubuntu下搭建pptp vpn服务器<br>date:2016-09-03 04:52:31</p>
+<p>最近弄了digitalocean的vps，研究了一下搭建一个vpn自己用，因为有些系统代理goagent还是搞不定。但是事实证明digitalocean线路还是很不稳，基本上没啥帮助=0=</p>
+<p>pptp配置</p>
+<p>安装pptp</p>
+<p>用ubuntu就是安装东西快</p>
+<p>sudo apt-get -y update<br>sudo apt-get -y install pptpd<br>修改配置脚本</p>
+<p>配置一下dns</p>
+<p>cat &gt;/etc/ppp/options.pptpd &lt;&lt;END<br>name pptpd<br>refuse-pap<br>refuse-chap<br>refuse-mschap<br>require-mschap-v2<br>require-mppe-128<br>ms-dns 8.8.8.8<br>ms-dns 8.8.4.4<br>proxyarp<br>lock<br>nobsdcomp<br>novj<br>novjccomp<br>nologfd<br>END<br>说明</p>
+<p>name pptpd（pptpd服务名，可以随便填写。）<br>refuse-pap（拒绝pap身份认证模式。）<br>refuse-chap（拒绝chap身份认证模式。）<br>refuse-mschap（拒绝mschap身份认证模式。）<br>require-mschap-v2（在端点进行连接握手时需要使用微软的 mschap-v2 进行自身验证。）<br>require-mppe-128（MPPE 模块使用 128 位加密。）<br>ms-dns 8.8.8.8 (ppp 为 Windows 客户端提供 DNS 服务器 IP 地址。)<br>proxyarp (建立 ARP 代理键值。)<br>nodefaultroute（不替换默认路由）<br>debug（开启调试模式，相关信息记录在 /var/logs/message 中。）<br>lock（锁定客户端 PTY 设备文件。）<br>nobsdcomp (禁用 BSD 压缩模式。)<br>还有ip</p>
+<p>cat &gt; /etc/pptpd.conf &lt;&lt;END<br>option /etc/ppp/options.pptpd<br>logwtmp<br>localip 192.168.2.1<br>remoteip 192.168.2.10-100<br>END<br>增加路由转发</p>
+<h3 id="ipv4转发"><a href="#ipv4转发" class="headerlink" title="ipv4转发"></a>ipv4转发</h3><p>cat &gt;&gt; /etc/sysctl.conf &lt;&lt;END<br>net.ipv4.ip_forward=1<br>END<br>sysctl -p<br>修改iptables</p>
+<p>备份当前iptables</p>
+<p>iptables-save &gt; /etc/iptables.down.rules<br>修改iptable NAT转发</p>
+<p>iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -o eth0 -j MASQUERADE<br>设置MTU</p>
+<p>iptables -I FORWARD -s 192.168.2.0/24 -p tcp –syn -i ppp+ -j TCPMSS –set-mss 1300<br>保存新iptables</p>
+<p>iptables-save &gt; /etc/iptables.up.rules<br>重启后继续有效</p>
+<p>cat &gt;&gt;/etc/ppp/pptpd-options&lt;&lt;EOF<br>pre-up iptables-restore &lt; /etc/iptables.up.rules<br>post-down iptables-restore &lt; /etc/iptables.down.rules<br>EOF<br>增加用户</p>
+<p>增加帐号密码都是test的用户</p>
+<p>cat &gt;/etc/ppp/chap-secrets &lt;&lt;END<br>test pptpd test *<br>END<br>重启服务</p>
+<p>/etc/init.d/pptpd restart<br>netstat -lntp<br>自动脚本</p>
+<p>wget -c <a href="https://github.com/suyan/scripts/raw/master/Setup/pptp.sh" target="_blank" rel="external">https://github.com/suyan/scripts/raw/master/Setup/pptp.sh</a><br>问题</p>
+<p>logwtmp.so 版本问题</p>
+<p>如果链接中断，并且出现下面问题：</p>
+<p>Plugin /usr/lib/pptpd/pptpd-logwtmp.so is for pppd version 2.4.5, this is 2.4.6<br>在 /etc/pptpd.conf 文件中把 logwtmp 删掉就好了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/[转]在ubuntu下搭建pptp vpn服务器/" data-id="cj0ryfubj0028c6otn82zaz0d" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/[转]用Python分析公开数据选出高送转预期股票/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/[转]windows 7 vpn 设置/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

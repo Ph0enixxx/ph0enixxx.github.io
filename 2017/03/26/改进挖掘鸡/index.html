@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:改进挖掘鸡date:2016-07-17 06:55:37今天在github上，把前几天fork的一个Python挖掘鸡拿出来看了看，更改了一些地方。    author = ‘AZONE&amp;amp;Mikoyan’    import Queue    import urllib2    from threading import Thread    import sys    imp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/改进挖掘鸡/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:改进挖掘鸡date:2016-07-17 06:55:37今天在github上，把前几天fork的一个Python挖掘鸡拿出来看了看，更改了一些地方。    author = ‘AZONE&amp;amp;Mikoyan’    import Queue    import urllib2    from threading import Thread    import sys    imp">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:改进挖掘鸡date:2016-07-17 06:55:37今天在github上，把前几天fork的一个Python挖掘鸡拿出来看了看，更改了一些地方。    author = ‘AZONE&amp;amp;Mikoyan’    import Queue    import urllib2    from threading import Thread    import sys    imp">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-改进挖掘鸡" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/改进挖掘鸡/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:改进挖掘鸡<br>date:2016-07-17 06:55:37<br>今天在github上，把前几天fork的一个Python挖掘鸡拿出来看了看，更改了一些地方。<br>    <strong>author</strong> = ‘AZONE&amp;Mikoyan’<br>    import Queue<br>    import urllib2<br>    from threading import Thread<br>    import sys<br>    import httplib<br>    import urlparse</p>
+<pre><code>#dirs = [&quot;index.php&quot;,&quot;wwwroot.zip&quot;,&quot;wwwroot.rar&quot;,&quot;www.rar&quot;,&quot;www.zip&quot;,&quot;web.rar&quot;,&quot;web.zip&quot;,&quot;db.rar&quot;,&quot;db.zip&quot;,&quot;wz.rar&quot;,&quot;wz.zip&quot;,&quot;fdsa.rar&quot;,&quot;fdsa.zip&quot;,&quot;wangzhan.rar&quot;,&quot;wangzhan.zip&quot;,&quot;root.rar&quot;,&quot;root.zip&quot;,&quot;admin.rar&quot;,&quot;admin.zip&quot;,&quot;data.rar&quot;,&quot;gg.rar&quot;,&quot;vip.rar&quot;,&quot;1.zip&quot;,&quot;1.rar&quot;,&quot;2.zip&quot;,&quot;2.rar&quot;,&quot;config.rar&quot;,&quot;config.zip&quot;,&quot;/config/config.rar&quot;,&quot;/config/config.zip&quot;]
+dirs =[i[:-1] for i in open(&apos;path.txt&apos;)] #改为读取文件
+print dirs
+
+def bThread(taget):
+    SETTHREAD = 800
+    print &apos;[Note] Running...\n&apos;
+    threadl = []
+    queue = Queue.Queue()
+    hosts = taget
+    for host in hosts:
+        queue.put(host)
+
+    threadl = [tThread(queue) for x in xrange(0, int(SETTHREAD))]
+    for t in threadl:
+        t.start()
+    for t in threadl:
+        t.join()
+
+class tThread(Thread):
+
+    def __init__(self, queue):
+        Thread.__init__(self)
+        self.queue = queue
+
+    def run(self):
+        while not self.queue.empty():
+            host = self.queue.get()
+            try:
+                #print host+&quot;:&quot;+PORT1
+                requesturl(host)
+            except:
+                continue
+taget =[]
+fd = file( &quot;host.txt&quot;, &quot;r&quot; )
+for line in fd.readlines():
+    if line[0:4] == &quot;http&quot;:
+        taget.append(line.strip()+&quot;/&quot;)
+    else:
+        taget.append(&quot;http://&quot;+line.strip()+&quot;/&quot;)
+print taget
+print &quot;[Note] Thread:800&quot;
+def requesturl(taget):
+    for i in dirs:
+        TURL = taget + i
+        try:
+            request = urllib2.Request(TURL)#这个地方放进try里面，容错率更高
+            response = urllib2.urlopen(request)
+            back = response.read()
+            print &quot;[%d] =&gt; %s&quot; %(response.code,TURL)
+            response.close()
+            &quot;&quot;&quot;parsedurl = urlparse.urlparse(TURL)
+            httpConn = httplib.HTTPConnection(parsedurl[1])
+            httpConn.request(&apos;GET&apos;, parsedurl[2])
+            responsed = httpConn.getresponse()
+            if responsed.status != 404:
+                size = responsed.getheader(&apos;Content-Length&apos;)
+                size = int(size) / 1024
+                if size &gt; 1024:
+                    print TURL+&apos;\n&apos;
+                    print &apos;Size: %s KB&apos; %size&quot;&quot;&quot;
+
+        except urllib2.HTTPError as error:
+            #print &quot;[ERROR]&quot;+TURL+&quot;----&quot;+error
+            #print 
+            pass
+bThread(taget)
+#sys.exit()
+</code></pre><p>原作者在：<a href="https://github.com/az0ne/digger" target="_blank" rel="external">https://github.com/az0ne/digger</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/改进挖掘鸡/" data-id="cj0ryfudp004cc6ot2mlhavag" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/手机网页宽度自适应/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/树莓派使用初体验/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

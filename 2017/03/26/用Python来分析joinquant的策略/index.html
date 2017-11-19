@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:用Python来分析joinquant的策略date:2017-02-14 13:15:27    import requests as req    import re    import sys    import io    import pandas as pd    if name == ‘main‘:        sys.stdout = io.TextIOWrapper">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/用Python来分析joinquant的策略/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:用Python来分析joinquant的策略date:2017-02-14 13:15:27    import requests as req    import re    import sys    import io    import pandas as pd    if name == ‘main‘:        sys.stdout = io.TextIOWrapper">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:用Python来分析joinquant的策略date:2017-02-14 13:15:27    import requests as req    import re    import sys    import io    import pandas as pd    if name == ‘main‘:        sys.stdout = io.TextIOWrapper">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-用Python来分析joinquant的策略" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/用Python来分析joinquant的策略/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:用Python来分析joinquant的策略<br>date:2017-02-14 13:15:27<br>    import requests as req<br>    import re<br>    import sys<br>    import io<br>    import pandas as pd<br>    if <strong>name</strong> == ‘<strong>main</strong>‘:<br>        sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding=’utf-8’)<br>    import datetime</p>
+<pre><code>#回测信息闭包
+def BackTest(jqid=2996):
+    jqid = str(btid)
+
+    #获取回测数据
+    #getBackTestData
+    def getBackTestData(id):
+        sharePositionUrl = &quot;https://www.joinquant.com/algorithm/live/sharePosition&quot;
+        shareTransactionUrl = &quot;https://www.joinquant.com/algorithm/live/shareTransaction&quot;
+
+
+
+    #joinquant shareTransaction
+    #获取回测id
+    #https://www.joinquant.com/post/2996
+
+
+
+
+
+
+class JoinQuant(object):
+    def __init__(self,jqid):
+        self.jqid = str(jqid)
+    #获取当前日期
+    def __getNowDay(self):
+        import time
+        return time.strftime(&apos;%Y-%m-%d&apos;, time.localtime())
+    def __getPrepare(self):
+        prepareStr = [&apos;?isAjax=1&amp;backtestId=&apos;,self.getBackTestId(),&apos;&amp;date=&apos;,self.__getNowDay(),&apos;&amp;isMobile=0&apos;]
+        return &quot;&quot;.join(prepareStr)
+    #抓回测id id -&gt; 回测id ok
+    #返回lambda
+    def getBackTestId(self):
+        jqid = self.jqid
+        text = req.get(&quot;https://www.joinquant.com/post/&quot; + jqid)
+        backTestId = re.findall(r&quot;backtestId=(.*?)&amp;&quot;,text.text)
+        if len(backTestId) == 1: #正常
+            return backTestId[0]
+        else:
+            raise Exception(&quot;[x]Back test id error! id:&quot;+jqid)
+    #抓数据 回测id -&gt; 数据
+    def getPosition(self):
+        sharePositionUrl = &quot;https://www.joinquant.com/algorithm/live/sharePosition&quot;
+        try:
+            return self.getData(sharePositionUrl)
+        except:
+            return []
+    def getTransaction(self):
+        shareTransactionUrl = &quot;https://www.joinquant.com/algorithm/live/shareTransaction&quot;
+        return self.getData(shareTransactionUrl)
+
+    def getData(self,url):
+        #sharePositionUrl = &quot;https://www.joinquant.com/algorithm/live/sharePosition&quot;
+        r = req.get(url + self.__getPrepare())
+        #print(r.text)
+        print(self.parseData(r.text))
+        return self.parseData(r.text)
+    #解析
+    def parseData(self,data):
+        import json
+        data = json.loads(data)
+        #print(data)
+        if str(data[&apos;status&apos;]) == &quot;0&quot;:
+            tmp = pd.read_html(&quot;&lt;table&gt;&quot;+data[&apos;data&apos;][&apos;html&apos;]+&quot;&lt;/table&gt;&quot;,)
+            tmp[0].columns = [&apos;股票&apos;,&apos;数量&apos;,&apos;市值&apos;,&apos;现价&apos;,&apos;盈亏&apos;]
+            tmp[0] = tmp[0].drop(0)
+            return tmp[0]
+        else:
+            raise Exception(&quot;[x]Back test data error! msg:&quot; + data[&apos;data&apos;][&apos;msg&apos;])
+
+def writeSql(data): #传入一行
+    import pymysql
+    db = pymysql.connect(&quot;127.0.0.1&quot;,&quot;root&quot;,&quot;&quot;,&quot;joinquant&quot;,charset=&apos;utf8&apos;)
+    cursor = db.cursor(pymysql.cursors.DictCursor)
+    try:
+        data = [&apos;\&apos;&apos;+x+&apos;\&apos;&apos; for x in data ]
+        sql = &quot;insert into jq_data(stock_name,mount,market,price,cash) values(&quot; + &quot;,&quot;.join(data)+&quot;)&quot;
+        #print(sql)
+        try:
+            cursor.execute(sql)
+            db.commit()
+        except:
+            print(data)
+            print(&quot;failed&quot;)
+    except:
+        print(data)
+        print(&quot;write field&quot;)
+
+#获取回测列表
+def getNum(page=1):
+    page = str(page)
+    text = req.get(&quot;https://www.joinquant.com/algorithm/live/shareList?page=&quot;+page)
+    return re.findall(r&quot;/post/(.*?)\?f=sharelist&quot;,text.text)
+def getTotalNum():
+    text = req.get(&quot;https://www.joinquant.com/algorithm/live/shareList&quot;)
+    res = re.findall(r&quot;\?page=(.*?)\&quot;&gt;&quot;,text.text)
+    return int(res[-1])
+
+def toSql(id):
+    print(id)
+    x = [writeSql(i) for i in JoinQuant(id).getPosition().values.tolist()]
+    return id
+
+def main():
+    # total = getTotalNum()
+    # btnum = [getNum(i) for i in range(1,total+1)]
+    # print(btnum)
+
+    # nums = [[&apos;2996&apos;, &apos;2143&apos;, &apos;2250&apos;, &apos;2708&apos;, &apos;2133&apos;, &apos;2997&apos;, &apos;2381&apos;, &apos;2748&apos;, &apos;4218&apos;, &apos;3245&apos;], [&apos;2305&apos;, &apos;3110&apos;, &apos;2255&apos;, &apos;3236&apos;, &apos;2349&apos;, &apos;3546&apos;, &apos;3934&apos;, &apos;2322&apos;, &apos;2256&apos;, &apos;2875&apos;], [&apos;2299&apos;, &apos;3751&apos;, &apos;3196&apos;, &apos;4392&apos;, &apos;2345&apos;, &apos;3890&apos;, &apos;4444&apos;, &apos;4404&apos;, &apos;2154&apos;, &apos;3602&apos;], [&apos;2810&apos;, &apos;2164&apos;, &apos;3393&apos;, &apos;3687&apos;, &apos;3594&apos;, &apos;2270&apos;, &apos;3696&apos;, &apos;2223&apos;, &apos;2148&apos;, &apos;2387&apos;], [&apos;2234&apos;, &apos;4318&apos;, &apos;3418&apos;, &apos;2159&apos;, &apos;2620&apos;, &apos;2320&apos;, &apos;3213&apos;, &apos;4312&apos;, &apos;2588&apos;, &apos;2175&apos;], [&apos;2701&apos;, &apos;2187&apos;, &apos;4246&apos;, &apos;2743&apos;, &apos;2466&apos;, &apos;2280&apos;, &apos;3443&apos;, &apos;2230&apos;, &apos;2472&apos;, &apos;3804&apos;], [&apos;2257&apos;, &apos;2292&apos;, &apos;2384&apos;, &apos;3212&apos;, &apos;4588&apos;, &apos;4101&apos;, &apos;4528&apos;, &apos;3703&apos;, &apos;4373&apos;, &apos;3161&apos;], [&apos;4535&apos;, &apos;4544&apos;, &apos;2215&apos;, &apos;3383&apos;, &apos;4438&apos;, &apos;2745&apos;, &apos;3826&apos;, &apos;4342&apos;, &apos;4365&apos;, &apos;3149&apos;], [&apos;4486&apos;, &apos;2237&apos;, &apos;4568&apos;, &apos;2451&apos;, &apos;4196&apos;, &apos;2132&apos;, &apos;4460&apos;, &apos;2471&apos;, &apos;4579&apos;, &apos;4534&apos;], [&apos;3169&apos;, &apos;3733&apos;, &apos;3107&apos;, &apos;4755&apos;, &apos;4582&apos;, &apos;4380&apos;, &apos;4357&apos;, &apos;2507&apos;, &apos;2452&apos;, &apos;3595&apos;], [&apos;4549&apos;, &apos;4561&apos;, &apos;4646&apos;, &apos;2371&apos;, &apos;2263&apos;, &apos;3731&apos;, &apos;3672&apos;, &apos;4240&apos;, &apos;2441&apos;, &apos;4529&apos;], [&apos;2273&apos;, &apos;4405&apos;, &apos;2998&apos;, &apos;2855&apos;, &apos;4219&apos;, &apos;4448&apos;, &apos;4447&apos;, &apos;2432&apos;, &apos;4547&apos;, &apos;4705&apos;], [&apos;4271&apos;, &apos;4664&apos;, &apos;4658&apos;, &apos;4586&apos;, &apos;4651&apos;, &apos;3705&apos;, &apos;3991&apos;, &apos;4592&apos;, &apos;4606&apos;, &apos;4265&apos;], [&apos;2382&apos;, &apos;2277&apos;, &apos;4277&apos;, &apos;4020&apos;, &apos;3789&apos;, &apos;2286&apos;, &apos;3328&apos;, &apos;4633&apos;, &apos;4436&apos;, &apos;4645&apos;], [&apos;4397&apos;, &apos;3301&apos;, &apos;4667&apos;, &apos;4413&apos;, &apos;4450&apos;, &apos;4371&apos;, &apos;4644&apos;, &apos;4407&apos;, &apos;4526&apos;, &apos;2926&apos;], [&apos;4708&apos;, &apos;4649&apos;, &apos;4774&apos;, &apos;2229&apos;, &apos;4673&apos;, &apos;3790&apos;, &apos;3904&apos;, &apos;3370&apos;, &apos;3011&apos;, &apos;4543&apos;], [&apos;3623&apos;, &apos;4691&apos;, &apos;3650&apos;, &apos;4665&apos;, &apos;3920&apos;, &apos;3060&apos;, &apos;4367&apos;, &apos;3732&apos;, &apos;4694&apos;, &apos;4687&apos;], [&apos;4538&apos;, &apos;2388&apos;, &apos;4710&apos;, &apos;4548&apos;, &apos;3848&apos;, &apos;4669&apos;, &apos;4597&apos;, &apos;4387&apos;, &apos;4736&apos;, &apos;4641&apos;], [&apos;3895&apos;, &apos;4369&apos;, &apos;3345&apos;, &apos;3836&apos;, &apos;4672&apos;, &apos;3395&apos;, &apos;4506&apos;, &apos;4786&apos;, &apos;2160&apos;, &apos;4130&apos;], [&apos;2248&apos;, &apos;4761&apos;, &apos;4509&apos;, &apos;2917&apos;, &apos;4656&apos;, &apos;3907&apos;, &apos;4758&apos;, &apos;3879&apos;, &apos;2725&apos;, &apos;4402&apos;], [&apos;4602&apos;, &apos;3740&apos;, &apos;4713&apos;, &apos;4727&apos;, &apos;2964&apos;, &apos;4435&apos;, &apos;4524&apos;, &apos;4692&apos;, &apos;3694&apos;, &apos;4523&apos;], [&apos;4696&apos;, &apos;2283&apos;, &apos;4559&apos;, &apos;2208&apos;, &apos;4737&apos;, &apos;3921&apos;, &apos;3469&apos;, &apos;4643&apos;, &apos;4180&apos;, &apos;2437&apos;], [&apos;2756&apos;, &apos;2635&apos;, &apos;2449&apos;, &apos;2936&apos;, &apos;3621&apos;, &apos;4728&apos;, &apos;2754&apos;, &apos;4648&apos;, &apos;3479&apos;, &apos;4604&apos;], [&apos;2398&apos;, &apos;4690&apos;, &apos;4702&apos;, &apos;4720&apos;, &apos;4618&apos;, &apos;2332&apos;, &apos;2193&apos;, &apos;2579&apos;, &apos;4304&apos;, &apos;2436&apos;], [&apos;4386&apos;, &apos;2600&apos;, &apos;2344&apos;, &apos;2358&apos;, &apos;4783&apos;, &apos;4555&apos;, &apos;4518&apos;, &apos;3462&apos;, &apos;4711&apos;, &apos;4792&apos;], [&apos;4760&apos;, &apos;3554&apos;, &apos;4662&apos;, &apos;2549&apos;, &apos;4054&apos;, &apos;2368&apos;, &apos;4029&apos;, &apos;3901&apos;, &apos;4743&apos;, &apos;2294&apos;], [&apos;2858&apos;, &apos;3738&apos;, &apos;2564&apos;, &apos;4008&apos;, &apos;4278&apos;, &apos;2165&apos;, &apos;2787&apos;, &apos;4006&apos;, &apos;3223&apos;, &apos;4640&apos;], [&apos;4269&apos;, &apos;3727&apos;, &apos;2295&apos;, &apos;4671&apos;, &apos;4261&apos;, &apos;4213&apos;, &apos;2826&apos;, &apos;3641&apos;, &apos;3181&apos;, &apos;2819&apos;], [&apos;3071&apos;, &apos;2621&apos;, &apos;4578&apos;, &apos;4382&apos;, &apos;3208&apos;, &apos;3524&apos;, &apos;4209&apos;, &apos;2604&apos;, &apos;3059&apos;, &apos;2799&apos;], [&apos;4826&apos;, &apos;3036&apos;, &apos;3999&apos;, &apos;4707&apos;, &apos;2315&apos;, &apos;3369&apos;, &apos;3335&apos;, &apos;4021&apos;, &apos;2569&apos;, &apos;3355&apos;], [&apos;3216&apos;, &apos;4738&apos;, &apos;3500&apos;, &apos;4619&apos;, &apos;3966&apos;, &apos;4622&apos;, &apos;4830&apos;, &apos;3119&apos;, &apos;2638&apos;, &apos;3326&apos;], [&apos;4185&apos;, &apos;4572&apos;, &apos;4273&apos;, &apos;3957&apos;, &apos;4689&apos;, &apos;4718&apos;, &apos;4821&apos;, &apos;4211&apos;, &apos;2434&apos;, &apos;3273&apos;], [&apos;3386&apos;, &apos;3686&apos;, &apos;4806&apos;, &apos;2489&apos;, &apos;4141&apos;, &apos;4704&apos;, &apos;4764&apos;, &apos;3973&apos;, &apos;2149&apos;, &apos;3156&apos;], [&apos;4805&apos;, &apos;2459&apos;, &apos;4706&apos;, &apos;2303&apos;, &apos;3609&apos;, &apos;4824&apos;, &apos;3312&apos;, &apos;3946&apos;, &apos;4455&apos;, &apos;3741&apos;], [&apos;4808&apos;, &apos;3619&apos;, &apos;3780&apos;, &apos;4569&apos;, &apos;4570&apos;, &apos;3955&apos;, &apos;4653&apos;, &apos;4785&apos;, &apos;4048&apos;, &apos;4174&apos;], [&apos;4840&apos;, &apos;4782&apos;, &apos;4609&apos;, &apos;4742&apos;, &apos;4800&apos;, &apos;4333&apos;, &apos;4734&apos;, &apos;3739&apos;, &apos;4375&apos;, &apos;4091&apos;], [&apos;4751&apos;, &apos;4660&apos;, &apos;3662&apos;, &apos;4836&apos;, &apos;3745&apos;, &apos;4829&apos;, &apos;4841&apos;, &apos;3990&apos;, &apos;2216&apos;, &apos;4255&apos;], [&apos;4659&apos;, &apos;4242&apos;, &apos;4795&apos;, &apos;4799&apos;, &apos;2953&apos;, &apos;4839&apos;, &apos;4813&apos;, &apos;4151&apos;, &apos;4717&apos;, &apos;4169&apos;], [&apos;4831&apos;, &apos;3481&apos;, &apos;4810&apos;, &apos;4817&apos;, &apos;4819&apos;, &apos;3702&apos;, &apos;3530&apos;, &apos;2246&apos;, &apos;3835&apos;, &apos;3016&apos;], [&apos;2566&apos;, &apos;2911&apos;, &apos;2362&apos;, &apos;4338&apos;, &apos;2574&apos;, &apos;4195&apos;, &apos;2414&apos;, &apos;4200&apos;, &apos;4553&apos;, &apos;4349&apos;], [&apos;2343&apos;, &apos;3095&apos;, &apos;2197&apos;, &apos;4122&apos;, &apos;2618&apos;, &apos;3475&apos;, &apos;3038&apos;, &apos;3601&apos;, &apos;2128&apos;, &apos;2364&apos;], [&apos;2944&apos;, &apos;3209&apos;, &apos;3770&apos;, &apos;2179&apos;, &apos;3855&apos;, &apos;4157&apos;, &apos;4319&apos;, &apos;2312&apos;, &apos;3956&apos;, &apos;3206&apos;], [&apos;2861&apos;, &apos;4468&apos;, &apos;4046&apos;, &apos;3225&apos;, &apos;4432&apos;, &apos;2514&apos;, &apos;4112&apos;, &apos;2801&apos;, &apos;3153&apos;, &apos;2135&apos;], [&apos;4109&apos;, &apos;3652&apos;, &apos;2488&apos;, &apos;2731&apos;, &apos;3432&apos;, &apos;4337&apos;, &apos;2264&apos;, &apos;2204&apos;, &apos;4744&apos;, &apos;3488&apos;], [&apos;4023&apos;, &apos;2281&apos;, &apos;2490&apos;, &apos;4372&apos;, &apos;3726&apos;, &apos;4445&apos;, &apos;2492&apos;, &apos;2533&apos;, &apos;4035&apos;, &apos;4076&apos;], [&apos;3205&apos;, &apos;2757&apos;, &apos;2376&apos;, &apos;4516&apos;, &apos;3735&apos;, &apos;3224&apos;, &apos;2284&apos;, &apos;3713&apos;, &apos;4359&apos;, &apos;3478&apos;], [&apos;3232&apos;, &apos;3349&apos;, &apos;2433&apos;, &apos;2282&apos;, &apos;2457&apos;, &apos;3498&apos;, &apos;3718&apos;, &apos;4721&apos;, &apos;2633&apos;, &apos;3929&apos;], [&apos;3871&apos;, &apos;4214&apos;, &apos;4305&apos;, &apos;3943&apos;, &apos;4505&apos;, &apos;3477&apos;, &apos;4400&apos;, &apos;3538&apos;, &apos;4456&apos;, &apos;2710&apos;], [&apos;3155&apos;, &apos;2369&apos;, &apos;2852&apos;, &apos;2201&apos;, &apos;2142&apos;, &apos;4442&apos;, &apos;2200&apos;, &apos;2192&apos;, &apos;4253&apos;, &apos;2225&apos;], [&apos;3040&apos;, &apos;4368&apos;, &apos;2191&apos;, &apos;4188&apos;, &apos;4399&apos;, &apos;4339&apos;, &apos;2347&apos;, &apos;2806&apos;, &apos;4302&apos;, &apos;3567&apos;], [&apos;2196&apos;, &apos;2605&apos;, &apos;2807&apos;, &apos;4245&apos;, &apos;2151&apos;, &apos;2202&apos;, &apos;3337&apos;, &apos;3812&apos;, &apos;2487&apos;, &apos;2836&apos;], [&apos;3905&apos;, &apos;2190&apos;, &apos;2400&apos;, &apos;2293&apos;, &apos;3064&apos;, &apos;2521&apos;, &apos;4019&apos;, &apos;4406&apos;, &apos;2360&apos;, &apos;3560&apos;], [&apos;2464&apos;, &apos;2678&apos;, &apos;4138&apos;, &apos;2377&apos;, &apos;3425&apos;, &apos;4412&apos;, &apos;3771&apos;, &apos;3689&apos;, &apos;3880&apos;, &apos;2629&apos;], [&apos;3755&apos;, &apos;2254&apos;, &apos;2217&apos;, &apos;2751&apos;, &apos;2439&apos;, &apos;2394&apos;, &apos;3591&apos;, &apos;3963&apos;, &apos;2477&apos;, &apos;3017&apos;], [&apos;4052&apos;, &apos;2172&apos;, &apos;3165&apos;, &apos;3046&apos;, &apos;4417&apos;, &apos;4363&apos;, &apos;4266&apos;, &apos;3242&apos;, &apos;2310&apos;, &apos;3666&apos;], [&apos;2140&apos;, &apos;2547&apos;, &apos;2979&apos;, &apos;3965&apos;, &apos;2222&apos;, &apos;2586&apos;, &apos;4617&apos;, &apos;2611&apos;, &apos;3922&apos;, &apos;3997&apos;], [&apos;3944&apos;, &apos;2793&apos;, &apos;4384&apos;, &apos;3658&apos;, &apos;3563&apos;, &apos;3508&apos;, &apos;3845&apos;, &apos;4335&apos;, &apos;2501&apos;, &apos;2615&apos;], [&apos;2199&apos;, &apos;4276&apos;, &apos;2397&apos;, &apos;2194&apos;, &apos;3277&apos;, &apos;3247&apos;, &apos;3674&apos;, &apos;3682&apos;, &apos;3080&apos;, &apos;3717&apos;], [&apos;3932&apos;, &apos;3250&apos;, &apos;3562&apos;, &apos;3959&apos;, &apos;2385&apos;, &apos;2186&apos;, &apos;3202&apos;, &apos;2238&apos;, &apos;3430&apos;, &apos;3611&apos;], [&apos;3936&apos;, &apos;3182&apos;, &apos;3452&apos;, &apos;3856&apos;, &apos;3152&apos;, &apos;3681&apos;, &apos;2168&apos;, &apos;4039&apos;, &apos;2435&apos;, &apos;4611&apos;], [&apos;3909&apos;, &apos;2646&apos;, &apos;2822&apos;, &apos;3340&apos;, &apos;2287&apos;, &apos;3939&apos;, &apos;2141&apos;]]
+    # tmp = []
+    # for i in nums:
+    #     tmp += i
+    # print(tmp)
+
+    nums = [&apos;2996&apos;, &apos;2143&apos;, &apos;2250&apos;, &apos;2708&apos;, &apos;2133&apos;, &apos;2997&apos;, &apos;2381&apos;, &apos;2748&apos;, &apos;4218&apos;, &apos;3245&apos;, &apos;2305&apos;, &apos;3110&apos;, &apos;2255&apos;, &apos;3236&apos;, &apos;2349&apos;, &apos;3546&apos;, &apos;3934&apos;, &apos;2322&apos;, &apos;2256&apos;, &apos;2875&apos;, &apos;2299&apos;, &apos;3751&apos;, &apos;3196&apos;, &apos;4392&apos;, &apos;2345&apos;, &apos;3890&apos;, &apos;4444&apos;, &apos;4404&apos;, &apos;2154&apos;, &apos;3602&apos;, &apos;2810&apos;, &apos;2164&apos;, &apos;3393&apos;, &apos;3687&apos;, &apos;3594&apos;, &apos;2270&apos;, &apos;3696&apos;, &apos;2223&apos;, &apos;2148&apos;, &apos;2387&apos;, &apos;2234&apos;, &apos;4318&apos;, &apos;3418&apos;, &apos;2159&apos;, &apos;2620&apos;, &apos;2320&apos;, &apos;3213&apos;, &apos;4312&apos;, &apos;2588&apos;, &apos;2175&apos;, &apos;2701&apos;, &apos;2187&apos;, &apos;4246&apos;, &apos;2743&apos;, &apos;2466&apos;, &apos;2280&apos;, &apos;3443&apos;, &apos;2230&apos;, &apos;2472&apos;, &apos;3804&apos;, &apos;2257&apos;, &apos;2292&apos;, &apos;2384&apos;, &apos;3212&apos;, &apos;4588&apos;, &apos;4101&apos;, &apos;4528&apos;, &apos;3703&apos;, &apos;4373&apos;, &apos;3161&apos;, &apos;4535&apos;, &apos;4544&apos;, &apos;2215&apos;, &apos;3383&apos;, &apos;4438&apos;, &apos;2745&apos;, &apos;3826&apos;, &apos;4342&apos;, &apos;4365&apos;, &apos;3149&apos;, &apos;4486&apos;, &apos;2237&apos;, &apos;4568&apos;, &apos;2451&apos;, &apos;4196&apos;, &apos;2132&apos;, &apos;4460&apos;, &apos;2471&apos;, &apos;4579&apos;, &apos;4534&apos;, &apos;3169&apos;, &apos;3733&apos;, &apos;3107&apos;, &apos;4755&apos;, &apos;4582&apos;, &apos;4380&apos;, &apos;4357&apos;, &apos;2507&apos;, &apos;2452&apos;, &apos;3595&apos;, &apos;4549&apos;, &apos;4561&apos;, &apos;4646&apos;, &apos;2371&apos;, &apos;2263&apos;, &apos;3731&apos;, &apos;3672&apos;, &apos;4240&apos;, &apos;2441&apos;, &apos;4529&apos;, &apos;2273&apos;, &apos;4405&apos;, &apos;2998&apos;, &apos;2855&apos;, &apos;4219&apos;, &apos;4448&apos;, &apos;4447&apos;, &apos;2432&apos;, &apos;4547&apos;, &apos;4705&apos;, &apos;4271&apos;, &apos;4664&apos;, &apos;4658&apos;, &apos;4586&apos;, &apos;4651&apos;, &apos;3705&apos;, &apos;3991&apos;, &apos;4592&apos;, &apos;4606&apos;, &apos;4265&apos;, &apos;2382&apos;, &apos;2277&apos;, &apos;4277&apos;, &apos;4020&apos;, &apos;3789&apos;, &apos;2286&apos;, &apos;3328&apos;, &apos;4633&apos;, &apos;4436&apos;, &apos;4645&apos;, &apos;4397&apos;, &apos;3301&apos;, &apos;4667&apos;, &apos;4413&apos;, &apos;4450&apos;, &apos;4371&apos;, &apos;4644&apos;, &apos;4407&apos;, &apos;4526&apos;, &apos;2926&apos;, &apos;4708&apos;, &apos;4649&apos;, &apos;4774&apos;, &apos;2229&apos;, &apos;4673&apos;, &apos;3790&apos;, &apos;3904&apos;, &apos;3370&apos;, &apos;3011&apos;, &apos;4543&apos;, &apos;3623&apos;, &apos;4691&apos;, &apos;3650&apos;, &apos;4665&apos;, &apos;3920&apos;, &apos;3060&apos;, &apos;4367&apos;, &apos;3732&apos;, &apos;4694&apos;, &apos;4687&apos;, &apos;4538&apos;, &apos;2388&apos;, &apos;4710&apos;, &apos;4548&apos;, &apos;3848&apos;, &apos;4669&apos;, &apos;4597&apos;, &apos;4387&apos;, &apos;4736&apos;, &apos;4641&apos;, &apos;3895&apos;, &apos;4369&apos;, &apos;3345&apos;, &apos;3836&apos;, &apos;4672&apos;, &apos;3395&apos;, &apos;4506&apos;, &apos;4786&apos;, &apos;2160&apos;, &apos;4130&apos;, &apos;2248&apos;, &apos;4761&apos;, &apos;4509&apos;, &apos;2917&apos;, &apos;4656&apos;, &apos;3907&apos;, &apos;4758&apos;, &apos;3879&apos;, &apos;2725&apos;, &apos;4402&apos;, &apos;4602&apos;, &apos;3740&apos;, &apos;4713&apos;, &apos;4727&apos;, &apos;2964&apos;, &apos;4435&apos;, &apos;4524&apos;, &apos;4692&apos;, &apos;3694&apos;, &apos;4523&apos;, &apos;4696&apos;, &apos;2283&apos;, &apos;4559&apos;, &apos;2208&apos;, &apos;4737&apos;, &apos;3921&apos;, &apos;3469&apos;, &apos;4643&apos;, &apos;4180&apos;, &apos;2437&apos;, &apos;2756&apos;, &apos;2635&apos;, &apos;2449&apos;, &apos;2936&apos;, &apos;3621&apos;, &apos;4728&apos;, &apos;2754&apos;, &apos;4648&apos;, &apos;3479&apos;, &apos;4604&apos;, &apos;2398&apos;, &apos;4690&apos;, &apos;4702&apos;, &apos;4720&apos;, &apos;4618&apos;, &apos;2332&apos;, &apos;2193&apos;, &apos;2579&apos;, &apos;4304&apos;, &apos;2436&apos;, &apos;4386&apos;, &apos;2600&apos;, &apos;2344&apos;, &apos;2358&apos;, &apos;4783&apos;, &apos;4555&apos;, &apos;4518&apos;, &apos;3462&apos;, &apos;4711&apos;, &apos;4792&apos;, &apos;4760&apos;, &apos;3554&apos;, &apos;4662&apos;, &apos;2549&apos;, &apos;4054&apos;, &apos;2368&apos;, &apos;4029&apos;, &apos;3901&apos;, &apos;4743&apos;, &apos;2294&apos;, &apos;2858&apos;, &apos;3738&apos;, &apos;2564&apos;, &apos;4008&apos;, &apos;4278&apos;, &apos;2165&apos;, &apos;2787&apos;, &apos;4006&apos;, &apos;3223&apos;, &apos;4640&apos;, &apos;4269&apos;, &apos;3727&apos;, &apos;2295&apos;, &apos;4671&apos;, &apos;4261&apos;, &apos;4213&apos;, &apos;2826&apos;, &apos;3641&apos;, &apos;3181&apos;, &apos;2819&apos;, &apos;3071&apos;, &apos;2621&apos;, &apos;4578&apos;, &apos;4382&apos;, &apos;3208&apos;, &apos;3524&apos;, &apos;4209&apos;, &apos;2604&apos;, &apos;3059&apos;, &apos;2799&apos;, &apos;4826&apos;, &apos;3036&apos;, &apos;3999&apos;, &apos;4707&apos;, &apos;2315&apos;, &apos;3369&apos;, &apos;3335&apos;, &apos;4021&apos;, &apos;2569&apos;, &apos;3355&apos;, &apos;3216&apos;, &apos;4738&apos;, &apos;3500&apos;, &apos;4619&apos;, &apos;3966&apos;, &apos;4622&apos;, &apos;4830&apos;, &apos;3119&apos;, &apos;2638&apos;, &apos;3326&apos;, &apos;4185&apos;, &apos;4572&apos;, &apos;4273&apos;, &apos;3957&apos;, &apos;4689&apos;, &apos;4718&apos;, &apos;4821&apos;, &apos;4211&apos;, &apos;2434&apos;, &apos;3273&apos;, &apos;3386&apos;, &apos;3686&apos;, &apos;4806&apos;, &apos;2489&apos;, &apos;4141&apos;, &apos;4704&apos;, &apos;4764&apos;, &apos;3973&apos;, &apos;2149&apos;, &apos;3156&apos;, &apos;4805&apos;, &apos;2459&apos;, &apos;4706&apos;, &apos;2303&apos;, &apos;3609&apos;, &apos;4824&apos;, &apos;3312&apos;, &apos;3946&apos;, &apos;4455&apos;, &apos;3741&apos;, &apos;4808&apos;, &apos;3619&apos;, &apos;3780&apos;, &apos;4569&apos;, &apos;4570&apos;, &apos;3955&apos;, &apos;4653&apos;, &apos;4785&apos;, &apos;4048&apos;, &apos;4174&apos;, &apos;4840&apos;, &apos;4782&apos;, &apos;4609&apos;, &apos;4742&apos;, &apos;4800&apos;, &apos;4333&apos;, &apos;4734&apos;, &apos;3739&apos;, &apos;4375&apos;, &apos;4091&apos;, &apos;4751&apos;, &apos;4660&apos;, &apos;3662&apos;, &apos;4836&apos;, &apos;3745&apos;, &apos;4829&apos;, &apos;4841&apos;, &apos;3990&apos;, &apos;2216&apos;, &apos;4255&apos;, &apos;4659&apos;, &apos;4242&apos;, &apos;4795&apos;, &apos;4799&apos;, &apos;2953&apos;, &apos;4839&apos;, &apos;4813&apos;, &apos;4151&apos;, &apos;4717&apos;, &apos;4169&apos;, &apos;4831&apos;, &apos;3481&apos;, &apos;4810&apos;, &apos;4817&apos;, &apos;4819&apos;, &apos;3702&apos;, &apos;3530&apos;, &apos;2246&apos;, &apos;3835&apos;, &apos;3016&apos;, &apos;2566&apos;, &apos;2911&apos;, &apos;2362&apos;, &apos;4338&apos;, &apos;2574&apos;, &apos;4195&apos;, &apos;2414&apos;, &apos;4200&apos;, &apos;4553&apos;, &apos;4349&apos;, &apos;2343&apos;, &apos;3095&apos;, &apos;2197&apos;, &apos;4122&apos;, &apos;2618&apos;, &apos;3475&apos;, &apos;3038&apos;, &apos;3601&apos;, &apos;2128&apos;, &apos;2364&apos;, &apos;2944&apos;, &apos;3209&apos;, &apos;3770&apos;, &apos;2179&apos;, &apos;3855&apos;, &apos;4157&apos;, &apos;4319&apos;, &apos;2312&apos;, &apos;3956&apos;, &apos;3206&apos;, &apos;2861&apos;, &apos;4468&apos;, &apos;4046&apos;, &apos;3225&apos;, &apos;4432&apos;, &apos;2514&apos;, &apos;4112&apos;, &apos;2801&apos;, &apos;3153&apos;, &apos;2135&apos;, &apos;4109&apos;, &apos;3652&apos;, &apos;2488&apos;, &apos;2731&apos;, &apos;3432&apos;, &apos;4337&apos;, &apos;2264&apos;, &apos;2204&apos;, &apos;4744&apos;, &apos;3488&apos;, &apos;4023&apos;, &apos;2281&apos;, &apos;2490&apos;, &apos;4372&apos;, &apos;3726&apos;, &apos;4445&apos;, &apos;2492&apos;, &apos;2533&apos;, &apos;4035&apos;, &apos;4076&apos;, &apos;3205&apos;, &apos;2757&apos;, &apos;2376&apos;, &apos;4516&apos;, &apos;3735&apos;, &apos;3224&apos;, &apos;2284&apos;, &apos;3713&apos;, &apos;4359&apos;, &apos;3478&apos;, &apos;3232&apos;, &apos;3349&apos;, &apos;2433&apos;, &apos;2282&apos;, &apos;2457&apos;, &apos;3498&apos;, &apos;3718&apos;, &apos;4721&apos;, &apos;2633&apos;, &apos;3929&apos;, &apos;3871&apos;, &apos;4214&apos;, &apos;4305&apos;, &apos;3943&apos;, &apos;4505&apos;, &apos;3477&apos;, &apos;4400&apos;, &apos;3538&apos;, &apos;4456&apos;, &apos;2710&apos;, &apos;3155&apos;, &apos;2369&apos;, &apos;2852&apos;, &apos;2201&apos;, &apos;2142&apos;, &apos;4442&apos;, &apos;2200&apos;, &apos;2192&apos;, &apos;4253&apos;, &apos;2225&apos;, &apos;3040&apos;, &apos;4368&apos;, &apos;2191&apos;, &apos;4188&apos;, &apos;4399&apos;, &apos;4339&apos;, &apos;2347&apos;, &apos;2806&apos;, &apos;4302&apos;, &apos;3567&apos;, &apos;2196&apos;, &apos;2605&apos;, &apos;2807&apos;, &apos;4245&apos;, &apos;2151&apos;, &apos;2202&apos;, &apos;3337&apos;, &apos;3812&apos;, &apos;2487&apos;, &apos;2836&apos;, &apos;3905&apos;, &apos;2190&apos;, &apos;2400&apos;, &apos;2293&apos;, &apos;3064&apos;, &apos;2521&apos;, &apos;4019&apos;, &apos;4406&apos;, &apos;2360&apos;, &apos;3560&apos;, &apos;2464&apos;, &apos;2678&apos;, &apos;4138&apos;, &apos;2377&apos;, &apos;3425&apos;, &apos;4412&apos;, &apos;3771&apos;, &apos;3689&apos;, &apos;3880&apos;, &apos;2629&apos;, &apos;3755&apos;, &apos;2254&apos;, &apos;2217&apos;, &apos;2751&apos;, &apos;2439&apos;, &apos;2394&apos;, &apos;3591&apos;, &apos;3963&apos;, &apos;2477&apos;, &apos;3017&apos;, &apos;4052&apos;, &apos;2172&apos;, &apos;3165&apos;, &apos;3046&apos;, &apos;4417&apos;, &apos;4363&apos;, &apos;4266&apos;, &apos;3242&apos;, &apos;2310&apos;, &apos;3666&apos;, &apos;2140&apos;, &apos;2547&apos;, &apos;2979&apos;, &apos;3965&apos;, &apos;2222&apos;, &apos;2586&apos;, &apos;4617&apos;, &apos;2611&apos;, &apos;3922&apos;, &apos;3997&apos;, &apos;3944&apos;, &apos;2793&apos;, &apos;4384&apos;, &apos;3658&apos;, &apos;3563&apos;, &apos;3508&apos;, &apos;3845&apos;, &apos;4335&apos;, &apos;2501&apos;, &apos;2615&apos;, &apos;2199&apos;, &apos;4276&apos;, &apos;2397&apos;, &apos;2194&apos;, &apos;3277&apos;, &apos;3247&apos;, &apos;3674&apos;, &apos;3682&apos;, &apos;3080&apos;, &apos;3717&apos;, &apos;3932&apos;, &apos;3250&apos;, &apos;3562&apos;, &apos;3959&apos;, &apos;2385&apos;, &apos;2186&apos;, &apos;3202&apos;, &apos;2238&apos;, &apos;3430&apos;, &apos;3611&apos;, &apos;3936&apos;, &apos;3182&apos;, &apos;3452&apos;, &apos;3856&apos;, &apos;3152&apos;, &apos;3681&apos;, &apos;2168&apos;, &apos;4039&apos;, &apos;2435&apos;, &apos;4611&apos;, &apos;3909&apos;, &apos;2646&apos;, &apos;2822&apos;, &apos;3340&apos;, &apos;2287&apos;, &apos;3939&apos;, &apos;2141&apos;]
+    nums = nums[:-100]
+    res = [toSql(i) for i in nums]
+
+
+if __name__ == &apos;__main__&apos;:
+    # #print(&quot;&quot;.join([&quot;a&quot;,&quot;b&quot;]))
+    # # print(getBackTestId(&quot;2250&quot;)())
+    # j = JoinQuant(2250)
+    # #j.getPosition()getTransaction
+    # # print(j.getPosition().values.tolist()) #失败
+    # a = [writeSql(x) for x in j.getPosition().values.tolist()]
+    # print(a)
+    # #print(getNowDay())
+    a = getTotalNum()
+    print(a)
+    main()
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/用Python来分析joinquant的策略/" data-id="cj0ryfuds004hc6otk9gzcez8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/汇编计算2的n次方/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/百度的关键词联想接口/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

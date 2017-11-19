@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:Django教程：制作你的第一个Django App，Part 1date:2016-01-23 09:40:20原文： https://docs.djangoproject.com/en/1.9/intro/tutorial01/译者：Radish
+让我们通过例子来学习。贯穿整个教程，我们将带你创作一个基本的投票软件。
+它将包含两个部分：
+
+一个让人们投票的公开网站
+
+一个让你添加、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/Django教程：制作你的第一个Django App，Part 1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:Django教程：制作你的第一个Django App，Part 1date:2016-01-23 09:40:20原文： https://docs.djangoproject.com/en/1.9/intro/tutorial01/译者：Radish
+让我们通过例子来学习。贯穿整个教程，我们将带你创作一个基本的投票软件。
+它将包含两个部分：
+
+一个让人们投票的公开网站
+
+一个让你添加、">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:Django教程：制作你的第一个Django App，Part 1date:2016-01-23 09:40:20原文： https://docs.djangoproject.com/en/1.9/intro/tutorial01/译者：Radish
+让我们通过例子来学习。贯穿整个教程，我们将带你创作一个基本的投票软件。
+它将包含两个部分：
+
+一个让人们投票的公开网站
+
+一个让你添加、">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Django教程：制作你的第一个Django App，Part 1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Django教程：制作你的第一个Django App，Part 1/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Django教程：制作你的第一个Django App，Part 1<br>date:2016-01-23 09:40:20<br>原文： <a href="https://docs.djangoproject.com/en/1.9/intro/tutorial01/" target="_blank" rel="external">https://docs.djangoproject.com/en/1.9/intro/tutorial01/</a><br>译者：Radish</p>
+<p>让我们通过例子来学习。<br>贯穿整个教程，我们将带你创作一个基本的投票软件。</p>
+<p>它将包含两个部分：</p>
+<ul>
+<li><p>一个让人们投票的公开网站</p>
+</li>
+<li><p>一个让你添加、修改、删除投票的后台</p>
+</li>
+</ul>
+<p>我们假定你已经安装好了Django，你可以通过如下命令来查看Django是否安装以及安装的版本：</p>
+<pre><code>$ python3 -c &quot;import django;print(django.get_version())&quot;
+</code></pre><p>如果Django已经安装好了，你将会看到你安装的版本，反之，你将收到一条『No module named django』的错误信息。</p>
+<p>这个教程是写给Django 1.9 和Python3.4及以上版本的。如果版本不匹配，你可以通过版本转换器查看你对应版本的Django教程，或者是将Django更新至最新版本，若果你还在用Python2.7，你只需要看注释并对代码做微小的改动即可。</p>
+<p>##创建一个工程</p>
+<p>如果这是你第一次使用Django，你要注意一些初始阶段的安装，即你需要自动生成一些代码来建立一个Django的工程 - 对一个Django实例进行一些设置，包含数据库的设置，Django的具体设置和应用的具体设置。</p>
+<p>在命令行中，使用cd命令进入你要存储代码的地方，然后运行下面的命令：</p>
+<pre><code>$django-admin startproject mysite
+</code></pre><p>这将在你的当前目录下创建一个名叫mysite的目录，如果没有成功 <a href="https://docs.djangoproject.com/en/1.9/faq/troubleshooting/#troubleshooting-django-admin" target="_blank" rel="external">点击这里</a></p>
+<pre><code>注意：
+在命名的时候要注意避免起一些与Python内置模块或者Django模块(比如math、django、test等)冲突的名字。
+
+
+应该将这段代码放在哪？
+如果你有学过PHP（PHP框架除外），你可能习惯于将代码放在web服务器的文件根目录下（例如/var/www），但是对于Django来说，你不需要做那些。把你的Python代码放在web目录下不是个好主意，因为这样可能导致别人能够看到你的web代码从而导致安全问题。
+将你的代码放到文档根目录的外面 例如/home/mycode/
+</code></pre><p>让我们看看startproject命令创建了什么：</p>
+<pre><code>mysite/
+    manage.py
+    mysite/
+        __init__.py
+        settings.py
+        urls.py
+        wsgi.py
+</code></pre><p> 这些文件是：</p>
+<ul>
+<li><p>外面的mysite/根目录只是一个装工程的文件夹，它的名字对于Django来说无所谓，你可以改成任何你喜欢的名字.</p>
+</li>
+<li><p>manage.py：一个你可以通过它与Django工程多种方式交互的命令行工具 .</p>
+</li>
+<li><p>里面的mysite/文件夹是你工程真正的Python包，这个的名字就是你之后用import命令导入包时用到的名字.</p>
+</li>
+<li><p>mysite/<strong>init</strong>.py:一个空文件用来告诉Python这个目录将被视为一个Python包.</p>
+</li>
+<li><p>mysite/settings.py:关于你Django工程的设置.</p>
+</li>
+<li><p>mysite/urls.py:这个Django工程的url定义;相当于这个Django网站的『目录』.</p>
+</li>
+<li><p>mysite/wsgi.py:一个满足你项目的WSGI web服务器的入口点.</p>
+</li>
+</ul>
+<p>##开发者的服务器</p>
+<p>让我们验证Django工程是否能够工作,把目录换到外层的mysite目录,然后运行如下命令：</p>
+<pre><code>$python3 manage.py runserver
+</code></pre><p>你会在命令行窗口中看到如下的的输出：</p>
+<pre><code>Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have unapplied migrations; your app may not work properly until they are applied.
+Run &apos;python manage.py migrate&apos; to apply them.
+
+January 14, 2016 - 15:50:53
+Django version 1.9, using settings &apos;mysite.settings&apos;
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+</code></pre><p>·</p>
+<pre><code>提示：
+不要管里面未设置数据库的警告，我们不久之后就会 去处理数据库的问题。
+</code></pre><p>你已经启动了Django的开发者服务器，一个由Python编写的轻量级web服务器，我们将里面导入了Django因此你可以快速的开发一些东西而不用去处理服务器的配置问题–比如Apache的配置–知道你已经准备好进行发布产品了。</p>
+<p>现在有个重要的提醒：不要把这个服务器当做一个正式的产品来使用，它仅仅是能够用作开发。</p>
+<p>现在这个服务器已经在运行了,访问<a href="http://127.0.0.1:8000/" target="_blank" rel="external">http://127.0.0.1:8000/</a> ，你将会看到一个淡蓝色的『Welcome to Django』的页面。</p>
+<pre><code>转换端口：
+默认的runserver命令将会在内部IP的8000端口开放服务，如果你想改变 只需要修改一下命令就好：
+$ python manage.py runserver 8080（在8080端口开放服务）
+$ python manage.py runserver 0.0.0.0:8000（开放外部IP）
+这个服务器是自动加载Python代码的，你不需要在修改代码后重启使代码生效。但是一些动作比如添加文件无法进行。
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Django教程：制作你的第一个Django App，Part 1/" data-id="cj0ryfu8r0007c6ot0jxm5o19" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/C++ memory Bomb/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/Docker出现Tag latest not found in repository/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

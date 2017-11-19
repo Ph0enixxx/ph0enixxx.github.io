@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title:Python&amp;amp;Flask实现代码片段发布网站date:2016-01-28 11:34:44    from flask import *    import redis    import time    import json    r = redis.StrictRedis(host=”127.0.0.1”)    app = Flask(name)
+if r.get(&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/Python&Flask实现代码片段发布网站/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="title:Python&amp;amp;Flask实现代码片段发布网站date:2016-01-28 11:34:44    from flask import *    import redis    import time    import json    r = redis.StrictRedis(host=”127.0.0.1”)    app = Flask(name)
+if r.get(&amp;">
+<meta property="og:updated_time" content="2017-03-27T10:11:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="title:Python&amp;amp;Flask实现代码片段发布网站date:2016-01-28 11:34:44    from flask import *    import redis    import time    import json    r = redis.StrictRedis(host=”127.0.0.1”)    app = Flask(name)
+if r.get(&amp;">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Python&amp;Flask实现代码片段发布网站" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/Python&Flask实现代码片段发布网站/" class="article-date">
+  <time datetime="2017-03-26T07:32:46.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title:Python&amp;Flask实现代码片段发布网站<br>date:2016-01-28 11:34:44<br>    from flask import *<br>    import redis<br>    import time<br>    import json<br>    r = redis.StrictRedis(host=”127.0.0.1”)<br>    app = Flask(<strong>name</strong>)</p>
+<pre><code>if r.get(&apos;count&apos;):
+    pass
+else:
+    r.set(&apos;count&apos;,0)
+#print(r.get(&apos;count&apos;))
+@app.route(&apos;/&apos;)
+def set():
+    #下一步 美化界面 xss去除
+    return render_template(&apos;a.html&apos;,action=url_for(&apos;add&apos;))
+@app.route(&apos;/view/&lt;kind&gt;&apos;)
+def look(kind=&quot;&quot;):
+    #查询
+    tmp = []
+    maxNum = r.get(&apos;count&apos;).decode(&apos;utf-8&apos;)
+    for i in range(1,int(maxNum)):
+        hashName = &apos;code&apos;+str(i)
+        try:
+            codeType = r.hget(hashName,&apos;type&apos;).decode(&apos;utf-8&apos;)
+            if codeType == kind:
+                tmp.append(code(i,view = False))
+        except:
+            pass
+
+    return render_template(&apos;view.html&apos;,model=tmp)
+
+@app.route(&apos;/add/&apos;,methods=[&apos;GET&apos;,&apos;POST&apos;])
+def add():
+    if request.method == &apos;POST&apos;:
+        codeContent = request.form[&apos;code&apos;]
+        codeTitle = request.form[&apos;title&apos;]
+        codeType = request.form[&apos;type&apos;]
+        count = r.get(&apos;count&apos;)
+        hashName = &apos;code&apos;+str(int(count))
+        #tmp = {&apos;title&apos;:codeTitle,&apos;code&apos;:codeContent,&apos;time&apos;:int(time.time()),&apos;type&apos;:codeType}
+        r.hset(hashName,&apos;title&apos;,codeTitle)#str(json.dumps(tmp)))
+        r.hset(hashName,&apos;code&apos;,codeContent)
+        r.hset(hashName,&apos;time&apos;,int(time.time()))
+        r.hset(hashName,&apos;type&apos;,codeType)
+        r.set(&apos;count&apos;,int(count)+1)
+        return codeContent
+
+@app.route(&apos;/code/&lt;int:id&gt;&apos;)
+def code(id,view = True):
+    tmp = {}
+    hashName = &apos;code&apos;+str(id)
+    tmp[&apos;type&apos;] = r.hget(hashName,&apos;type&apos;).decode(&apos;utf-8&apos;)
+    tmp[&apos;code&apos;] = r.hget(hashName,&apos;code&apos;).decode(&apos;utf-8&apos;)
+    tmp[&apos;time&apos;] = r.hget(hashName,&apos;time&apos;).decode(&apos;utf-8&apos;)
+    tmp[&apos;title&apos;] = r.hget(hashName,&apos;title&apos;).decode(&apos;utf-8&apos;)
+    if view:
+        return render_template(&apos;code.html&apos;,data=tmp)
+    else:
+        return tmp
+
+app.debug = True
+app.run(host=&quot;127.0.0.1&quot;,port=8080)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/26/Python&Flask实现代码片段发布网站/" data-id="cj0ryfu9s000wc6otoxph5iwi" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/26/Python Lambda/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/26/Python 简单计算器/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">173</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/c++ std::random_shuffle()实现/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/About/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Ajax模板/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Bing背景图片API/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/Django教程：创建投票App Part 2/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
