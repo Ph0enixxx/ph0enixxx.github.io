@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,7 +60,44 @@
   
     <article id="post-0" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/15/0/" class="article-date">
+    <a href="/2017/11/19/0/" class="article-date">
+  <time datetime="2017-11-19T00:30:06.000Z" itemprop="datePublished">2017-11-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/19/0/">Use github issue as blog backend</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>just use this script!<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line"></span><br><span class="line">url = <span class="string">"https://api.github.com/repos/Ph0enixxx/articles/issues"</span></span><br><span class="line">file_template = <span class="string">"""</span></span><br><span class="line"><span class="string">title: %s</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">date: %s</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">tags:</span></span><br><span class="line"><span class="string">---</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">%s</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">cnt = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">get_text = <span class="keyword">lambda</span> url :req.get(url).text</span><br><span class="line">get_json = <span class="keyword">lambda</span> data : json.loads(data)</span><br><span class="line">deal_data = <span class="keyword">lambda</span> data : [&#123;<span class="string">"title"</span>:i[<span class="string">"title"</span>].replace(<span class="string">":"</span>, <span class="string">"："</span>).replace(<span class="string">"["</span>, <span class="string">"【"</span>).replace(<span class="string">"]"</span>, <span class="string">"】"</span>), <span class="string">"content"</span>:i[<span class="string">"body"</span>], <span class="string">"date"</span>:i[<span class="string">"created_at"</span>]&#125; <span class="keyword">for</span> i <span class="keyword">in</span> data]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_file</span><span class="params">(template)</span>:</span>  <span class="comment"># </span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">a</span><span class="params">(i)</span>:</span></span><br><span class="line">		<span class="keyword">with</span> open(<span class="string">"./source/_posts/"</span> + str(cnt) + <span class="string">".md"</span>, <span class="string">"w"</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> fp:</span><br><span class="line">			<span class="keyword">global</span> cnt</span><br><span class="line">			print(<span class="string">"./source/_posts/"</span> + str(cnt))</span><br><span class="line">			fp.write(template%(i[<span class="string">'title'</span>], i[<span class="string">"date"</span>], i[<span class="string">'content'</span>]))</span><br><span class="line">			fp.close()</span><br><span class="line">			cnt += <span class="number">1</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">233</span></span><br><span class="line">	<span class="keyword">return</span> a</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">	a = deal_data(get_json(get_text(url)))</span><br><span class="line">	print(a)</span><br><span class="line">	wt = to_file(file_template)</span><br><span class="line">	[wt(i) <span class="keyword">for</span> i <span class="keyword">in</span> a]</span><br><span class="line">	<span class="comment"># map(wt, a)</span></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/19/0/" data-id="cja6h5jv500000zot0ku0bmne" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/15/1/" class="article-date">
   <time datetime="2017-11-14T23:32:00.000Z" itemprop="datePublished">2017-11-15</time>
 </a>
     
@@ -73,7 +109,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/15/0/">custom django model_to_dict with @property and readonly field</a>
+      <a class="article-title" href="/2017/11/15/1/">custom django model_to_dict with @property and readonly field</a>
     </h1>
   
 
@@ -86,7 +122,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/15/0/" data-id="cja6h5jv500000zot0ku0bmne" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/15/1/" data-id="cja6h5jvk00020zotzwykvn2r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -96,9 +132,9 @@
 
 
   
-    <article id="post-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/13/1/" class="article-date">
+    <a href="/2017/11/13/2/" class="article-date">
   <time datetime="2017-11-13T06:29:08.000Z" itemprop="datePublished">2017-11-13</time>
 </a>
     
@@ -110,7 +146,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/13/1/">【踩坑】Django中一个危险而隐蔽的坑</a>
+      <a class="article-title" href="/2017/11/13/2/">【踩坑】Django中一个危险而隐蔽的坑</a>
     </h1>
   
 
@@ -126,7 +162,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/13/1/" data-id="cja6h5jvk00020zotzwykvn2r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/13/2/" data-id="cja6h5jvx00060zotbwbrpkpj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -136,9 +172,9 @@
 
 
   
-    <article id="post-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/10/2/" class="article-date">
+    <a href="/2017/11/10/3/" class="article-date">
   <time datetime="2017-11-09T21:20:39.000Z" itemprop="datePublished">2017-11-10</time>
 </a>
     
@@ -150,7 +186,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/10/2/">【reprint】An excellent way to add request.PUT to Django</a>
+      <a class="article-title" href="/2017/11/10/3/">【reprint】An excellent way to add request.PUT to Django</a>
     </h1>
   
 
@@ -164,7 +200,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/10/2/" data-id="cja6h5jvx00060zotbwbrpkpj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/10/3/" data-id="cja6h5jwf00070zot7swj27yn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -174,9 +210,9 @@
 
 
   
-    <article id="post-3" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-4" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/08/3/" class="article-date">
+    <a href="/2017/11/08/4/" class="article-date">
   <time datetime="2017-11-08T06:14:06.000Z" itemprop="datePublished">2017-11-08</time>
 </a>
     
@@ -188,7 +224,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/08/3/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
+      <a class="article-title" href="/2017/11/08/4/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
     </h1>
   
 
@@ -201,7 +237,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/08/3/" data-id="cja6h5jwf00070zot7swj27yn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/08/4/" data-id="cja6h5jwn00080zot6ncutd6b" class="article-share-link">Share</a>
       
       
     </footer>
@@ -211,9 +247,9 @@
 
 
   
-    <article id="post-4" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-5" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/07/4/" class="article-date">
+    <a href="/2017/11/07/5/" class="article-date">
   <time datetime="2017-11-07T04:15:52.000Z" itemprop="datePublished">2017-11-07</time>
 </a>
     
@@ -225,7 +261,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/07/4/">awk print last element of a line</a>
+      <a class="article-title" href="/2017/11/07/5/">awk print last element of a line</a>
     </h1>
   
 
@@ -241,7 +277,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/07/4/" data-id="cja6h5jwn00080zot6ncutd6b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/07/5/" data-id="cja6h5jwq000a0zotc9n714xv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -251,9 +287,9 @@
 
 
   
-    <article id="post-5" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-6" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/04/5/" class="article-date">
+    <a href="/2017/11/04/6/" class="article-date">
   <time datetime="2017-11-03T22:24:21.000Z" itemprop="datePublished">2017-11-04</time>
 </a>
     
@@ -265,7 +301,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/04/5/">绕过基于机器学习WAF检测Webshell的几种思路</a>
+      <a class="article-title" href="/2017/11/04/6/">绕过基于机器学习WAF检测Webshell的几种思路</a>
     </h1>
   
 
@@ -284,7 +320,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/04/5/" data-id="cja6h5jwq000a0zotc9n714xv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/04/6/" data-id="cja6h5jwp00090zotzgt23zqp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -294,9 +330,9 @@
 
 
   
-    <article id="post-6" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-7" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/04/6/" class="article-date">
+    <a href="/2017/11/04/7/" class="article-date">
   <time datetime="2017-11-03T21:54:58.000Z" itemprop="datePublished">2017-11-04</time>
 </a>
     
@@ -308,7 +344,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/04/6/">【踩坑】slove &quot;libmysqlclient.so.16 not found&quot;</a>
+      <a class="article-title" href="/2017/11/04/7/">【踩坑】slove &quot;libmysqlclient.so.16 not found&quot;</a>
     </h1>
   
 
@@ -323,7 +359,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/04/6/" data-id="cja6h5jwp00090zotzgt23zqp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/04/7/" data-id="cja6h5jwv000b0zotmk5yqcjc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -333,9 +369,9 @@
 
 
   
-    <article id="post-7" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-8" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/02/7/" class="article-date">
+    <a href="/2017/11/02/8/" class="article-date">
   <time datetime="2017-11-01T23:17:33.000Z" itemprop="datePublished">2017-11-02</time>
 </a>
     
@@ -347,7 +383,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/02/7/">【踩坑】ORM模型</a>
+      <a class="article-title" href="/2017/11/02/8/">【踩坑】ORM模型</a>
     </h1>
   
 
@@ -364,7 +400,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/02/7/" data-id="cja6h5jwv000b0zotmk5yqcjc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/02/8/" data-id="cja6h5jwz000c0zot06bpw46m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -374,9 +410,9 @@
 
 
   
-    <article id="post-8" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-9" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/10/25/8/" class="article-date">
+    <a href="/2017/10/25/9/" class="article-date">
   <time datetime="2017-10-25T02:03:22.000Z" itemprop="datePublished">2017-10-25</time>
 </a>
     
@@ -388,7 +424,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/25/8/">django restful framework 做基于field的权限控制</a>
+      <a class="article-title" href="/2017/10/25/9/">django restful framework 做基于field的权限控制</a>
     </h1>
   
 
@@ -407,47 +443,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/25/8/" data-id="cja6h5jwz000c0zot06bpw46m" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-9" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/10/23/9/" class="article-date">
-  <time datetime="2017-10-23T06:53:28.000Z" itemprop="datePublished">2017-10-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/23/9/">django-jet 使用DateRangeFilter 报importError的解决方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：<code>from jet.filters import DateRangeFilter</code></p>
-<p>然而，我在加入上述代码后，报出了如下错误：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> jet.filters <span class="keyword">import</span> DateRangeFilter</span><br><span class="line">ImportError: cannot <span class="keyword">import</span> name <span class="string">'DateRangeFilter'</span></span><br></pre></td></tr></table></figure></p>
-<p>搜索了jet的github源码，找到如下解决方案：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将from jet.filters import DateRangeFilter 替换为：</span></span><br><span class="line"><span class="keyword">from</span> rangefilter.filter <span class="keyword">import</span> DateRangeFilter</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyUserAdmin</span><span class="params">(UserAdmin)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    list_filter = (</span><br><span class="line">        (<span class="string">'date_joined'</span>, DateRangeFilter),</span><br><span class="line">    )</span><br></pre></td></tr></table></figure></p>
-<p>引用：<br><a href="https://github.com/geex-arts/django-jet/blob/552191c5be551741b3349aa104c92435702f62e5/docs/filters.rst" target="_blank" rel="noopener">https://github.com/geex-arts/django-jet/blob/552191c5be551741b3349aa104c92435702f62e5/docs/filters.rst</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/23/9/" data-id="cja6h5jx1000d0zotz29udaiq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/25/9/" data-id="cja6h5jx1000d0zotz29udaiq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -476,7 +472,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -488,23 +484,23 @@
       <ul>
         
           <li>
-            <a href="/2017/11/15/0/">custom django model_to_dict with @property and readonly field</a>
+            <a href="/2017/11/19/0/">Use github issue as blog backend</a>
           </li>
         
           <li>
-            <a href="/2017/11/13/1/">【踩坑】Django中一个危险而隐蔽的坑</a>
+            <a href="/2017/11/15/1/">custom django model_to_dict with @property and readonly field</a>
           </li>
         
           <li>
-            <a href="/2017/11/10/2/">【reprint】An excellent way to add request.PUT to Django</a>
+            <a href="/2017/11/13/2/">【踩坑】Django中一个危险而隐蔽的坑</a>
           </li>
         
           <li>
-            <a href="/2017/11/08/3/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
+            <a href="/2017/11/10/3/">【reprint】An excellent way to add request.PUT to Django</a>
           </li>
         
           <li>
-            <a href="/2017/11/07/4/">awk print last element of a line</a>
+            <a href="/2017/11/08/4/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
           </li>
         
       </ul>
@@ -546,6 +542,3 @@
   </div>
 </body>
 </html>
-=======
-<script>location.href="https://github.com/Ph0enixxx/articles/issues"</script>
->>>>>>> 5d7679dcec7915d5e74b9a321c85f50150591e55

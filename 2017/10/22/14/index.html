@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>【踩坑】dracut_initqueue【599】： Warning： Could not boot | Hexo</title>
+  <title>【踩坑】 sudo： sorry, you must have a tty to run sudo (附解决方案) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用pd虚拟机安装CentOS时，出现了如下错误：dracut_initqueue[599]: Warning: Could not boot 原因是由于linux安装程序没有识别设备造成的 解决方案： 在选择系统界面按下TAB，将stage2=后面改成/dev/sdx(x为你的u盘设备名)，在这里由于pd是将iso作为">
+  <meta name="description" content="最近在做一个Linux软件的打包成为iso发行的流程，大体是这样的： 1.准备好软件安装的相关脚本2.编写spec文件，通过rpmbuild来将其打包为yum3.测试yum安装通过后，将其写入一个Linux镜像安装文件夹的Packages并重新生成repo4.打包iso，虚拟机安装测试 我在这里卡在了第4步上：文件成功">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【踩坑】dracut_initqueue【599】： Warning： Could not boot">
-<meta property="og:url" content="http://yoursite.com/2017/10/22/13/index.html">
+<meta property="og:title" content="【踩坑】 sudo： sorry, you must have a tty to run sudo (附解决方案)">
+<meta property="og:url" content="http://yoursite.com/2017/10/22/14/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="用pd虚拟机安装CentOS时，出现了如下错误：dracut_initqueue[599]: Warning: Could not boot 原因是由于linux安装程序没有识别设备造成的 解决方案： 在选择系统界面按下TAB，将stage2=后面改成/dev/sdx(x为你的u盘设备名)，在这里由于pd是将iso作为光盘安装的，因此改成/dev/cdrom">
+<meta property="og:description" content="最近在做一个Linux软件的打包成为iso发行的流程，大体是这样的： 1.准备好软件安装的相关脚本2.编写spec文件，通过rpmbuild来将其打包为yum3.测试yum安装通过后，将其写入一个Linux镜像安装文件夹的Packages并重新生成repo4.打包iso，虚拟机安装测试 我在这里卡在了第4步上：文件成功的安装并复制到了虚拟机，但是执行MySQL初始化的脚本却出现了错误：脚本不执">
 <meta property="og:updated_time" content="2017-11-19T08:30:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【踩坑】dracut_initqueue【599】： Warning： Could not boot">
-<meta name="twitter:description" content="用pd虚拟机安装CentOS时，出现了如下错误：dracut_initqueue[599]: Warning: Could not boot 原因是由于linux安装程序没有识别设备造成的 解决方案： 在选择系统界面按下TAB，将stage2=后面改成/dev/sdx(x为你的u盘设备名)，在这里由于pd是将iso作为光盘安装的，因此改成/dev/cdrom">
+<meta name="twitter:title" content="【踩坑】 sudo： sorry, you must have a tty to run sudo (附解决方案)">
+<meta name="twitter:description" content="最近在做一个Linux软件的打包成为iso发行的流程，大体是这样的： 1.准备好软件安装的相关脚本2.编写spec文件，通过rpmbuild来将其打包为yum3.测试yum安装通过后，将其写入一个Linux镜像安装文件夹的Packages并重新生成repo4.打包iso，虚拟机安装测试 我在这里卡在了第4步上：文件成功的安装并复制到了虚拟机，但是执行MySQL初始化的脚本却出现了错误：脚本不执">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,10 +60,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-13" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-14" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/10/22/13/" class="article-date">
-  <time datetime="2017-10-22T07:25:45.000Z" itemprop="datePublished">2017-10-22</time>
+    <a href="/2017/10/22/14/" class="article-date">
+  <time datetime="2017-10-22T04:09:06.000Z" itemprop="datePublished">2017-10-22</time>
 </a>
     
   </div>
@@ -74,7 +74,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      【踩坑】dracut_initqueue【599】： Warning： Could not boot
+      【踩坑】 sudo： sorry, you must have a tty to run sudo (附解决方案)
     </h1>
   
 
@@ -82,15 +82,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>用pd虚拟机安装CentOS时，出现了如下错误：<br><code>dracut_initqueue[599]: Warning: Could not boot</code></p>
-<p>原因是由于linux安装程序没有识别设备造成的</p>
+        <p>  最近在做一个Linux软件的打包成为iso发行的流程，大体是这样的：</p>
+<p>1.准备好软件安装的相关脚本<br>2.编写spec文件，通过rpmbuild来将其打包为yum<br>3.测试yum安装通过后，将其写入一个Linux镜像安装文件夹的Packages并重新生成repo<br>4.打包iso，虚拟机安装测试</p>
+<p>我在这里卡在了第4步上：文件成功的安装并复制到了虚拟机，但是执行MySQL初始化的脚本却出现了错误：脚本不执行，而在启动后手动执行时，正常安装</p>
+<p>由于错误难以收集，我将初始化脚本写入了/etc/rc.local ，准备用重启后自动安装的方式来『绕过』</p>
+<p>然而这样同样失败了，经过在rc.local 中写入：sh init_mysql.sh 2&gt;/root/err后，才发现出现了这样的一行错误：<br><code>sudo: sorry, you must have a tty to run sudo</code><br>原来安装mysql的代码中由于需要切换到mysql用户执行，在导入sql文件时用了sudo执行，而不管是在安装Linux时还是在启动rc.local的过程中，都不算在终端执行</p>
 <p>解决方案：</p>
-<p>在选择系统界面按下TAB，将stage2=后面改成<code>/dev/sdx</code>(x为你的u盘设备名)，在这里由于pd是将iso作为光盘安装的，因此改成<code>/dev/cdrom</code> </p>
+<p>1.去除sodo 用root用户执行权限<br>2.修改 /etc/sudoers ，将 <code>Default requiretty</code>这一行加上#注释</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/22/13/" data-id="cja6h5jvr00050zotscjgdqmw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/22/14/" data-id="cja6i5k1q0000xeotxhw40mz5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -99,20 +102,15 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/10/22/12/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/10/22/13/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          用nginx+python快速克隆网站
+          【踩坑】dracut_initqueue【599】： Warning： Could not boot
         
       </div>
     </a>
   
-  
-    <a href="/2017/10/22/14/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">【踩坑】 sudo： sorry, you must have a tty to run sudo (附解决方案)</div>
-    </a>
   
 </nav>
 

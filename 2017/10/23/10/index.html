@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Django Admin add &quot;Export to Excel&quot; action | Hexo</title>
+  <title>django-jet 使用DateRangeFilter 报importError的解决方法 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="It’s a convinent action to export excel with your data in Django require pandas and xlwt  1234567891011121314151617181920import pandas as pd# Register your mode">
+  <meta name="description" content="今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：from jet.filters import DateRangeFilter 然而，我在加入上述代码后，报出了如下错误：1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Django Admin add &quot;Export to Excel&quot; action">
+<meta property="og:title" content="django-jet 使用DateRangeFilter 报importError的解决方法">
 <meta property="og:url" content="http://yoursite.com/2017/10/23/10/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="It’s a convinent action to export excel with your data in Django require pandas and xlwt  1234567891011121314151617181920import pandas as pd# Register your models here.def export_to_excel(modeladmin,">
-<meta property="og:updated_time" content="2017-11-19T08:11:59.000Z">
+<meta property="og:description" content="今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：from jet.filters import DateRangeFilter 然而，我在加入上述代码后，报出了如下错误：12from jet.filters import DateRangeFilter">
+<meta property="og:updated_time" content="2017-11-19T08:30:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Django Admin add &quot;Export to Excel&quot; action">
-<meta name="twitter:description" content="It’s a convinent action to export excel with your data in Django require pandas and xlwt  1234567891011121314151617181920import pandas as pd# Register your models here.def export_to_excel(modeladmin,">
+<meta name="twitter:title" content="django-jet 使用DateRangeFilter 报importError的解决方法">
+<meta name="twitter:description" content="今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：from jet.filters import DateRangeFilter 然而，我在加入上述代码后，报出了如下错误：12from jet.filters import DateRangeFilter">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -63,7 +63,7 @@
         <section id="main"><article id="post-10" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/10/23/10/" class="article-date">
-  <time datetime="2017-10-23T01:32:38.000Z" itemprop="datePublished">2017-10-23</time>
+  <time datetime="2017-10-23T06:53:28.000Z" itemprop="datePublished">2017-10-23</time>
 </a>
     
   </div>
@@ -74,7 +74,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Django Admin add &quot;Export to Excel&quot; action
+      django-jet 使用DateRangeFilter 报importError的解决方法
     </h1>
   
 
@@ -82,11 +82,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li>It’s a convinent action to export excel with your data in Django</li>
-<li>require pandas and xlwt</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># Register your models here.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">export_to_excel</span><span class="params">(modeladmin, request, queryset)</span>:</span></span><br><span class="line">	response = HttpResponse(content_type=<span class="string">"application/xls"</span>)</span><br><span class="line">	data = serializers.serialize(<span class="string">"json"</span>, queryset, stream=response)</span><br><span class="line">	data = json.loads(data.decode(<span class="string">"utf-8"</span>))</span><br><span class="line">	data = [i[<span class="string">'fields'</span>] <span class="keyword">for</span> i <span class="keyword">in</span> data]</span><br><span class="line">	data = pd.DataFrame(data)</span><br><span class="line">	data = data.fillna(<span class="string">'空'</span>)</span><br><span class="line">	data.to_excel(<span class="string">"./tmp.xls"</span>)</span><br><span class="line">	test_file = open(<span class="string">'./tmp.xls'</span>, <span class="string">'rb'</span>)</span><br><span class="line">	response = HttpResponse(content=test_file)</span><br><span class="line">	response[<span class="string">'Content-Type'</span>] = <span class="string">'application/xls'</span></span><br><span class="line">	response[<span class="string">'Content-Disposition'</span>] = <span class="string">'attachment; filename="%s.xls"'</span> \</span><br><span class="line">	                                  % <span class="string">'export'</span></span><br><span class="line">	<span class="keyword">return</span> response</span><br><span class="line">  </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Export</span><span class="params">(admin.ModelAdmin)</span>:</span></span><br><span class="line">	actions = (export_to_excel,)</span><br></pre></td></tr></table></figure>
+        <p>今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：<code>from jet.filters import DateRangeFilter</code></p>
+<p>然而，我在加入上述代码后，报出了如下错误：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> jet.filters <span class="keyword">import</span> DateRangeFilter</span><br><span class="line">ImportError: cannot <span class="keyword">import</span> name <span class="string">'DateRangeFilter'</span></span><br></pre></td></tr></table></figure></p>
+<p>搜索了jet的github源码，找到如下解决方案：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将from jet.filters import DateRangeFilter 替换为：</span></span><br><span class="line"><span class="keyword">from</span> rangefilter.filter <span class="keyword">import</span> DateRangeFilter</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyUserAdmin</span><span class="params">(UserAdmin)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    list_filter = (</span><br><span class="line">        (<span class="string">'date_joined'</span>, DateRangeFilter),</span><br><span class="line">    )</span><br></pre></td></tr></table></figure></p>
+<p>引用：<br><a href="https://github.com/geex-arts/django-jet/blob/552191c5be551741b3349aa104c92435702f62e5/docs/filters.rst" target="_blank" rel="noopener">https://github.com/geex-arts/django-jet/blob/552191c5be551741b3349aa104c92435702f62e5/docs/filters.rst</a></p>
 
       
     </div>
@@ -100,19 +99,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/10/23/9/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/10/25/9/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          django-jet 使用DateRangeFilter 报importError的解决方法
+          django restful framework 做基于field的权限控制
         
       </div>
     </a>
   
   
-    <a href="/2017/10/22/11/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/10/23/11/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">用nginx+python快速克隆网站</div>
+      <div class="article-nav-title">Django Admin add &quot;Export to Excel&quot; action</div>
     </a>
   
 </nav>
@@ -134,7 +133,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -146,23 +145,23 @@
       <ul>
         
           <li>
-            <a href="/2017/11/15/0/">custom django model_to_dict with @property and readonly field</a>
+            <a href="/2017/11/19/0/">Use github issue as blog backend</a>
           </li>
         
           <li>
-            <a href="/2017/11/13/1/">【踩坑】Django中一个危险而隐蔽的坑</a>
+            <a href="/2017/11/15/1/">custom django model_to_dict with @property and readonly field</a>
           </li>
         
           <li>
-            <a href="/2017/11/10/2/">【reprint】An excellent way to add request.PUT to Django</a>
+            <a href="/2017/11/13/2/">【踩坑】Django中一个危险而隐蔽的坑</a>
           </li>
         
           <li>
-            <a href="/2017/11/08/3/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
+            <a href="/2017/11/10/3/">【reprint】An excellent way to add request.PUT to Django</a>
           </li>
         
           <li>
-            <a href="/2017/11/07/4/">awk print last element of a line</a>
+            <a href="/2017/11/08/4/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
           </li>
         
       </ul>
