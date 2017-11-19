@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>awk print last element of a line | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="123456789101112`mac` char(17) NOT NULL DEFAULT &apos;00:00:00:00:00:00&apos; COMMENT &apos;mac地址&apos;,  `ip_addr` char(12) DEFAULT NULL COMMENT &apos;ip地址&apos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="awk print last element of a line">
+<meta property="og:url" content="http://yoursite.com/2017/11/07/4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="123456789101112`mac` char(17) NOT NULL DEFAULT &apos;00:00:00:00:00:00&apos; COMMENT &apos;mac地址&apos;,  `ip_addr` char(12) DEFAULT NULL COMMENT &apos;ip地址&apos;,  `origin_ip` char(12) DEFAULT NULL COMMENT &apos;源ip(如果为kvm)&apos;,  `asset_t">
+<meta property="og:updated_time" content="2017-11-19T08:11:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="awk print last element of a line">
+<meta name="twitter:description" content="123456789101112`mac` char(17) NOT NULL DEFAULT &apos;00:00:00:00:00:00&apos; COMMENT &apos;mac地址&apos;,  `ip_addr` char(12) DEFAULT NULL COMMENT &apos;ip地址&apos;,  `origin_ip` char(12) DEFAULT NULL COMMENT &apos;源ip(如果为kvm)&apos;,  `asset_t">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-4" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/07/4/" class="article-date">
+  <time datetime="2017-11-07T04:15:52.000Z" itemprop="datePublished">2017-11-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      awk print last element of a line
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">`mac` char(17) NOT NULL DEFAULT '00:00:00:00:00:00' <span class="keyword">COMMENT</span> <span class="string">'mac地址'</span>,</span><br><span class="line">  <span class="string">`ip_addr`</span> <span class="built_in">char</span>(<span class="number">12</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'ip地址'</span>,</span><br><span class="line">  <span class="string">`origin_ip`</span> <span class="built_in">char</span>(<span class="number">12</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'源ip(如果为kvm)'</span>,</span><br><span class="line">  <span class="string">`asset_type`</span> <span class="built_in">char</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'其他'</span> <span class="keyword">COMMENT</span> <span class="string">'资产类型'</span>,</span><br><span class="line">  <span class="string">`bussiness`</span> <span class="built_in">char</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'其他'</span> <span class="keyword">COMMENT</span> <span class="string">'业务类型'</span>,</span><br><span class="line">  <span class="string">`bussiness_version`</span> <span class="built_in">char</span>(<span class="number">15</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'软件版本'</span>,</span><br><span class="line">  <span class="string">`leak_db_version`</span> <span class="built_in">char</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'漏洞库版本'</span>,</span><br><span class="line">  <span class="string">`setup_type`</span> <span class="built_in">char</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'部署架构'</span>,</span><br><span class="line">  <span class="string">`licence`</span> <span class="built_in">char</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'许可设置'</span>,</span><br><span class="line">  <span class="string">`trial_type`</span> <span class="built_in">char</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'试用方式'</span>,</span><br><span class="line">  <span class="string">`web_user`</span> <span class="built_in">char</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'root'</span> <span class="keyword">COMMENT</span> <span class="string">'web用户名'</span>,</span><br><span class="line">  <span class="string">`remark`</span> <span class="built_in">char</span>(<span class="number">200</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'备注'</span>,</span><br></pre></td></tr></table></figure>
+<p> i want transform it to a json-like data then</p>
+<p><code>cat a.txt|awk &#39;{printf &quot;%s:%s\n&quot;,$1,$NF}&#39;</code></p>
+<p>it works.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/07/4/" data-id="cja6h5jwn00080zot6ncutd6b" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/08/3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/11/04/5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">绕过基于机器学习WAF检测Webshell的几种思路</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/11/15/0/">custom django model_to_dict with @property and readonly field</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/13/1/">【踩坑】Django中一个危险而隐蔽的坑</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/10/2/">【reprint】An excellent way to add request.PUT to Django</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/3/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/4/">awk print last element of a line</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

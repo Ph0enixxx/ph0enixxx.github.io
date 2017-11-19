@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>【踩坑】 sudo： sorry, you must have a tty to run sudo (附解决方案) | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近在做一个Linux软件的打包成为iso发行的流程，大体是这样的： 1.准备好软件安装的相关脚本2.编写spec文件，通过rpmbuild来将其打包为yum3.测试yum安装通过后，将其写入一个Linux镜像安装文件夹的Packages并重新生成repo4.打包iso，虚拟机安装测试 我在这里卡在了第4步上：文件成功">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【踩坑】 sudo： sorry, you must have a tty to run sudo (附解决方案)">
+<meta property="og:url" content="http://yoursite.com/2017/10/22/13/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="最近在做一个Linux软件的打包成为iso发行的流程，大体是这样的： 1.准备好软件安装的相关脚本2.编写spec文件，通过rpmbuild来将其打包为yum3.测试yum安装通过后，将其写入一个Linux镜像安装文件夹的Packages并重新生成repo4.打包iso，虚拟机安装测试 我在这里卡在了第4步上：文件成功的安装并复制到了虚拟机，但是执行MySQL初始化的脚本却出现了错误：脚本不执">
+<meta property="og:updated_time" content="2017-11-19T08:18:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【踩坑】 sudo： sorry, you must have a tty to run sudo (附解决方案)">
+<meta name="twitter:description" content="最近在做一个Linux软件的打包成为iso发行的流程，大体是这样的： 1.准备好软件安装的相关脚本2.编写spec文件，通过rpmbuild来将其打包为yum3.测试yum安装通过后，将其写入一个Linux镜像安装文件夹的Packages并重新生成repo4.打包iso，虚拟机安装测试 我在这里卡在了第4步上：文件成功的安装并复制到了虚拟机，但是执行MySQL初始化的脚本却出现了错误：脚本不执">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-13" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/22/13/" class="article-date">
+  <time datetime="2017-10-22T04:09:06.000Z" itemprop="datePublished">2017-10-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【踩坑】 sudo： sorry, you must have a tty to run sudo (附解决方案)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>  最近在做一个Linux软件的打包成为iso发行的流程，大体是这样的：</p>
+<p>1.准备好软件安装的相关脚本<br>2.编写spec文件，通过rpmbuild来将其打包为yum<br>3.测试yum安装通过后，将其写入一个Linux镜像安装文件夹的Packages并重新生成repo<br>4.打包iso，虚拟机安装测试</p>
+<p>我在这里卡在了第4步上：文件成功的安装并复制到了虚拟机，但是执行MySQL初始化的脚本却出现了错误：脚本不执行，而在启动后手动执行时，正常安装</p>
+<p>由于错误难以收集，我将初始化脚本写入了/etc/rc.local ，准备用重启后自动安装的方式来『绕过』</p>
+<p>然而这样同样失败了，经过在rc.local 中写入：sh init_mysql.sh 2&gt;/root/err后，才发现出现了这样的一行错误：<br><code>sudo: sorry, you must have a tty to run sudo</code><br>原来安装mysql的代码中由于需要切换到mysql用户执行，在导入sql文件时用了sudo执行，而不管是在安装Linux时还是在启动rc.local的过程中，都不算在终端执行</p>
+<p>解决方案：</p>
+<p>1.去除sodo 用root用户执行权限<br>2.修改 /etc/sudoers ，将 <code>Default requiretty</code>这一行加上#注释</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/10/22/13/" data-id="cja6h5jvr00050zotscjgdqmw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/10/22/12/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          【踩坑】dracut_initqueue【599】： Warning： Could not boot
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/11/15/0/">custom django model_to_dict with @property and readonly field</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/13/1/">【踩坑】Django中一个危险而隐蔽的坑</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/10/2/">【reprint】An excellent way to add request.PUT to Django</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/3/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/4/">awk print last element of a line</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

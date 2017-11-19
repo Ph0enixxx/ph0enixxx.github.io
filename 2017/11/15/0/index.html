@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>custom django model_to_dict with @property and readonly field | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1234567891011from django.db.models.query_utils import DeferredAttributedef object_as_dict(obj):    data_dict = &amp;#123;&amp;#125;#&amp;#123;k:getattr(obj, k) ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="custom django model_to_dict with @property and readonly field">
+<meta property="og:url" content="http://yoursite.com/2017/11/15/0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1234567891011from django.db.models.query_utils import DeferredAttributedef object_as_dict(obj):    data_dict = &amp;#123;&amp;#125;#&amp;#123;k:getattr(obj, k) for k in dir(obj)&amp;#125;    for k in dir(obj):">
+<meta property="og:updated_time" content="2017-11-19T08:11:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="custom django model_to_dict with @property and readonly field">
+<meta name="twitter:description" content="1234567891011from django.db.models.query_utils import DeferredAttributedef object_as_dict(obj):    data_dict = &amp;#123;&amp;#125;#&amp;#123;k:getattr(obj, k) for k in dir(obj)&amp;#125;    for k in dir(obj):">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-0" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/15/0/" class="article-date">
+  <time datetime="2017-11-14T23:32:00.000Z" itemprop="datePublished">2017-11-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      custom django model_to_dict with @property and readonly field
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models.query_utils <span class="keyword">import</span> DeferredAttribute</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">object_as_dict</span><span class="params">(obj)</span>:</span></span><br><span class="line">    data_dict = &#123;&#125;<span class="comment">#&#123;k:getattr(obj, k) for k in dir(obj)&#125;</span></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> dir(obj):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> isinstance(getattr(obj.__class__, k), DeferredAttribute) <span class="keyword">or</span> isinstance(getattr(obj.__class__, k), property):</span><br><span class="line">                data_dict[k] = getattr(obj, k)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            print(e)</span><br><span class="line">            <span class="keyword">print</span> k</span><br><span class="line">    <span class="keyword">return</span> data_dict</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/15/0/" data-id="cja6h5jv500000zot0ku0bmne" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/13/1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">【踩坑】Django中一个危险而隐蔽的坑</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/11/15/0/">custom django model_to_dict with @property and readonly field</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/13/1/">【踩坑】Django中一个危险而隐蔽的坑</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/10/2/">【reprint】An excellent way to add request.PUT to Django</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/3/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/4/">awk print last element of a line</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
