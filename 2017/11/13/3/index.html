@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>django-jet 使用DateRangeFilter 报importError的解决方法 | Hexo</title>
+  <title>【踩坑】Django中一个危险而隐蔽的坑 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：from jet.filters import DateRangeFilter 然而，我在加入上述代码后，报出了如下错误：1">
+  <meta name="description" content="触发条件1.使用inspectdb生产model文件2.使用自己做的主键（如xxx_id）而非django自动生成主键3.假设有model A 主键为自定义的a_id: 1234&amp;gt;&amp;gt;&amp;gt; a1 = A(a_id=1, name=&quot;杨子荣&quot;)&amp;gt;&a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="django-jet 使用DateRangeFilter 报importError的解决方法">
-<meta property="og:url" content="http://yoursite.com/2017/10/23/11/index.html">
+<meta property="og:title" content="【踩坑】Django中一个危险而隐蔽的坑">
+<meta property="og:url" content="http://yoursite.com/2017/11/13/3/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：from jet.filters import DateRangeFilter 然而，我在加入上述代码后，报出了如下错误：12from jet.filters import DateRangeFilter">
+<meta property="og:description" content="触发条件1.使用inspectdb生产model文件2.使用自己做的主键（如xxx_id）而非django自动生成主键3.假设有model A 主键为自定义的a_id: 1234&amp;gt;&amp;gt;&amp;gt; a1 = A(a_id=1, name=&quot;杨子荣&quot;)&amp;gt;&amp;gt;&amp;gt; a1.save()&amp;gt;&amp;gt;&amp;gt; a2 = A(a_id=1, name=&quot;座山雕&quot;)&amp;gt;&amp;gt;&amp;gt">
 <meta property="og:updated_time" content="2017-11-21T14:41:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="django-jet 使用DateRangeFilter 报importError的解决方法">
-<meta name="twitter:description" content="今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：from jet.filters import DateRangeFilter 然而，我在加入上述代码后，报出了如下错误：12from jet.filters import DateRangeFilter">
+<meta name="twitter:title" content="【踩坑】Django中一个危险而隐蔽的坑">
+<meta name="twitter:description" content="触发条件1.使用inspectdb生产model文件2.使用自己做的主键（如xxx_id）而非django自动生成主键3.假设有model A 主键为自定义的a_id: 1234&amp;gt;&amp;gt;&amp;gt; a1 = A(a_id=1, name=&quot;杨子荣&quot;)&amp;gt;&amp;gt;&amp;gt; a1.save()&amp;gt;&amp;gt;&amp;gt; a2 = A(a_id=1, name=&quot;座山雕&quot;)&amp;gt;&amp;gt;&amp;gt">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,10 +60,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-11" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/10/23/11/" class="article-date">
-  <time datetime="2017-10-23T06:53:28.000Z" itemprop="datePublished">2017-10-23</time>
+    <a href="/2017/11/13/3/" class="article-date">
+  <time datetime="2017-11-13T06:29:08.000Z" itemprop="datePublished">2017-11-13</time>
 </a>
     
   </div>
@@ -74,7 +74,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      django-jet 使用DateRangeFilter 报importError的解决方法
+      【踩坑】Django中一个危险而隐蔽的坑
     </h1>
   
 
@@ -82,15 +82,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：<code>from jet.filters import DateRangeFilter</code></p>
-<p>然而，我在加入上述代码后，报出了如下错误：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> jet.filters <span class="keyword">import</span> DateRangeFilter</span><br><span class="line">ImportError: cannot <span class="keyword">import</span> name <span class="string">'DateRangeFilter'</span></span><br></pre></td></tr></table></figure></p>
-<p>搜索了jet的github源码，找到如下解决方案：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将from jet.filters import DateRangeFilter 替换为：</span></span><br><span class="line"><span class="keyword">from</span> rangefilter.filter <span class="keyword">import</span> DateRangeFilter</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyUserAdmin</span><span class="params">(UserAdmin)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    list_filter = (</span><br><span class="line">        (<span class="string">'date_joined'</span>, DateRangeFilter),</span><br><span class="line">    )</span><br></pre></td></tr></table></figure></p>
-<p>引用：<br><a href="https://github.com/geex-arts/django-jet/blob/552191c5be551741b3349aa104c92435702f62e5/docs/filters.rst" target="_blank" rel="noopener">https://github.com/geex-arts/django-jet/blob/552191c5be551741b3349aa104c92435702f62e5/docs/filters.rst</a></p>
+        <h3 id="触发条件"><a href="#触发条件" class="headerlink" title="触发条件"></a>触发条件</h3><p>1.使用inspectdb生产model文件<br>2.使用自己做的主键（如xxx_id）而非django自动生成主键<br>3.假设有model A 主键为自定义的a_id:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a1 = A(a_id=<span class="number">1</span>, name=<span class="string">"杨子荣"</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a1.save()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a2 = A(a_id=<span class="number">1</span>, name=<span class="string">"座山雕"</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a2.save()</span><br></pre></td></tr></table></figure>
+<p>以上操作并没有报错，然而当打开数据库时，会发现数据被替换了。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>用 obj.save(force_insert=True) 来代替save()</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/23/11/" data-id="cja6gv4mu00036sotqp25gccq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/13/3/" data-id="cja6h19um00037fot76aa7473" class="article-share-link">Share</a>
       
       
     </footer>
@@ -99,19 +99,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/10/25/10/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/11/15/2/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          django restful framework 做基于field的权限控制
+          custom django model_to_dict with @property and readonly field
         
       </div>
     </a>
   
   
-    <a href="/2017/10/23/12/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/11/10/4/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Django Admin add &quot;Export to Excel&quot; action</div>
+      <div class="article-nav-title">【reprint】An excellent way to add request.PUT to Django</div>
     </a>
   
 </nav>

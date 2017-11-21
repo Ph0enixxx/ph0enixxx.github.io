@@ -60,7 +60,47 @@
   
     <article id="post-0" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/19/0/" class="article-date">
+    <a href="/2017/11/21/0/" class="article-date">
+  <time datetime="2017-11-21T06:41:33.000Z" itemprop="datePublished">2017-11-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/21/0/">【踩坑】Django AttributeError： &#39;tuple&#39; object has no attribute &#39;startswith&#39;</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="出现场景"><a href="#出现场景" class="headerlink" title="出现场景"></a>出现场景</h3><p>一般是在Django添加了MEDIA_ROOT or STATIC_ROOT后出现</p>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>Python语法机制：会将  <code>XXX_ROOT = &quot;/media/&quot;,</code> 中的<code>&quot;/media/&quot;,</code> 识别为tuple而不是字符串</p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>删除<code>,</code></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://stackoverflow.com/questions/17931380/attributeerror-tuple-object-has-no-attribute-startswith" target="_blank" rel="noopener">https://stackoverflow.com/questions/17931380/attributeerror-tuple-object-has-no-attribute-startswith</a> </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/21/0/" data-id="cja6gv4lb00006sotaxyzas5h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/19/1/" class="article-date">
   <time datetime="2017-11-19T00:30:06.000Z" itemprop="datePublished">2017-11-19</time>
 </a>
     
@@ -72,7 +112,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/19/0/">Use github issue as blog backend</a>
+      <a class="article-title" href="/2017/11/19/1/">Use github issue as blog backend</a>
     </h1>
   
 
@@ -85,7 +125,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/19/0/" data-id="cja6h5jv500000zot0ku0bmne" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/19/1/" data-id="cja6h19uh00017foth06fzpjd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -95,9 +135,9 @@
 
 
   
-    <article id="post-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/15/1/" class="article-date">
+    <a href="/2017/11/15/2/" class="article-date">
   <time datetime="2017-11-14T23:32:00.000Z" itemprop="datePublished">2017-11-15</time>
 </a>
     
@@ -109,7 +149,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/15/1/">custom django model_to_dict with @property and readonly field</a>
+      <a class="article-title" href="/2017/11/15/2/">custom django model_to_dict with @property and readonly field</a>
     </h1>
   
 
@@ -122,7 +162,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/15/1/" data-id="cja6h5jvk00020zotzwykvn2r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/15/2/" data-id="cja6h19uk00027fotz9mrmo88" class="article-share-link">Share</a>
       
       
     </footer>
@@ -132,9 +172,9 @@
 
 
   
-    <article id="post-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/13/2/" class="article-date">
+    <a href="/2017/11/13/3/" class="article-date">
   <time datetime="2017-11-13T06:29:08.000Z" itemprop="datePublished">2017-11-13</time>
 </a>
     
@@ -146,7 +186,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/13/2/">【踩坑】Django中一个危险而隐蔽的坑</a>
+      <a class="article-title" href="/2017/11/13/3/">【踩坑】Django中一个危险而隐蔽的坑</a>
     </h1>
   
 
@@ -162,7 +202,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/13/2/" data-id="cja6h5jvx00060zotbwbrpkpj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/13/3/" data-id="cja6h19um00037fot76aa7473" class="article-share-link">Share</a>
       
       
     </footer>
@@ -172,9 +212,9 @@
 
 
   
-    <article id="post-3" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-4" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/10/3/" class="article-date">
+    <a href="/2017/11/10/4/" class="article-date">
   <time datetime="2017-11-09T21:20:39.000Z" itemprop="datePublished">2017-11-10</time>
 </a>
     
@@ -186,7 +226,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/10/3/">【reprint】An excellent way to add request.PUT to Django</a>
+      <a class="article-title" href="/2017/11/10/4/">【reprint】An excellent way to add request.PUT to Django</a>
     </h1>
   
 
@@ -200,7 +240,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/10/3/" data-id="cja6h5jwf00070zot7swj27yn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/10/4/" data-id="cja6gv4mw00046sotjsgb88tz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -210,9 +250,9 @@
 
 
   
-    <article id="post-4" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-5" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/08/4/" class="article-date">
+    <a href="/2017/11/08/5/" class="article-date">
   <time datetime="2017-11-08T06:14:06.000Z" itemprop="datePublished">2017-11-08</time>
 </a>
     
@@ -224,7 +264,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/08/4/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
+      <a class="article-title" href="/2017/11/08/5/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
     </h1>
   
 
@@ -237,7 +277,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/08/4/" data-id="cja6h5jwn00080zot6ncutd6b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/08/5/" data-id="cja6gv4n000056sot2gjkvhaw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -247,9 +287,9 @@
 
 
   
-    <article id="post-5" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-6" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/07/5/" class="article-date">
+    <a href="/2017/11/07/6/" class="article-date">
   <time datetime="2017-11-07T04:15:52.000Z" itemprop="datePublished">2017-11-07</time>
 </a>
     
@@ -261,7 +301,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/07/5/">awk print last element of a line</a>
+      <a class="article-title" href="/2017/11/07/6/">awk print last element of a line</a>
     </h1>
   
 
@@ -277,7 +317,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/07/5/" data-id="cja6h5jwq000a0zotc9n714xv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/07/6/" data-id="cja6h19ur00047fot2zqpm1yt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -287,9 +327,9 @@
 
 
   
-    <article id="post-6" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-7" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/04/6/" class="article-date">
+    <a href="/2017/11/04/7/" class="article-date">
   <time datetime="2017-11-03T22:24:21.000Z" itemprop="datePublished">2017-11-04</time>
 </a>
     
@@ -301,7 +341,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/04/6/">绕过基于机器学习WAF检测Webshell的几种思路</a>
+      <a class="article-title" href="/2017/11/04/7/">绕过基于机器学习WAF检测Webshell的几种思路</a>
     </h1>
   
 
@@ -320,7 +360,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/04/6/" data-id="cja6h5jwp00090zotzgt23zqp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/04/7/" data-id="cja6h0g6j00007fot4dot9ygv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -330,9 +370,9 @@
 
 
   
-    <article id="post-7" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-8" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/04/7/" class="article-date">
+    <a href="/2017/11/04/8/" class="article-date">
   <time datetime="2017-11-03T21:54:58.000Z" itemprop="datePublished">2017-11-04</time>
 </a>
     
@@ -344,7 +384,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/04/7/">【踩坑】slove &quot;libmysqlclient.so.16 not found&quot;</a>
+      <a class="article-title" href="/2017/11/04/8/">【踩坑】slove &quot;libmysqlclient.so.16 not found&quot;</a>
     </h1>
   
 
@@ -359,7 +399,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/04/7/" data-id="cja6h5jwv000b0zotmk5yqcjc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/04/8/" data-id="cja6gv4n500066sotdxnl4wfo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -369,9 +409,9 @@
 
 
   
-    <article id="post-8" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-9" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/02/8/" class="article-date">
+    <a href="/2017/11/02/9/" class="article-date">
   <time datetime="2017-11-01T23:17:33.000Z" itemprop="datePublished">2017-11-02</time>
 </a>
     
@@ -383,7 +423,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/02/8/">【踩坑】ORM模型</a>
+      <a class="article-title" href="/2017/11/02/9/">【踩坑】ORM模型</a>
     </h1>
   
 
@@ -400,50 +440,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/02/8/" data-id="cja6h5jwz000c0zot06bpw46m" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-9" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/10/25/9/" class="article-date">
-  <time datetime="2017-10-25T02:03:22.000Z" itemprop="datePublished">2017-10-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/25/9/">django restful framework 做基于field的权限控制</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>由于开发需要，需要将机器展示页面分为两种：低权限账户可以查看普通机器的基本信息，但是不能查看密码；高权限账户可以查看所有的信息（包括所有的机器，以及所有机器的账号密码等敏感信息）</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>系统用Django + DRF编写，查看文档后和Stack Overflow发现可以通过给不同权限的用户展示不同的视图/serializer来实现，找到了如下方法：</p>
-<p>在DRF的view基类中有<code>def get_serializer_class(self)</code>方法，将其重写即可根据当前用户的权限来切换serializer：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_serializer_class</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> self.request.user.has_perm(<span class="string">"www.saw_pass"</span>):</span><br><span class="line">        <span class="keyword">return</span> SuperSerializer</span><br><span class="line">    <span class="keyword">return</span> IPSerializer</span><br></pre></td></tr></table></figure>
-<p>这里写了两个Serializer，分别对应不同权限返回的数据，然后在低权限Serializer中确认好只返回哪些字段即可</p>
-<h3 id="推广"><a href="#推广" class="headerlink" title="推广"></a>推广</h3><p>此法同样可以用于在用户不同状态返回不同数据、反爬虫等方面</p>
-<h3 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h3><p>仍然没有将基于field的权限控制脱离代码</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/25/9/" data-id="cja6h5jx1000d0zotz29udaiq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/02/9/" data-id="cja6gv4n700076sotxtvws7ys" class="article-share-link">Share</a>
       
       
     </footer>
@@ -472,7 +469,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -484,23 +481,23 @@
       <ul>
         
           <li>
-            <a href="/2017/11/19/0/">Use github issue as blog backend</a>
+            <a href="/2017/11/21/0/">【踩坑】Django AttributeError： &#39;tuple&#39; object has no attribute &#39;startswith&#39;</a>
           </li>
         
           <li>
-            <a href="/2017/11/15/1/">custom django model_to_dict with @property and readonly field</a>
+            <a href="/2017/11/19/1/">Use github issue as blog backend</a>
           </li>
         
           <li>
-            <a href="/2017/11/13/2/">【踩坑】Django中一个危险而隐蔽的坑</a>
+            <a href="/2017/11/15/2/">custom django model_to_dict with @property and readonly field</a>
           </li>
         
           <li>
-            <a href="/2017/11/10/3/">【reprint】An excellent way to add request.PUT to Django</a>
+            <a href="/2017/11/13/3/">【踩坑】Django中一个危险而隐蔽的坑</a>
           </li>
         
           <li>
-            <a href="/2017/11/08/4/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
+            <a href="/2017/11/10/4/">【reprint】An excellent way to add request.PUT to Django</a>
           </li>
         
       </ul>
@@ -542,4 +539,3 @@
   </div>
 </body>
 </html>
-

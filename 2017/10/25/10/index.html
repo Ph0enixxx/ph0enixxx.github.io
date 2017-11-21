@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>django restful framework 做基于field的权限控制 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="原因由于开发需要，需要将机器展示页面分为两种：低权限账户可以查看普通机器的基本信息，但是不能查看密码；高权限账户可以查看所有的信息（包括所有的机器，以及所有机器的账号密码等敏感信息） 实现系统用Django + DRF编写，查看文档后和Stack Overflow发现可以通过给不同权限的用户展示不同的视图/serial">
+<meta property="og:type" content="article">
+<meta property="og:title" content="django restful framework 做基于field的权限控制">
+<meta property="og:url" content="http://yoursite.com/2017/10/25/10/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="原因由于开发需要，需要将机器展示页面分为两种：低权限账户可以查看普通机器的基本信息，但是不能查看密码；高权限账户可以查看所有的信息（包括所有的机器，以及所有机器的账号密码等敏感信息） 实现系统用Django + DRF编写，查看文档后和Stack Overflow发现可以通过给不同权限的用户展示不同的视图/serializer来实现，找到了如下方法： 在DRF的view基类中有def get_se">
+<meta property="og:updated_time" content="2017-11-21T14:41:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="django restful framework 做基于field的权限控制">
+<meta name="twitter:description" content="原因由于开发需要，需要将机器展示页面分为两种：低权限账户可以查看普通机器的基本信息，但是不能查看密码；高权限账户可以查看所有的信息（包括所有的机器，以及所有机器的账号密码等敏感信息） 实现系统用Django + DRF编写，查看文档后和Stack Overflow发现可以通过给不同权限的用户展示不同的视图/serializer来实现，找到了如下方法： 在DRF的view基类中有def get_se">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-10" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/25/10/" class="article-date">
+  <time datetime="2017-10-25T02:03:22.000Z" itemprop="datePublished">2017-10-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      django restful framework 做基于field的权限控制
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>由于开发需要，需要将机器展示页面分为两种：低权限账户可以查看普通机器的基本信息，但是不能查看密码；高权限账户可以查看所有的信息（包括所有的机器，以及所有机器的账号密码等敏感信息）</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>系统用Django + DRF编写，查看文档后和Stack Overflow发现可以通过给不同权限的用户展示不同的视图/serializer来实现，找到了如下方法：</p>
+<p>在DRF的view基类中有<code>def get_serializer_class(self)</code>方法，将其重写即可根据当前用户的权限来切换serializer：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_serializer_class</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> self.request.user.has_perm(<span class="string">"www.saw_pass"</span>):</span><br><span class="line">        <span class="keyword">return</span> SuperSerializer</span><br><span class="line">    <span class="keyword">return</span> IPSerializer</span><br></pre></td></tr></table></figure>
+<p>这里写了两个Serializer，分别对应不同权限返回的数据，然后在低权限Serializer中确认好只返回哪些字段即可</p>
+<h3 id="推广"><a href="#推广" class="headerlink" title="推广"></a>推广</h3><p>此法同样可以用于在用户不同状态返回不同数据、反爬虫等方面</p>
+<h3 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h3><p>仍然没有将基于field的权限控制脱离代码</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/10/25/10/" data-id="cja6gv4mf00016sotyg5k4q52" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/02/9/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          【踩坑】ORM模型
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/10/23/11/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">django-jet 使用DateRangeFilter 报importError的解决方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/11/21/0/">【踩坑】Django AttributeError： &#39;tuple&#39; object has no attribute &#39;startswith&#39;</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/19/1/">Use github issue as blog backend</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/15/2/">custom django model_to_dict with @property and readonly field</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/13/3/">【踩坑】Django中一个危险而隐蔽的坑</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/10/4/">【reprint】An excellent way to add request.PUT to Django</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

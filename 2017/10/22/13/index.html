@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>【踩坑】dracut_initqueue【599】： Warning： Could not boot | Hexo</title>
+  <title>用nginx+python快速克隆网站 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用pd虚拟机安装CentOS时，出现了如下错误：dracut_initqueue[599]: Warning: Could not boot 原因是由于linux安装程序没有识别设备造成的 解决方案： 在选择系统界面按下TAB，将stage2=后面改成/dev/sdx(x为你的u盘设备名)，在这里由于pd是将iso作为">
+  <meta name="description" content="原由之前接了一个仿制网站+特定页面更改的项目，原网站竟然用的是IE6 在用各种页面下载工具仍然无法完整的复制网站后，突然想出了另一种思路： 用nginx反向代理原网站，然后只修改特定的页面是否可行？ 在进行试验后，发现是可行的 方案1.nginx配置样例如下 1234567891011121314151617locat">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【踩坑】dracut_initqueue【599】： Warning： Could not boot">
+<meta property="og:title" content="用nginx+python快速克隆网站">
 <meta property="og:url" content="http://yoursite.com/2017/10/22/13/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="用pd虚拟机安装CentOS时，出现了如下错误：dracut_initqueue[599]: Warning: Could not boot 原因是由于linux安装程序没有识别设备造成的 解决方案： 在选择系统界面按下TAB，将stage2=后面改成/dev/sdx(x为你的u盘设备名)，在这里由于pd是将iso作为光盘安装的，因此改成/dev/cdrom">
-<meta property="og:updated_time" content="2017-11-19T08:30:28.000Z">
+<meta property="og:description" content="原由之前接了一个仿制网站+特定页面更改的项目，原网站竟然用的是IE6 在用各种页面下载工具仍然无法完整的复制网站后，突然想出了另一种思路： 用nginx反向代理原网站，然后只修改特定的页面是否可行？ 在进行试验后，发现是可行的 方案1.nginx配置样例如下 1234567891011121314151617location /queryHistory.asp &amp;#123;   # 需要定制的页面">
+<meta property="og:updated_time" content="2017-11-21T14:41:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【踩坑】dracut_initqueue【599】： Warning： Could not boot">
-<meta name="twitter:description" content="用pd虚拟机安装CentOS时，出现了如下错误：dracut_initqueue[599]: Warning: Could not boot 原因是由于linux安装程序没有识别设备造成的 解决方案： 在选择系统界面按下TAB，将stage2=后面改成/dev/sdx(x为你的u盘设备名)，在这里由于pd是将iso作为光盘安装的，因此改成/dev/cdrom">
+<meta name="twitter:title" content="用nginx+python快速克隆网站">
+<meta name="twitter:description" content="原由之前接了一个仿制网站+特定页面更改的项目，原网站竟然用的是IE6 在用各种页面下载工具仍然无法完整的复制网站后，突然想出了另一种思路： 用nginx反向代理原网站，然后只修改特定的页面是否可行？ 在进行试验后，发现是可行的 方案1.nginx配置样例如下 1234567891011121314151617location /queryHistory.asp &amp;#123;   # 需要定制的页面">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -63,7 +63,7 @@
         <section id="main"><article id="post-13" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/10/22/13/" class="article-date">
-  <time datetime="2017-10-22T07:25:45.000Z" itemprop="datePublished">2017-10-22</time>
+  <time datetime="2017-10-22T07:41:12.000Z" itemprop="datePublished">2017-10-22</time>
 </a>
     
   </div>
@@ -74,7 +74,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      【踩坑】dracut_initqueue【599】： Warning： Could not boot
+      用nginx+python快速克隆网站
     </h1>
   
 
@@ -82,15 +82,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>用pd虚拟机安装CentOS时，出现了如下错误：<br><code>dracut_initqueue[599]: Warning: Could not boot</code></p>
-<p>原因是由于linux安装程序没有识别设备造成的</p>
-<p>解决方案：</p>
-<p>在选择系统界面按下TAB，将stage2=后面改成<code>/dev/sdx</code>(x为你的u盘设备名)，在这里由于pd是将iso作为光盘安装的，因此改成<code>/dev/cdrom</code> </p>
+        <h3 id="原由"><a href="#原由" class="headerlink" title="原由"></a>原由</h3><p>之前接了一个仿制网站+特定页面更改的项目，原网站竟然用的是IE6</p>
+<p>在用各种页面下载工具仍然无法完整的复制网站后，突然想出了另一种思路： 用nginx反向代理原网站，然后只修改特定的页面是否可行？</p>
+<p>在进行试验后，发现是可行的</p>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>1.nginx配置样例如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">location /queryHistory.asp &#123;   # 需要定制的页面</span><br><span class="line">		 rewrite ^/(.*)$ /$<span class="number">1</span> <span class="keyword">break</span>;</span><br><span class="line">		 proxy_pass http:<span class="comment">//127.0.0.1:8000/; # 这里用的是django</span></span><br><span class="line">		 &#125;</span><br><span class="line">	location /<span class="keyword">static</span> &#123;</span><br><span class="line">		 rewrite ^/(.*)$ /$<span class="number">1</span> <span class="keyword">break</span>;</span><br><span class="line">		 proxy_pass http:<span class="comment">//127.0.0.1:8000/;</span></span><br><span class="line">		 &#125;</span><br><span class="line"></span><br><span class="line">	location / &#123;</span><br><span class="line">                rewrite ^/(.*)$ /$<span class="number">1</span> <span class="keyword">break</span>;</span><br><span class="line">		#access_log off;  # 开启记录日志</span><br><span class="line">		proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line">		proxy_pass http:/xxx.xxx.xxx.xxx:<span class="number">8080</span>;   # 在这里转发原网站</span><br><span class="line">		access_log  /var/<span class="built_in">log</span>/nginx/access.<span class="built_in">log</span>;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Django配置好url，同上方<code>/queryHistory.asp</code> 一样，然后按需求更改<br>* 注意，重写的url配置要放在转发的原网站上方</li>
+</ol>
+<p>3.对于template和staticfile的问题，完全不需要额外去找原网站的staticfile，因为nginx会自动反向代理到开发机上</p>
+<h3 id="展望"><a href="#展望" class="headerlink" title="展望"></a>展望</h3><p>这套方法目前已经作为成为了我仿制网站的基本流程，还需要做的就是准备研究一下nginx的缓存功能，通过几次对网站的访问，将缓存用nginx完整的『抓』下来，实现不依赖原网站的仿制网站</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/22/13/" data-id="cja6h5jvr00050zotscjgdqmw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/22/13/" data-id="cja6gv4mq00026sotlzwxjqf5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -99,11 +105,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/10/22/12/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/10/23/12/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          用nginx+python快速克隆网站
+          Django Admin add &quot;Export to Excel&quot; action
         
       </div>
     </a>
@@ -111,7 +117,7 @@
   
     <a href="/2017/10/22/14/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">【踩坑】 sudo： sorry, you must have a tty to run sudo (附解决方案)</div>
+      <div class="article-nav-title">【踩坑】dracut_initqueue【599】： Warning： Could not boot</div>
     </a>
   
 </nav>
@@ -133,7 +139,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -145,23 +151,23 @@
       <ul>
         
           <li>
-            <a href="/2017/11/19/0/">Use github issue as blog backend</a>
+            <a href="/2017/11/21/0/">【踩坑】Django AttributeError： &#39;tuple&#39; object has no attribute &#39;startswith&#39;</a>
           </li>
         
           <li>
-            <a href="/2017/11/15/1/">custom django model_to_dict with @property and readonly field</a>
+            <a href="/2017/11/19/1/">Use github issue as blog backend</a>
           </li>
         
           <li>
-            <a href="/2017/11/13/2/">【踩坑】Django中一个危险而隐蔽的坑</a>
+            <a href="/2017/11/15/2/">custom django model_to_dict with @property and readonly field</a>
           </li>
         
           <li>
-            <a href="/2017/11/10/3/">【reprint】An excellent way to add request.PUT to Django</a>
+            <a href="/2017/11/13/3/">【踩坑】Django中一个危险而隐蔽的坑</a>
           </li>
         
           <li>
-            <a href="/2017/11/08/4/">【SQLalchemy】filter_by can&#39;t use the &#39;like&#39; query</a>
+            <a href="/2017/11/10/4/">【reprint】An excellent way to add request.PUT to Django</a>
           </li>
         
       </ul>

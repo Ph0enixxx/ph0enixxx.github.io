@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>django-jet 使用DateRangeFilter 报importError的解决方法 | Hexo</title>
+  <title>custom django model_to_dict with @property and readonly field | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：from jet.filters import DateRangeFilter 然而，我在加入上述代码后，报出了如下错误：1">
+  <meta name="description" content="1234567891011from django.db.models.query_utils import DeferredAttributedef object_as_dict(obj):    data_dict = &amp;#123;&amp;#125;#&amp;#123;k:getattr(obj, k) ">
 <meta property="og:type" content="article">
-<meta property="og:title" content="django-jet 使用DateRangeFilter 报importError的解决方法">
-<meta property="og:url" content="http://yoursite.com/2017/10/23/11/index.html">
+<meta property="og:title" content="custom django model_to_dict with @property and readonly field">
+<meta property="og:url" content="http://yoursite.com/2017/11/15/2/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：from jet.filters import DateRangeFilter 然而，我在加入上述代码后，报出了如下错误：12from jet.filters import DateRangeFilter">
+<meta property="og:description" content="1234567891011from django.db.models.query_utils import DeferredAttributedef object_as_dict(obj):    data_dict = &amp;#123;&amp;#125;#&amp;#123;k:getattr(obj, k) for k in dir(obj)&amp;#125;    for k in dir(obj):">
 <meta property="og:updated_time" content="2017-11-21T14:41:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="django-jet 使用DateRangeFilter 报importError的解决方法">
-<meta name="twitter:description" content="今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：from jet.filters import DateRangeFilter 然而，我在加入上述代码后，报出了如下错误：12from jet.filters import DateRangeFilter">
+<meta name="twitter:title" content="custom django model_to_dict with @property and readonly field">
+<meta name="twitter:description" content="1234567891011from django.db.models.query_utils import DeferredAttributedef object_as_dict(obj):    data_dict = &amp;#123;&amp;#125;#&amp;#123;k:getattr(obj, k) for k in dir(obj)&amp;#125;    for k in dir(obj):">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,10 +60,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-11" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/10/23/11/" class="article-date">
-  <time datetime="2017-10-23T06:53:28.000Z" itemprop="datePublished">2017-10-23</time>
+    <a href="/2017/11/15/2/" class="article-date">
+  <time datetime="2017-11-14T23:32:00.000Z" itemprop="datePublished">2017-11-15</time>
 </a>
     
   </div>
@@ -74,7 +74,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      django-jet 使用DateRangeFilter 报importError的解决方法
+      custom django model_to_dict with @property and readonly field
     </h1>
   
 
@@ -82,15 +82,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天在编程时，需要给Django Admin加一个DateRange的list_filter，发现daterange与已安装的jet主题不兼容（不显示），查阅jet文档后发现jet处理了兼容问题：<code>from jet.filters import DateRangeFilter</code></p>
-<p>然而，我在加入上述代码后，报出了如下错误：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> jet.filters <span class="keyword">import</span> DateRangeFilter</span><br><span class="line">ImportError: cannot <span class="keyword">import</span> name <span class="string">'DateRangeFilter'</span></span><br></pre></td></tr></table></figure></p>
-<p>搜索了jet的github源码，找到如下解决方案：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将from jet.filters import DateRangeFilter 替换为：</span></span><br><span class="line"><span class="keyword">from</span> rangefilter.filter <span class="keyword">import</span> DateRangeFilter</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyUserAdmin</span><span class="params">(UserAdmin)</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    list_filter = (</span><br><span class="line">        (<span class="string">'date_joined'</span>, DateRangeFilter),</span><br><span class="line">    )</span><br></pre></td></tr></table></figure></p>
-<p>引用：<br><a href="https://github.com/geex-arts/django-jet/blob/552191c5be551741b3349aa104c92435702f62e5/docs/filters.rst" target="_blank" rel="noopener">https://github.com/geex-arts/django-jet/blob/552191c5be551741b3349aa104c92435702f62e5/docs/filters.rst</a></p>
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models.query_utils <span class="keyword">import</span> DeferredAttribute</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">object_as_dict</span><span class="params">(obj)</span>:</span></span><br><span class="line">    data_dict = &#123;&#125;<span class="comment">#&#123;k:getattr(obj, k) for k in dir(obj)&#125;</span></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> dir(obj):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> isinstance(getattr(obj.__class__, k), DeferredAttribute) <span class="keyword">or</span> isinstance(getattr(obj.__class__, k), property):</span><br><span class="line">                data_dict[k] = getattr(obj, k)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            print(e)</span><br><span class="line">            <span class="keyword">print</span> k</span><br><span class="line">    <span class="keyword">return</span> data_dict</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/23/11/" data-id="cja6gv4mu00036sotqp25gccq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/15/2/" data-id="cja6h19uk00027fotz9mrmo88" class="article-share-link">Share</a>
       
       
     </footer>
@@ -99,19 +96,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/10/25/10/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/11/19/1/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          django restful framework 做基于field的权限控制
+          Use github issue as blog backend
         
       </div>
     </a>
   
   
-    <a href="/2017/10/23/12/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/11/13/3/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Django Admin add &quot;Export to Excel&quot; action</div>
+      <div class="article-nav-title">【踩坑】Django中一个危险而隐蔽的坑</div>
     </a>
   
 </nav>
